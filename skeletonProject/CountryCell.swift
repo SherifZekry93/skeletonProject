@@ -23,7 +23,7 @@ class CountryCell:UICollectionViewCell
             }
             
             if let url = URL(string: imageurl) {
-                downloadImage(from: url)
+                countryImage.downloadImage(from: url)
             }
 
         }
@@ -38,7 +38,8 @@ class CountryCell:UICollectionViewCell
         let image = UIImageView()
         image.contentMode = .scaleAspectFill
         image.clipsToBounds = true
-        image.image = UIImage(named:"flag")
+        image.backgroundColor = .red
+        image.image = nil
         return image
     }()
     override init(frame: CGRect) {
@@ -67,16 +68,23 @@ class CountryCell:UICollectionViewCell
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+  
+    override func prepareForReuse() {
+        countryImage.image = nil
+    }
+}
+extension UIImageView
+{
     func getData(from url: URL, completion: @escaping (Data?, URLResponse?, Error?) -> ()) {
+        print("download started")
         URLSession.shared.dataTask(with: url, completionHandler: completion).resume()
     }
     func downloadImage(from url: URL) {
         getData(from: url) { data, response, error in
             guard let data = data, error == nil else { return }
             DispatchQueue.main.async() {
-                self.countryImage.image = UIImage(data: data)
+                self.image = UIImage(data: data)
             }
         }
     }
-
 }

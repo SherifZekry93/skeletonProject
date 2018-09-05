@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		7EB6ED1621402BC50030167A /* CountrySectionsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EB6ED1521402BC50030167A /* CountrySectionsModel.swift */; };
+		7EB6ED1A214036510030167A /* CVExtension+CollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EB6ED19214036510030167A /* CVExtension+CollectionView.swift */; };
 		7EC1118F213BC0B900CFF334 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EC1118E213BC0B900CFF334 /* AppDelegate.swift */; };
 		7EC11191213BC0B900CFF334 /* CountriesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EC11190213BC0B900CFF334 /* CountriesViewController.swift */; };
 		7EC11194213BC0B900CFF334 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7EC11192213BC0B900CFF334 /* Main.storyboard */; };
@@ -22,9 +24,14 @@
 		7EC111B1213C51AA00CFF334 /* SectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EC111B0213C51AA00CFF334 /* SectionCell.swift */; };
 		7EC111B3213C74E100CFF334 /* SectionItems.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EC111B2213C74E100CFF334 /* SectionItems.swift */; };
 		7EC111B5213C75F100CFF334 /* ItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EC111B4213C75F100CFF334 /* ItemCell.swift */; };
+		A8389EB4D738A8C55E258074 /* Pods_skeletonProject.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CF10E20F0AE003E57D28EC4C /* Pods_skeletonProject.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		2DA1212B28D486C2D7D056D2 /* Pods-skeletonProject.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-skeletonProject.debug.xcconfig"; path = "Pods/Target Support Files/Pods-skeletonProject/Pods-skeletonProject.debug.xcconfig"; sourceTree = "<group>"; };
+		37A98627E9602DA71A3C96AC /* Pods-skeletonProject.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-skeletonProject.release.xcconfig"; path = "Pods/Target Support Files/Pods-skeletonProject/Pods-skeletonProject.release.xcconfig"; sourceTree = "<group>"; };
+		7EB6ED1521402BC50030167A /* CountrySectionsModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountrySectionsModel.swift; sourceTree = "<group>"; };
+		7EB6ED19214036510030167A /* CVExtension+CollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CVExtension+CollectionView.swift"; sourceTree = "<group>"; };
 		7EC1118B213BC0B900CFF334 /* skeletonProject.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = skeletonProject.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7EC1118E213BC0B900CFF334 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		7EC11190213BC0B900CFF334 /* CountriesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountriesViewController.swift; sourceTree = "<group>"; };
@@ -42,6 +49,7 @@
 		7EC111B0213C51AA00CFF334 /* SectionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SectionCell.swift; sourceTree = "<group>"; };
 		7EC111B2213C74E100CFF334 /* SectionItems.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SectionItems.swift; sourceTree = "<group>"; };
 		7EC111B4213C75F100CFF334 /* ItemCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemCell.swift; sourceTree = "<group>"; };
+		CF10E20F0AE003E57D28EC4C /* Pods_skeletonProject.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_skeletonProject.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -49,17 +57,62 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A8389EB4D738A8C55E258074 /* Pods_skeletonProject.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		29E085B6FDB9B1BB341074F1 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				CF10E20F0AE003E57D28EC4C /* Pods_skeletonProject.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		766855C9C7EDF652FF8D412D /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				2DA1212B28D486C2D7D056D2 /* Pods-skeletonProject.debug.xcconfig */,
+				37A98627E9602DA71A3C96AC /* Pods-skeletonProject.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+		7EB6ED17214035B70030167A /* Countries */ = {
+			isa = PBXGroup;
+			children = (
+				7EB6ED18214035D70030167A /* Controllers */,
+			);
+			path = Countries;
+			sourceTree = "<group>";
+		};
+		7EB6ED18214035D70030167A /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				7EC11190213BC0B900CFF334 /* CountriesViewController.swift */,
+				7EB6ED1B214038490030167A /* Controller Extensions */,
+			);
+			path = Controllers;
+			sourceTree = "<group>";
+		};
+		7EB6ED1B214038490030167A /* Controller Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				7EB6ED19214036510030167A /* CVExtension+CollectionView.swift */,
+			);
+			path = "Controller Extensions";
+			sourceTree = "<group>";
+		};
 		7EC11182213BC0B900CFF334 = {
 			isa = PBXGroup;
 			children = (
 				7EC1118D213BC0B900CFF334 /* skeletonProject */,
 				7EC1118C213BC0B900CFF334 /* Products */,
+				766855C9C7EDF652FF8D412D /* Pods */,
+				29E085B6FDB9B1BB341074F1 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -74,8 +127,8 @@
 		7EC1118D213BC0B900CFF334 /* skeletonProject */ = {
 			isa = PBXGroup;
 			children = (
+				7EB6ED17214035B70030167A /* Countries */,
 				7EC1118E213BC0B900CFF334 /* AppDelegate.swift */,
-				7EC11190213BC0B900CFF334 /* CountriesViewController.swift */,
 				7EC11192213BC0B900CFF334 /* Main.storyboard */,
 				7EC11195213BC0BA00CFF334 /* Assets.xcassets */,
 				7EC11197213BC0BA00CFF334 /* LaunchScreen.storyboard */,
@@ -90,6 +143,7 @@
 				7EC111B0213C51AA00CFF334 /* SectionCell.swift */,
 				7EC111B2213C74E100CFF334 /* SectionItems.swift */,
 				7EC111B4213C75F100CFF334 /* ItemCell.swift */,
+				7EB6ED1521402BC50030167A /* CountrySectionsModel.swift */,
 			);
 			path = skeletonProject;
 			sourceTree = "<group>";
@@ -101,9 +155,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 7EC1119D213BC0BA00CFF334 /* Build configuration list for PBXNativeTarget "skeletonProject" */;
 			buildPhases = (
+				D8069F1D656AA8CA05B2436B /* [CP] Check Pods Manifest.lock */,
 				7EC11187213BC0B900CFF334 /* Sources */,
 				7EC11188213BC0B900CFF334 /* Frameworks */,
 				7EC11189213BC0B900CFF334 /* Resources */,
+				7498FD0960D02ACD2062ADDC /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -160,6 +216,45 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		7498FD0960D02ACD2062ADDC /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-skeletonProject/Pods-skeletonProject-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/SVProgressHUD/SVProgressHUD.framework",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SVProgressHUD.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-skeletonProject/Pods-skeletonProject-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		D8069F1D656AA8CA05B2436B /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-skeletonProject-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		7EC11187213BC0B900CFF334 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -170,8 +265,10 @@
 				7EC111A5213BC27300CFF334 /* CountryCell.swift in Sources */,
 				7EC111B1213C51AA00CFF334 /* SectionCell.swift in Sources */,
 				7EC111B5213C75F100CFF334 /* ItemCell.swift in Sources */,
+				7EB6ED1621402BC50030167A /* CountrySectionsModel.swift in Sources */,
 				7EC111A3213BC25F00CFF334 /* Countries.swift in Sources */,
 				7EC111AF213C502A00CFF334 /* SectionsViewController.swift in Sources */,
+				7EB6ED1A214036510030167A /* CVExtension+CollectionView.swift in Sources */,
 				7EC111A7213BDC2500CFF334 /* CountrySections.swift in Sources */,
 				7EC111A1213BC16900CFF334 /* ConstraintExtension.swift in Sources */,
 				7EC111B3213C74E100CFF334 /* SectionItems.swift in Sources */,
@@ -318,6 +415,7 @@
 		};
 		7EC1119E213BC0BA00CFF334 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 2DA1212B28D486C2D7D056D2 /* Pods-skeletonProject.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
@@ -336,6 +434,7 @@
 		};
 		7EC1119F213BC0BA00CFF334 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 37A98627E9602DA71A3C96AC /* Pods-skeletonProject.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;

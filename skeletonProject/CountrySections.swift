@@ -7,10 +7,26 @@
 //
 
 import UIKit
+import SVProgressHUD
 class CountrySection: UIViewController,UICollectionViewDelegateFlowLayout,UICollectionViewDataSource,UICollectionViewDelegate {
-     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 20
+    var countryId:Int?
+    {
+        didSet
+        {
+        
+            fetchSections { (allCategories) in
+                self.allCategories = allCategories
+                self.collectionView.reloadData()
+            }
+        }
     }
+    var allCategories:[Category]?
+   
+    
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return allCategories?.count ?? 0
+    }
+    
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         performSegue(withIdentifier: "SectionsSegue", sender: self)
     }
@@ -21,17 +37,73 @@ class CountrySection: UIViewController,UICollectionViewDelegateFlowLayout,UIColl
     
      func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "id", for: indexPath) as! CountrySectionCell
-        //cell.backgroundColor = indexPath.row % 2 == 0 ? .red: .green
         cell.layer.borderColor = UIColor.lightGray.cgColor
         cell.layer.borderWidth = 1
+        if let category = allCategories?[indexPath.item]
+        {
+            cell.category = category
+        }
         return cell
     }
     override func viewDidLoad() {
         super.viewDidLoad()
         collectionView.register(CountrySectionCell.self, forCellWithReuseIdentifier: "id")
         setupTitleStack()
+        
+      
     }
-  
+    func fetchSections(completionHandler:@escaping ([Category]) -> () ) {
+        if let id = countryId
+        {
+            let url = URL(string:"https://fitnessksa.com/public/api/category/\(id)")
+            URLSession.shared.dataTask(with: url!) { (data, response, error) in
+                var categories = [Category]()
+                var customErrorMessage:String = ""
+                if error != nil
+                {
+                    customErrorMessage = "Something Went Wrong! Make sure you are connected to the internet!"
+                }
+                else
+                {
+                    if (response as? HTTPURLResponse)?.statusCode == 200 {
+                        do
+                        {
+                            let allCategories = try JSONDecoder().decode([Category].self,from: data!)
+                            categories = allCategories
+                        }
+                        catch
+                        {
+                            customErrorMessage = "Something Went Wrong! Make sure you are connected to the internet!"
+                        }
+                    }
+                    else
+                    {
+                        customErrorMessage = "Something Went Wrong! Make sure you are connected to the internet!"
+                    }
+                }
+                DispatchQueue.main.async {
+                    if !(customErrorMessage.isEmpty)
+                    {
+                        let uiAlert = UIAlertController(title: "Error!", message: customErrorMessage, preferredStyle: .alert)
+                        let action = UIAlertAction(title: "Ok!",style:.cancel, handler: nil)
+                        uiAlert.addAction(action)
+                        self.present(uiAlert, animated: true, completion: nil)
+                    }
+                    else
+                    {
+                        
+                    }
+                    completionHandler(categories)
+                }
+                
+                }.resume()
+
+        }
+        else
+        {
+            return
+        }
+    }
     func setupTitleStack()
     {
         let size = (view.frame.size.width - 20)

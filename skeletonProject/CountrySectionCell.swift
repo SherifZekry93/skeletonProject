@@ -8,6 +8,22 @@
 
 import UIKit
 class CountrySectionCell: UICollectionViewCell {
+    var category:Category?{
+        didSet{
+            if let sectionName = category?.name
+            {
+                sectionLabel.text = sectionName
+            }
+            let imageBaseUrl = "https://fitnessksa.com/public/images/categories/"
+            if let imageName = category?.image
+            {
+                if let url = URL(string: imageBaseUrl+imageName)
+                {
+                    sectionImage.downloadImage(from: url)
+                }
+            }
+        }
+    }
     let sectionLabel:UILabel = {
         let label = UILabel()
         label.textAlignment = .center
@@ -15,11 +31,13 @@ class CountrySectionCell: UICollectionViewCell {
         label.text = "التسويق \n الالكتزوني"
         label.textColor = .white
         label.font = UIFont.boldSystemFont(ofSize: 16)
+        //label
         return label
     }()
     let sectionImage:UIImageView = {
        let image = UIImageView()
-        image.image = UIImage(named: "phone")
+       image.contentMode = .scaleAspectFit
+        
        return image
     }()
     let gradientView:UIView = {

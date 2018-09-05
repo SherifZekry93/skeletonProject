@@ -10,10 +10,10 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Home View Controller-->
+        <!--All Countries View Controller-->
         <scene sceneID="Rzr-Nc-cuN">
             <objects>
-                <viewController id="rLS-nt-geb" customClass="HomeViewController" customModule="skeletonProject" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="rLS-nt-geb" customClass="AllCountriesViewController" customModule="skeletonProject" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="EbT-Z9-rWF">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="603"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -273,7 +273,7 @@
         </scene>
     </scenes>
     <resources>
-        <image name="background" width="750" height="1334"/>
+        <image name="background" width="512" height="512"/>
         <image name="ic_white_reply" width="72" height="72"/>
     </resources>
 </document>
