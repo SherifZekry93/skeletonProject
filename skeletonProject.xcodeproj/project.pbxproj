@@ -12,6 +12,7 @@
 		7EB6ED2021403B320030167A /* ImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EB6ED1F21403B320030167A /* ImageView.swift */; };
 		7EB6ED2521403E1D0030167A /* CSExtension+CV.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EB6ED2421403E1D0030167A /* CSExtension+CV.swift */; };
 		7EB6ED27214046390030167A /* AlertExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EB6ED26214046390030167A /* AlertExtension.swift */; };
+		7EB6ED3021405D5D0030167A /* SubCategory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EB6ED2F21405D5D0030167A /* SubCategory.swift */; };
 		7EC1118F213BC0B900CFF334 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EC1118E213BC0B900CFF334 /* AppDelegate.swift */; };
 		7EC11191213BC0B900CFF334 /* CountriesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EC11190213BC0B900CFF334 /* CountriesViewController.swift */; };
 		7EC11194213BC0B900CFF334 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7EC11192213BC0B900CFF334 /* Main.storyboard */; };
@@ -37,6 +38,7 @@
 		7EB6ED1F21403B320030167A /* ImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageView.swift; sourceTree = "<group>"; };
 		7EB6ED2421403E1D0030167A /* CSExtension+CV.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CSExtension+CV.swift"; sourceTree = "<group>"; };
 		7EB6ED26214046390030167A /* AlertExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertExtension.swift; sourceTree = "<group>"; };
+		7EB6ED2F21405D5D0030167A /* SubCategory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubCategory.swift; sourceTree = "<group>"; };
 		7EC1118B213BC0B900CFF334 /* skeletonProject.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = skeletonProject.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7EC1118E213BC0B900CFF334 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		7EC11190213BC0B900CFF334 /* CountriesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountriesViewController.swift; sourceTree = "<group>"; };
@@ -184,8 +186,43 @@
 		7EB6ED2A21404CA00030167A /* SubCategories */ = {
 			isa = PBXGroup;
 			children = (
+				7EB6ED2D2140583F0030167A /* Controller */,
+				7EB6ED2C214057100030167A /* View */,
+				7EB6ED2B214056E80030167A /* Model */,
 			);
 			path = SubCategories;
+			sourceTree = "<group>";
+		};
+		7EB6ED2B214056E80030167A /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				7EB6ED2F21405D5D0030167A /* SubCategory.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		7EB6ED2C214057100030167A /* View */ = {
+			isa = PBXGroup;
+			children = (
+				7EC111B0213C51AA00CFF334 /* SubCategoryCell.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		7EB6ED2D2140583F0030167A /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				7EB6ED2E214058BA0030167A /* Controller Extension */,
+				7EC111AE213C502A00CFF334 /* SubCategoriesViewController.swift */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		7EB6ED2E214058BA0030167A /* Controller Extension */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = "Controller Extension";
 			sourceTree = "<group>";
 		};
 		7EC11182213BC0B900CFF334 = {
@@ -218,8 +255,6 @@
 				7EC11195213BC0BA00CFF334 /* Assets.xcassets */,
 				7EC11197213BC0BA00CFF334 /* LaunchScreen.storyboard */,
 				7EC1119A213BC0BA00CFF334 /* Info.plist */,
-				7EC111AE213C502A00CFF334 /* SubCategoriesViewController.swift */,
-				7EC111B0213C51AA00CFF334 /* SubCategoryCell.swift */,
 				7EC111B2213C74E100CFF334 /* SubCategoryItems.swift */,
 				7EC111B4213C75F100CFF334 /* SubCategoryItemCell.swift */,
 			);
@@ -338,6 +373,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7EB6ED3021405D5D0030167A /* SubCategory.swift in Sources */,
 				7EB6ED2021403B320030167A /* ImageView.swift in Sources */,
 				7EC11191213BC0B900CFF334 /* CountriesViewController.swift in Sources */,
 				7EC1118F213BC0B900CFF334 /* AppDelegate.swift in Sources */,

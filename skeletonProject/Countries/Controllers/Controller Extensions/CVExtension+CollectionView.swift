@@ -31,7 +31,7 @@ extension AllCountriesViewController:UICollectionViewDelegate,UICollectionViewDa
         return CGSize(width: (view.frame.width / 2) - 15, height: 40)
     }
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        performSegue(withIdentifier: "CountrySectionSegue", sender: self)
+        performSegue(withIdentifier: "CategoriesSegue", sender: self)
     }
     func collectionViewCustomize()
     {

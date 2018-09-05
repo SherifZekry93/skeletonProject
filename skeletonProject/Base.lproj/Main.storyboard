@@ -80,7 +80,7 @@
                         <outlet property="addButtonOutlet" destination="aCW-Dc-n6P" id="MkJ-zR-Jf4"/>
                         <outlet property="collectionView" destination="6SK-Ec-eux" id="cAN-0p-j01"/>
                         <outlet property="uibuttonView" destination="ZqE-0C-iTa" id="qZ8-1R-KQE"/>
-                        <segue destination="B6W-SA-Nbn" kind="show" identifier="CountrySectionSegue" id="Y7Y-xj-uAg"/>
+                        <segue destination="B6W-SA-Nbn" kind="show" identifier="CategoriesSegue" id="Y7Y-xj-uAg"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="YGE-0z-6iz" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -90,7 +90,7 @@
         <!--العاب ضرب النار-->
         <scene sceneID="19D-6l-6eD">
             <objects>
-                <collectionViewController title="العاب ضرب النار" id="xY7-z3-Sxo" customClass="SubCategoryItems" customModule="skeletonProject" customModuleProvider="target" sceneMemberID="viewController">
+                <collectionViewController title="العاب ضرب النار" id="xY7-z3-Sxo" customClass="SectionItems" customModule="skeletonProject" customModuleProvider="target" sceneMemberID="viewController">
                     <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" id="2HD-BS-NOu">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="603"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -169,10 +169,10 @@
             </objects>
             <point key="canvasLocation" x="2433" y="220"/>
         </scene>
-        <!--Country Section-->
+        <!--Categories-->
         <scene sceneID="gMJ-Dy-O3V">
             <objects>
-                <viewController id="B6W-SA-Nbn" customClass="CountrySection" customModule="skeletonProject" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="B6W-SA-Nbn" customClass="Categories" customModule="skeletonProject" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="mv3-Bb-WjN">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="603"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -238,7 +238,7 @@
                     </view>
                     <connections>
                         <outlet property="collectionView" destination="TGI-8b-1oZ" id="Swf-SR-NDK"/>
-                        <segue destination="geG-ls-ehl" kind="show" identifier="SectionsSegue" id="8uo-ZC-yzz"/>
+                        <segue destination="geG-ls-ehl" kind="show" identifier="SubCategoriesSegue" id="8uo-ZC-yzz"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="z8i-ee-U4R" userLabel="First Responder" sceneMemberID="firstResponder"/>

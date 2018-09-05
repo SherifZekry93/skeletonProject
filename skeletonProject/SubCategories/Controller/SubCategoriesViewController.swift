@@ -7,22 +7,57 @@
 //
 
 import UIKit
+import SVProgressHUD
 class SubCategoryViewController: UICollectionViewController,UICollectionViewDelegateFlowLayout {
-    
+    var allSubCategories:[SubCategory]?
+    var loadedSuccessfully = false
+    var categoryName:String?{
+        didSet{
+            if let name = categoryName
+            {
+                backtitleLabel.text = name
+            }
+        }
+    }
+    var categoryId:Int?{
+        didSet{
+            if let id = categoryId
+            {
+                SubCategory.fetchCategories(categoryId: id) { (allSubCategories, loadedSuccessfully) in
+                    self.loadedSuccessfully = loadedSuccessfully
+                    if loadedSuccessfully
+                    {
+                        self.allSubCategories = allSubCategories
+                        self.collectionView?.reloadData()
+                    }
+                    else
+                    {
+                      let alert = UIAlertController.showAlert(message: "Something Went Wrong! Please make sure you are connected to the internet. ")
+                       self.present(alert, animated: true, completion: nil)
+                    }
+                    SVProgressHUD.dismiss()
+                }
+            }
+        }
+    }
     override func viewDidLoad() {
         super.viewDidLoad()
+        SVProgressHUD.show(withStatus: "تحميل الاقسام الفرعية")
         navigationItem.hidesBackButton = true
         collectionView?.register(SectionCell.self, forCellWithReuseIdentifier: cellID)
         setupTitleStack()
     }
     let cellID : String = "cellId"
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 4
+        return allSubCategories?.count ?? 0
     }
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellID, for: indexPath) as! SectionCell
-        cell.sectionTitle.text = "التسويق الالكتروني"
-        return cell
+        if let subCategory = allSubCategories?[indexPath.item]
+        {
+            cell.sectionTitle.text = subCategory.name
+        }
+            return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
@@ -31,6 +66,8 @@ class SubCategoryViewController: UICollectionViewController,UICollectionViewDele
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         performSegue(withIdentifier: "SectionItemsSegue", sender: self)
     }
+    var backtitleLabel = UILabel()
+
     func setupTitleStack()
     {
         let size = (view.frame.size.width - 20)
@@ -42,17 +79,17 @@ class SubCategoryViewController: UICollectionViewController,UICollectionViewDele
         let favButton = UIButton()
         favButton.setImage(UIImage(named: "ic_white_empty_star"), for: .normal)
         let titleLabel = UILabel()
-        titleLabel.text = "مصر"
+        titleLabel.text = "آضافة تطبيق"
         titleLabel.textAlignment = .right
         titleLabel.textColor = .white
-        let backtitleLabel = UILabel()
-        backtitleLabel.text = "التسوق \n الالكتروني"
+        //backtitleLabel.text = "التسوق \n الالكتروني"
         backtitleLabel.numberOfLines = 2
         backtitleLabel.font = UIFont.boldSystemFont(ofSize: 11)
         backtitleLabel.textAlignment = .center
         backtitleLabel.textColor = .white
         let backToPrevious = UIButton()
         backToPrevious.setImage(UIImage(named: "ic_rtl_back"), for: .normal)
+        backToPrevious.addTarget(self, action: #selector(backToCategories), for: .touchUpInside)
         let titleView = UIView()
         titleView.translatesAutoresizingMaskIntoConstraints = false
         titleView.heightAnchor.constraint(equalToConstant: 40).isActive = true
@@ -110,5 +147,9 @@ class SubCategoryViewController: UICollectionViewController,UICollectionViewDele
             backToPrevious.widthAnchor.constraint(equalToConstant: 40)
             ])
         navigationItem.titleView = titleView
+    }
+    @objc func backToCategories()
+    {
+        navigationController?.popViewController(animated: true)
     }
 }

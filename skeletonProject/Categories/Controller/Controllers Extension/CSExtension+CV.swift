@@ -7,15 +7,14 @@
 //
 
 import UIKit
-extension CountrySection: UICollectionViewDelegateFlowLayout,UICollectionViewDataSource,
+extension Categories: UICollectionViewDelegateFlowLayout,UICollectionViewDataSource,
     UICollectionViewDelegate
 {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return allCategories?.count ?? 0
     }
-    
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        performSegue(withIdentifier: "SectionsSegue", sender: self)
+        performSegue(withIdentifier: "SubCategoriesSegue", sender: self)
     }
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize(width: view.frame.width / 3, height: view.frame.width / 3)

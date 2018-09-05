@@ -73,12 +73,16 @@ class AllCountriesViewController:UIViewController {
     //MARK:- Prepare for new segues
     override func prepare(for segue: UIStoryboardSegue, sender: Any?)
     {
-        if segue.identifier == "CountrySectionSegue"
+        if segue.identifier == "CategoriesSegue"
         {
-            let dest = segue.destination as! CountrySection
+            let dest = segue.destination as! Categories
             let item = collectionView.indexPathsForSelectedItems?.first
-            let id = allCountries?[(item?.item)!].id
+            guard let id = allCountries?[(item?.item)!].id else {return}
+            guard let imageName = allCountries![(item?.item)!].image else {return}
+            guard let countryName = allCountries![(item?.item)!].name else {return}
             dest.countryId = id
+            dest.countryName = countryName
+            dest.imageName = imageName
         }
     }
 }

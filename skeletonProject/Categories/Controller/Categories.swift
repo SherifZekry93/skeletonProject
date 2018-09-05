@@ -8,7 +8,16 @@
 
 import UIKit
 import SVProgressHUD
-class CountrySection: UIViewController{
+class Categories: UIViewController{
+    var countryName:String?{
+        didSet{
+            print(countryName)
+            if let name = countryName
+            {
+                titleLabel.text = name
+            }
+        }
+    }
     var countryId:Int?
     {
         didSet
@@ -28,13 +37,24 @@ class CountrySection: UIViewController{
                     }
                     SVProgressHUD.dismiss()
                 }
-
-                
-
             }
             else
             {
                 return
+            }
+        }
+    }
+    
+    var imageName:String?{
+        didSet{
+            let imageBaseUrl = "https://fitnessksa.com/public/images/countries/"
+            if let name = imageName
+            {
+                let imageurl = imageBaseUrl + name
+                if let url = URL(string: imageurl)
+                {
+                    countryImage.downloadImage(from: url)
+                }
             }
         }
     }
@@ -48,7 +68,26 @@ class CountrySection: UIViewController{
         collectionView.register(CategoryCell.self, forCellWithReuseIdentifier: "id")
         setupTitleStack()
     }
-    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "SubCategoriesSegue"
+        {
+            if let indexPath = collectionView.indexPathsForSelectedItems?.first
+            {
+                let dest = segue.destination as! SubCategoryViewController
+                if let catName = allCategories?[indexPath.item].name
+                {
+                    dest.categoryName = catName
+                }
+                if let catId = allCategories?[indexPath.item].id
+                {
+                    dest.categoryId = catId
+                }
+                
+            }
+        }
+    }
+        let countryImage = UIImageView()
+     let titleLabel = UILabel()
     func setupTitleStack()
     {
         let size = (view.frame.size.width - 20)
@@ -59,16 +98,14 @@ class CountrySection: UIViewController{
         backButton.setImage(UIImage(named: "ic_white_reply"), for: .normal)
         let favButton = UIButton()
         favButton.setImage(UIImage(named: "ic_white_empty_star"), for: .normal)
-        let titleLabel = UILabel()
-        titleLabel.text = "مصر"
         titleLabel.textAlignment = .center
         titleLabel.textColor = .white
-        let countryImage = UIImageView()
-        countryImage.image = UIImage(named: "flag")
+        countryImage.contentMode = .scaleAspectFill
         countryImage.clipsToBounds = true
         countryImage.layer.cornerRadius = 20
         let backToPrevious = UIButton()
         backToPrevious.setImage(UIImage(named: "ic_rtl_back"), for: .normal)
+        backToPrevious.addTarget(self, action: #selector(goToCountries), for: .touchUpInside)
         let titleView = UIView()
         titleView.translatesAutoresizingMaskIntoConstraints = false
         titleView.heightAnchor.constraint(equalToConstant: 40).isActive = true
@@ -79,7 +116,6 @@ class CountrySection: UIViewController{
         titleView.addSubview(titleLabel)
         titleView.addSubview(countryImage)
         titleView.addSubview(backToPrevious)
-        //titleView.backgroundColor = .red
         menuButton.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             menuButton.leadingAnchor.constraint(equalTo: titleView.leadingAnchor),
@@ -127,6 +163,10 @@ class CountrySection: UIViewController{
             backToPrevious.widthAnchor.constraint(equalToConstant: 40)
             ])
         navigationItem.titleView = titleView
+    }
+    @objc func goToCountries()
+    {
+        navigationController?.popViewController(animated: true)
     }
 }
 
