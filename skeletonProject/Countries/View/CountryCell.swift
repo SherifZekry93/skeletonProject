@@ -51,8 +51,6 @@ class CountryCell:UICollectionViewCell
     {
         addSubview(countryName)
         addSubview(countryImage)
-      
-
         countryName.anchorWithConstantsToTop(top: topAnchor, left: leftAnchor, bottom: bottomAnchor, right: rightAnchor, topConstant: 5, leftConstant: 50, bottomConstant: 5, rightConstant: 5)
     countryImage.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate(
@@ -71,20 +69,5 @@ class CountryCell:UICollectionViewCell
   
     override func prepareForReuse() {
         countryImage.image = nil
-    }
-}
-extension UIImageView
-{
-    func getData(from url: URL, completion: @escaping (Data?, URLResponse?, Error?) -> ()) {
-        print("download started")
-        URLSession.shared.dataTask(with: url, completionHandler: completion).resume()
-    }
-    func downloadImage(from url: URL) {
-        getData(from: url) { data, response, error in
-            guard let data = data, error == nil else { return }
-            DispatchQueue.main.async() {
-                self.image = UIImage(data: data)
-            }
-        }
     }
 }

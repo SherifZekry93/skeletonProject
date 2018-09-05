@@ -7,12 +7,10 @@
 //
 
 import UIKit
-class SectionsViewController: UICollectionViewController,UICollectionViewDelegateFlowLayout {
+class SubCategoryViewController: UICollectionViewController,UICollectionViewDelegateFlowLayout {
     
-
     override func viewDidLoad() {
         super.viewDidLoad()
-      
         navigationItem.hidesBackButton = true
         collectionView?.register(SectionCell.self, forCellWithReuseIdentifier: cellID)
         setupTitleStack()

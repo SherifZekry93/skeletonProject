@@ -13,6 +13,7 @@ class AllCountriesViewController:UIViewController {
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var addButtonOutlet: UIButton!
     @IBOutlet weak var uibuttonView: UIView!
+    let cellId = "cellId"
     var allCountries:[Country]?
     let titleText : UITextView = {
         let textView = UITextView()
@@ -31,78 +32,44 @@ class AllCountriesViewController:UIViewController {
         textView.textAlignment = .center
         return textView
     }()
+    var loadedData:Bool = false
     override func viewDidLoad()
     {
         super.viewDidLoad()
         SVProgressHUD.show(withStatus: "تحميل الدول")
         collectionViewCustomize()
         customizeNavBar()
-        fetchCountries { (allCountries) in
+        Country.fetchCountries { (allCountries,loadedData) in
             self.allCountries = allCountries
-            self.collectionView.reloadData()
+            self.loadedData = loadedData
+            if loadedData
+            {
+                self.collectionView.reloadData()
+            }
+            else
+            {
+                self.present(UIAlertController.showAlert(message: "Error loading data. Please make sure you are connected to the internet"), animated: true, completion: nil)
+            }
             SVProgressHUD.dismiss()
         }
     }
-    //MARK:- Change Navigation Top Bar
+    //MARK:- Customize Navigation Bar
     func customizeNavBar()
     {
         navigationController?.navigationBar.barTintColor = UIColor.blue
         uibuttonView.backgroundColor = UIColor.blue
         addButtonOutlet.layer.cornerRadius = 15
+        self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: UIBarMetrics.default)
+        self.navigationController?.navigationBar.shadowImage = UIImage()
     }
-    //MARK:- Load All Countries
-    func fetchCountries(completionHandler:@escaping ([Country]) -> () ) {
-        let url = URL(string:"https://fitnessksa.com/public/api/country")
-        URLSession.shared.dataTask(with: url!) { (data, response, error) in
-            print("inside closure")
-            var countries = [Country]()
-            var customErrorMessage:String = ""
-            if error != nil
-            {
-                customErrorMessage = "Something Went Wrong! Make sure you are connected to the internet!"
-            }
-            else
-            {
-                if (response as? HTTPURLResponse)?.statusCode == 200 {
-                    do
-                    {
-                        let allCountries = try JSONDecoder().decode([Country].self,from: data!)
-                        countries = allCountries
-                    }
-                    catch
-                    {
-                        customErrorMessage = "Something Went Wrong! Make sure you are connected to the internet!"
-                    }
-                }
-                else
-                {
-                    customErrorMessage = "Something Went Wrong! Make sure you are connected to the internet!"
-                }
-            }
-            DispatchQueue.main.async {
-                if !(customErrorMessage.isEmpty)
-                {
-                    let uiAlert = UIAlertController(title: "Error!", message: customErrorMessage, preferredStyle: .alert)
-                    let action = UIAlertAction(title: "Ok!",style:.cancel, handler: nil)
-                    uiAlert.addAction(action)
-                   self.present(uiAlert, animated: true, completion: nil)
-                }
-                else
-                {
-                    
-                }
-                completionHandler(countries)
 
-            }
-            
-            }.resume()
-    }
+    //MARK:- Load All Countries
+    
     
     override func viewWillAppear(_ animated: Bool) {
         navigationItem.titleView = titleText
     }
     
-    let cellId = "cellId"
     //MARK:- Prepare for new segues
     override func prepare(for segue: UIStoryboardSegue, sender: Any?)
     {

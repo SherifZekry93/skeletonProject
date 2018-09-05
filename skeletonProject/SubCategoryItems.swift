@@ -7,10 +7,10 @@
 //
 
 import UIKit
-class SectionItems: UICollectionViewController,UICollectionViewDelegateFlowLayout {
+class SubCategoryItems: UICollectionViewController,UICollectionViewDelegateFlowLayout {
     override func viewDidLoad() {
         super.viewDidLoad()
-        collectionView?.register(ItemCell.self, forCellWithReuseIdentifier: cellId)
+        collectionView?.register(SubCategoryItemCell.self, forCellWithReuseIdentifier: cellId)
         collectionView?.backgroundColor = .lightGray
         loadData()
     }
@@ -29,7 +29,7 @@ class SectionItems: UICollectionViewController,UICollectionViewDelegateFlowLayou
         return CGSize(width: view.frame.size.width, height: view.frame.size.height / 6)
     }
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! ItemCell
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! SubCategoryItemCell
         cell.backgroundColor = .white
         cell.titleLabel.text = "لعبة جميلة جدا Swat"
         cell.subTitleLabel.text = "لعبة الاسطورة Ostora"

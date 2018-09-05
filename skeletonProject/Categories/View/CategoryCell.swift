@@ -7,7 +7,7 @@
 //
 
 import UIKit
-class CountrySectionCell: UICollectionViewCell {
+class CategoryCell: UICollectionViewCell {
     var category:Category?{
         didSet{
             if let sectionName = category?.name
@@ -31,7 +31,6 @@ class CountrySectionCell: UICollectionViewCell {
         label.text = "التسويق \n الالكتزوني"
         label.textColor = .white
         label.font = UIFont.boldSystemFont(ofSize: 16)
-        //label
         return label
     }()
     let sectionImage:UIImageView = {

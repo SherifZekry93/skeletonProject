@@ -90,7 +90,7 @@
         <!--العاب ضرب النار-->
         <scene sceneID="19D-6l-6eD">
             <objects>
-                <collectionViewController title="العاب ضرب النار" id="xY7-z3-Sxo" customClass="SectionItems" customModule="skeletonProject" customModuleProvider="target" sceneMemberID="viewController">
+                <collectionViewController title="العاب ضرب النار" id="xY7-z3-Sxo" customClass="SubCategoryItems" customModule="skeletonProject" customModuleProvider="target" sceneMemberID="viewController">
                     <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" id="2HD-BS-NOu">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="603"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -128,10 +128,10 @@
             </objects>
             <point key="canvasLocation" x="2694" y="-493"/>
         </scene>
-        <!--Sections View Controller-->
+        <!--Sub Category View Controller-->
         <scene sceneID="Dh0-zo-IJz">
             <objects>
-                <collectionViewController id="geG-ls-ehl" customClass="SectionsViewController" customModule="skeletonProject" customModuleProvider="target" sceneMemberID="viewController">
+                <collectionViewController id="geG-ls-ehl" customClass="SubCategoryViewController" customModule="skeletonProject" customModuleProvider="target" sceneMemberID="viewController">
                     <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" id="UBD-jZ-tml">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="603"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
