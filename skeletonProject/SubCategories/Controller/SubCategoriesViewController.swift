@@ -82,9 +82,9 @@ class SubCategoryViewController: UICollectionViewController,UICollectionViewDele
         titleLabel.text = "آضافة تطبيق"
         titleLabel.textAlignment = .right
         titleLabel.textColor = .white
-        //backtitleLabel.text = "التسوق \n الالكتروني"
+        //backtitleLabel.text = "some brand new"
         backtitleLabel.numberOfLines = 2
-        backtitleLabel.font = UIFont.boldSystemFont(ofSize: 11)
+        backtitleLabel.font = UIFont.boldSystemFont(ofSize: 13)
         backtitleLabel.textAlignment = .center
         backtitleLabel.textColor = .white
         let backToPrevious = UIButton()

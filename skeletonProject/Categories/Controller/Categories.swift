@@ -86,8 +86,8 @@ class Categories: UIViewController{
             }
         }
     }
-        let countryImage = UIImageView()
-     let titleLabel = UILabel()
+    let countryImage = UIImageView()
+    let titleLabel = UILabel()
     func setupTitleStack()
     {
         let size = (view.frame.size.width - 20)
@@ -100,7 +100,7 @@ class Categories: UIViewController{
         favButton.setImage(UIImage(named: "ic_white_empty_star"), for: .normal)
         titleLabel.textAlignment = .center
         titleLabel.textColor = .white
-        countryImage.contentMode = .scaleAspectFill
+        countryImage.contentMode = .scaleToFill
         countryImage.clipsToBounds = true
         countryImage.layer.cornerRadius = 20
         let backToPrevious = UIButton()
@@ -151,8 +151,8 @@ class Categories: UIViewController{
         countryImage.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             countryImage.leadingAnchor.constraint(equalTo: titleLabel.trailingAnchor),
-            countryImage.topAnchor.constraint(equalTo: titleView.topAnchor,constant:5),
-            countryImage.bottomAnchor.constraint(equalTo: titleView.bottomAnchor,constant:-5),
+            countryImage.topAnchor.constraint(equalTo: titleView.topAnchor,constant:0),
+            countryImage.bottomAnchor.constraint(equalTo: titleView.bottomAnchor,constant:0),
             countryImage.widthAnchor.constraint(equalToConstant: 40)
             ])
         backToPrevious.translatesAutoresizingMaskIntoConstraints = false
