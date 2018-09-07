@@ -49,7 +49,7 @@ class SubCategoryViewController: UICollectionViewController,UICollectionViewDele
     }
     let cellID : String = "cellId"
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return allSubCategories?.count ?? 0
+        return  allSubCategories?.count ?? 0
     }
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellID, for: indexPath) as! SectionCell
@@ -61,7 +61,7 @@ class SubCategoryViewController: UICollectionViewController,UICollectionViewDele
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: (view.frame.size.width - 40) / 3, height: 50)
+        return CGSize(width: (view.frame.size.width - 50) / 3, height: 50)
     }
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         performSegue(withIdentifier: "SectionItemsSegue", sender: self)
@@ -80,6 +80,7 @@ class SubCategoryViewController: UICollectionViewController,UICollectionViewDele
         favButton.setImage(UIImage(named: "ic_white_empty_star"), for: .normal)
         let titleLabel = UILabel()
         titleLabel.text = "آضافة تطبيق"
+        titleLabel.font = UIFont.systemFont(ofSize: 12)
         titleLabel.textAlignment = .right
         titleLabel.textColor = .white
         //backtitleLabel.text = "some brand new"

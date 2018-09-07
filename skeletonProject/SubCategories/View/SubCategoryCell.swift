@@ -14,7 +14,6 @@ class SectionCell: UICollectionViewCell{
         addSubview(sectionTitle)
         sectionTitle.anchorToTop(top: topAnchor, left: leftAnchor, bottom: bottomAnchor, right: rightAnchor)
     }
-    
     let sectionTitle : UILabel = {
         let label = UILabel()
         label.textAlignment = .center

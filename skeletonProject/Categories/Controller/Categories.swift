@@ -11,7 +11,7 @@ import SVProgressHUD
 class Categories: UIViewController{
     var countryName:String?{
         didSet{
-            print(countryName)
+//            print(countryName)
             if let name = countryName
             {
                 titleLabel.text = name
@@ -86,7 +86,7 @@ class Categories: UIViewController{
             }
         }
     }
-    let countryImage = UIImageView()
+    let countryImage = CustomImageView()
     let titleLabel = UILabel()
     func setupTitleStack()
     {

@@ -33,8 +33,8 @@ class CategoryCell: UICollectionViewCell {
         label.font = UIFont.boldSystemFont(ofSize: 16)
         return label
     }()
-    let sectionImage:UIImageView = {
-       let image = UIImageView()
+    let sectionImage:CustomImageView = {
+       let image = CustomImageView()
        image.contentMode = .scaleAspectFit
         
        return image

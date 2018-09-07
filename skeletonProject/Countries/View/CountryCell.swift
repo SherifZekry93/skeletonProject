@@ -34,11 +34,11 @@ class CountryCell:UICollectionViewCell
         label.textColor = .blue
         return label
     }()
-    let countryImage:UIImageView = {
-        let image = UIImageView()
+    let countryImage:CustomImageView = {
+        let image = CustomImageView()
         image.contentMode = .scaleAspectFill
         image.clipsToBounds = true
-        image.backgroundColor = .red
+        image.backgroundColor = .gray
         image.image = nil
         return image
     }()
@@ -68,6 +68,6 @@ class CountryCell:UICollectionViewCell
     }
   
     override func prepareForReuse() {
-        countryImage.image = nil
+        //countryImage.image = nil
     }
 }
