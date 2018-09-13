@@ -7,7 +7,7 @@
 //
 
 import UIKit
-extension SubSubCategoryItems
+extension ItemDetailsViewController
 {
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
        if let count = allListItems?.count
@@ -16,11 +16,22 @@ extension SubSubCategoryItems
        }
         return 0
     }
+    override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath)
+    {
+        let layout = UICollectionViewFlowLayout()
+        let controller = SingleItemCollectionViewController(collectionViewLayout: layout)
+        if let listItem = allListItems?[indexPath.item]
+        {
+            controller.listItem = listItem
+        }
+        navigationController?.pushViewController(controller, animated: true)
+    }
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize(width: view.frame.size.width, height: view.frame.size.height / 6)
     }
+    
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! SubCategoryItemCell
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! ItemDetailsCell
         if let item = allListItems?[indexPath.item]
         {
             cell.listItem = item

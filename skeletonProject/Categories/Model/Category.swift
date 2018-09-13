@@ -13,6 +13,6 @@ struct Category : Codable
     var country_id:Int?
     var name:String?
     var image:String?
-    var created_at:String
+    var created_at:String?
     var updated_at:String?
 }

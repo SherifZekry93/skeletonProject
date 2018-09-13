@@ -88,7 +88,7 @@ class SubCategoryViewController: UICollectionViewController,UICollectionViewDele
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize(width: (view.frame.size.width - 50) / 3, height: 50)
     }
-    var allSubSubCategories:[SubSubCategory]?
+    var allSubSubCategories:[ItemDetails]?
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath){
         SVProgressHUD.show()
         if subCategoriesMode && allSubCategories?[indexPath.item].id == 1
@@ -128,7 +128,7 @@ class SubCategoryViewController: UICollectionViewController,UICollectionViewDele
         if segue.identifier == "SectionItemsSegue"
         {
             print(segue.destination)
-            if let dest = segue.destination as? SubSubCategoryItems
+            if let dest = segue.destination as? ItemDetailsViewController
             {
                 if let index = (collectionView?.indexPathsForSelectedItems?.first?.item)
                 {

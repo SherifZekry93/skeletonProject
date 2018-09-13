@@ -7,46 +7,57 @@
 //
 
 import Foundation
+var dataTask:URLSessionDataTask?
 class APIService {
      static let shared = APIService()
      func fetchCategories(countryId:Int,completionHandler:@escaping ([Category],Bool) -> () ) {
-        let url = URL(string:"https://fitnessksa.com/public/api/category/\(countryId)")
-        URLSession.shared.dataTask(with: url!) { (data, response, error) in
+        guard let url = URL(string:"https://fitnessksa.com/public/api/category/\(countryId)") else {return}
+        dataTask?.cancel()
+        dataTask = URLSession.shared.dataTask(with: url) { (data, response, error) in
             var categories = [Category]()
             var loadedData:Bool = true
             if error != nil
             {
                 loadedData = false
-                /*customErrorMessage = "Something Went Wrong! Make sure you are connected to the internet!"*/
+                print("error\(error)" )
             }
             else
             {
                 if (response as? HTTPURLResponse)?.statusCode == 200 {
                     do
                     {
-                        let allCategories = try JSONDecoder().decode([Category].self,from: data!)
-                        categories = allCategories
+                        if let responseData = data
+                        {
+                            let allCategories = try JSONDecoder().decode([Category].self,from: responseData)
+                            categories = allCategories
+
+                        }
                     }
-                    catch
+                    catch let error
                     {
+                        print("here is the reason why it's not loading egypt")
+                        print(error.localizedDescription)
+                        print(error)
                         loadedData = false
                     }
                 }
                 else
                 {
                     loadedData = false
-                    
+                    print((response as! HTTPURLResponse).statusCode)
                 }
             }
             DispatchQueue.main.async {
                 
                 completionHandler(categories,loadedData)
             }
-            }.resume()
+            }//.resume()
+        dataTask?.resume()
     }
     func fetchCountries(completionHandler:@escaping ([Country],Bool) -> () ) {
-        let url = URL(string:"https://fitnessksa.com/public/api/country")
-        URLSession.shared.dataTask(with: url!) { (data, response, error) in
+        guard let url = URL(string:"https://fitnessksa.com/public/api/country") else {return}
+        dataTask?.cancel()
+        dataTask =  URLSession.shared.dataTask(with: url) { (data, response, error) in
             var countries = [Country]()
             var loadedData:Bool = true
             if error != nil
@@ -75,11 +86,13 @@ class APIService {
                 completionHandler(countries,loadedData)
             }
             
-            }.resume()
+            }//.resume()
+        dataTask?.resume()
     }
     func fetchSubCategories(categoryId:Int,completionHandler:@escaping ([SubCategory],Bool) -> () ) {
-        let url = URL(string:"https://fitnessksa.com/public/api/sub-categories/\(categoryId)")
-        URLSession.shared.dataTask(with: url!) { (data, response, error) in
+        guard let url = URL(string:"https://fitnessksa.com/public/api/sub-categories/\(categoryId)") else {return}
+        dataTask?.cancel()
+       dataTask =  URLSession.shared.dataTask(with: url) { (data, response, error) in
             
             var subCategories = [SubCategory]()
             var loadedData:Bool = true
@@ -108,12 +121,14 @@ class APIService {
             DispatchQueue.main.async {
                 completionHandler(subCategories,loadedData)
             }
-            }.resume()
+            }//.resume()
+        dataTask?.resume()
     }
-    func fetchSubSubCategories(subcategoryId:Int,completionHandler:@escaping ([SubSubCategory],Bool) -> () ) {
+    func fetchSubSubCategories(subcategoryId:Int,completionHandler:@escaping ([ItemDetails],Bool) -> () ) {
         let url = URL(string:"https://fitnessksa.com/public/api/sub-sub-category/\(subcategoryId)")
-        URLSession.shared.dataTask(with: url!) { (data, response, error) in
-            var subSubCategories = [SubSubCategory]()
+        dataTask?.cancel()
+        dataTask =  URLSession.shared.dataTask(with: url!) { (data, response, error) in
+            var subSubCategories = [ItemDetails]()
             var loadedData:Bool = true
             if error != nil
             {
@@ -125,7 +140,7 @@ class APIService {
                 if (response as? HTTPURLResponse)?.statusCode == 200 {
                     do
                     {
-                        let allSubCategories = try JSONDecoder().decode([SubSubCategory].self,from: data!)
+                        let allSubCategories = try JSONDecoder().decode([ItemDetails].self,from: data!)
                         subSubCategories = allSubCategories
                         print(subSubCategories)
                     }
@@ -144,7 +159,8 @@ class APIService {
                 
                 completionHandler(subSubCategories,loadedData)
             }
-            }.resume()
+            }//.resume()
+        dataTask?.resume()
     }
     func fetchListItems(subCategory:Int,subSubCategory:Int,completitionHandler:@escaping ([ListItem]) -> ()) {
         let listItemsUrlString: String = "https://fitnessksa.com/public/api/list-items?subCategory=\(subCategory)&subSubCategory=\(subSubCategory)"
@@ -157,7 +173,8 @@ class APIService {
         print("here is the url"+listItemsUrlString)
         listItemsUrlRequest.httpMethod = "POST"
         print(listItemsUrlString)
-        URLSession.shared.dataTask(with: listItemsUrlRequest)
+        dataTask?.cancel()
+        dataTask =  URLSession.shared.dataTask(with: listItemsUrlRequest)
         {
             (data, response, error) in
             guard error == nil else {
@@ -173,6 +190,7 @@ class APIService {
                 {
                     allItems = try JSONDecoder().decode([ListItem].self, from: data!)
                     print("here is all items")
+                    print(allItems)
                 }
                 else
                 {
@@ -188,9 +206,8 @@ class APIService {
             {
                     completitionHandler(allItems)
             }
-//            let dataString = String(data:responseData,encoding:.utf8)
-//            print("here is the data" + dataString!)
-        }.resume()
+        }//.resume()
+        dataTask?.resume()
        // task.resume()
     }
     

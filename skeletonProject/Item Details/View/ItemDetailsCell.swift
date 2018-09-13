@@ -7,23 +7,32 @@
 //
 
 import UIKit
-class SubCategoryItemCell: UICollectionViewCell {
+class ItemDetailsCell: UICollectionViewCell {
     
     var listItem:ListItem?{
         didSet
         {
             if let title = listItem?.title
             {
-                titleLabel.text = title
-            }
-            if let subTitle = listItem?.details
-            {
-                subTitleLabel.text = subTitle
+                let attributedText = NSMutableAttributedString(string: title, attributes: [NSAttributedStringKey.font : UIFont.systemFont(ofSize: 16)])
+                
+                guard let subTitle = listItem?.details else {return }
+                if subTitle != ""
+                {
+                attributedText.append(NSAttributedString(string: "\n\(subTitle)", attributes: [NSAttributedStringKey.font : UIFont.systemFont(ofSize: 13),NSAttributedStringKey.foregroundColor:UIColor.lightGray]))
+                }
+                let paragraphStyle = NSMutableParagraphStyle()
+                paragraphStyle.lineSpacing = 4
+                attributedText.addAttribute(.paragraphStyle, value: paragraphStyle, range: NSMakeRange(0, attributedText.length))
+                titleLabel.attributedText = attributedText
+                
+                titleLabel.textAlignment = .right
             }
             if let imageName = listItem?.image
             {
                 if imageName != ""
                 {
+                    print(imageName)
                     guard let imageURL = URL(string:"https://fitnessksa.com/public/images/posts/" + imageName)
                         else {
                             return
@@ -51,23 +60,21 @@ class SubCategoryItemCell: UICollectionViewCell {
             itemImage.widthAnchor.constraint(equalToConstant: 100)
             ])
         addSubview(titleLabel)
+        
+        addSubview(starButton)
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            titleLabel.centerYAnchor.constraint(equalTo: centerYAnchor),
-            titleLabel.rightAnchor.constraint(lessThanOrEqualTo: itemImage.leftAnchor, constant: -10)
+            titleLabel.rightAnchor.constraint(equalTo: itemImage.leftAnchor, constant: -5),
+            titleLabel.leftAnchor.constraint(equalTo: starButton.rightAnchor, constant: 5),
+            titleLabel.topAnchor.constraint(equalTo: topAnchor),
+            titleLabel.bottomAnchor.constraint(equalTo: bottomAnchor)
             ])
-        addSubview(subTitleLabel)
-        subTitleLabel.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
-            subTitleLabel.leadingAnchor.constraint(equalTo: titleLabel.leadingAnchor),
-            subTitleLabel.trailingAnchor.constraint(equalTo: titleLabel.trailingAnchor),
-            subTitleLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor,constant:5)
-            ])
-        addSubview(starButton)
+        
         starButton.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             starButton.centerYAnchor.constraint(equalTo: centerYAnchor),
-            starButton.leftAnchor.constraint(equalTo: leftAnchor, constant: 15)
+            starButton.leftAnchor.constraint(equalTo: leftAnchor, constant: 15),
+            starButton.widthAnchor.constraint(equalToConstant: 40)
             ])
     }
     let starButton : UIButton = {
@@ -75,6 +82,7 @@ class SubCategoryItemCell: UICollectionViewCell {
         startButton.frame = CGRect(x: 0, y: 0, width: 60, height: 60)
         startButton.setImage(UIImage(named: "ic_white_empty_star"), for: .normal)
         startButton.tintColor = UIColor.darkGray
+        startButton.contentMode = .scaleAspectFit
         return startButton
     }()
     let titleLabel : UILabel = {
@@ -82,19 +90,13 @@ class SubCategoryItemCell: UICollectionViewCell {
         label.font = UIFont.boldSystemFont(ofSize: 17)
         label.numberOfLines = 0
         label.textAlignment = .right
-        return label
-    }()
-    let subTitleLabel : UILabel = {
-        let label = UILabel()
-        label.textColor = .gray
-        label.font = UIFont.boldSystemFont(ofSize: 12)
-        label.textAlignment = .right
+        //label.backgroundColor = .red
         return label
     }()
     let itemImage : CustomImageView = {
         let image = CustomImageView()
         image.contentMode = .scaleToFill
-        image.image = UIImage(named: "flag")
+        image.image = UIImage(named: "img_blank")
         return image
     }()
     required init?(coder aDecoder: NSCoder) {

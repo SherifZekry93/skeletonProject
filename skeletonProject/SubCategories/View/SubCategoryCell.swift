@@ -18,6 +18,7 @@ class SectionCell: UICollectionViewCell{
         let label = UILabel()
         label.textAlignment = .center
         label.numberOfLines = 2
+        label.font = UIFont.systemFont(ofSize: 13)
         return label
     }()
     required init?(coder aDecoder: NSCoder) {

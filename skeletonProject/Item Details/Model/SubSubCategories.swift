@@ -7,7 +7,7 @@
 //
 
 import Foundation
-struct SubSubCategory:Codable {
+struct ItemDetails:Codable {
     var id:Int?
     var sub_category_id:Int?
     var name:String?

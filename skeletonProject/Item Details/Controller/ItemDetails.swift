@@ -8,10 +8,11 @@
 
 import UIKit
 import SVProgressHUD
-class SubSubCategoryItems: UICollectionViewController,UICollectionViewDelegateFlowLayout {
+class ItemDetailsViewController: UICollectionViewController,UICollectionViewDelegateFlowLayout {
+
     let cellId = "cellId"
     
-    var subSubCategory:SubSubCategory?
+    var subSubCategory:ItemDetails?
     {
         didSet{
             title = subSubCategory?.name
@@ -45,12 +46,11 @@ class SubSubCategoryItems: UICollectionViewController,UICollectionViewDelegateFl
             }
         }
     }
-    
     var allListItems:[ListItem]?
     override func viewDidLoad()
     {
         super.viewDidLoad()
-        collectionView?.register(SubCategoryItemCell.self, forCellWithReuseIdentifier: cellId)
+        collectionView?.register(ItemDetailsCell.self, forCellWithReuseIdentifier: cellId)
         collectionView?.backgroundColor = .lightGray
     }
     override func viewWillDisappear(_ animated: Bool) {
