@@ -19,11 +19,12 @@ class SubCategoryViewController: UICollectionViewController,UICollectionViewDele
             }
         }
     }
+    var subCategoriesMode:Bool = true
     var categoryId:Int?{
         didSet{
             if let id = categoryId
             {
-                SubCategory.fetchCategories(categoryId: id) { (allSubCategories, loadedSuccessfully) in
+                APIService.shared.fetchSubCategories(categoryId: id) { (allSubCategories, loadedSuccessfully) in
                     self.loadedSuccessfully = loadedSuccessfully
                     if loadedSuccessfully
                     {
@@ -49,13 +50,37 @@ class SubCategoryViewController: UICollectionViewController,UICollectionViewDele
     }
     let cellID : String = "cellId"
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return  allSubCategories?.count ?? 0
+        if subCategoriesMode
+        {
+            if let count =  allSubCategories?.count
+            {
+                return count
+            }
+        }
+        else
+        {
+            if let count =  allSubSubCategories?.count
+            {
+                return count
+            }
+        }
+        return 0
     }
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellID, for: indexPath) as! SectionCell
-        if let subCategory = allSubCategories?[indexPath.item]
+        if subCategoriesMode
         {
-            cell.sectionTitle.text = subCategory.name
+            if let subCategory = allSubCategories?[indexPath.item]
+            {
+                cell.sectionTitle.text = subCategory.name
+            }
+        }
+        else
+        {
+            if let subSubCategory = allSubSubCategories?[indexPath.item]
+            {
+                cell.sectionTitle.text = subSubCategory.name
+            }
         }
             return cell
     }
@@ -63,11 +88,69 @@ class SubCategoryViewController: UICollectionViewController,UICollectionViewDele
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize(width: (view.frame.size.width - 50) / 3, height: 50)
     }
-    override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        performSegue(withIdentifier: "SectionItemsSegue", sender: self)
+    var allSubSubCategories:[SubSubCategory]?
+    override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath){
+        SVProgressHUD.show()
+        if subCategoriesMode && allSubCategories?[indexPath.item].id == 1
+        {
+            if let id = allSubCategories?[indexPath.item].id
+            {
+                loadSubSubCategories(subcategoryId: id)
+            }
+            subCategoriesMode = false
+            backtitleLabel.text = allSubCategories?[indexPath.item].name
+        }
+        else
+        {
+            SVProgressHUD.dismiss()
+            performSegue(withIdentifier: "SectionItemsSegue", sender: self)
+            
+        }
+    }
+    func loadSubSubCategories(subcategoryId:Int)
+    {
+        APIService.shared.fetchSubSubCategories(subcategoryId: subcategoryId)
+        { (subSubCategories, completed) in
+            if completed
+            {
+                self.allSubSubCategories = subSubCategories
+                self.collectionView?.reloadData()
+                SVProgressHUD.dismiss()
+            }
+            else
+            {
+                print("something went wrong")
+            }
+        }
+    }
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        
+        if segue.identifier == "SectionItemsSegue"
+        {
+            print(segue.destination)
+            if let dest = segue.destination as? SubSubCategoryItems
+            {
+                if let index = (collectionView?.indexPathsForSelectedItems?.first?.item)
+                {
+                    if subCategoriesMode
+                    {
+                        if let subCategory = allSubCategories?[index]
+                        {
+                            dest.subCategory = subCategory
+                        }
+                    }
+                    else
+                    {
+                        if let subSubCategory = allSubSubCategories?[index]
+                        {
+                            dest.subSubCategory = subSubCategory
+                        }
+                    }
+                }
+            }
+        }
     }
     var backtitleLabel = UILabel()
-
     func setupTitleStack()
     {
         let size = (view.frame.size.width - 20)
@@ -78,12 +161,8 @@ class SubCategoryViewController: UICollectionViewController,UICollectionViewDele
         backButton.setImage(UIImage(named: "ic_white_reply"), for: .normal)
         let favButton = UIButton()
         favButton.setImage(UIImage(named: "ic_white_empty_star"), for: .normal)
-        let titleLabel = UILabel()
-        titleLabel.text = "آضافة تطبيق"
-        titleLabel.font = UIFont.systemFont(ofSize: 12)
-        titleLabel.textAlignment = .right
-        titleLabel.textColor = .white
-        //backtitleLabel.text = "some brand new"
+        let titleLabel = UIImageView()
+        titleLabel.image = UIImage(named: "open_web")
         backtitleLabel.numberOfLines = 2
         backtitleLabel.font = UIFont.boldSystemFont(ofSize: 13)
         backtitleLabel.textAlignment = .center
@@ -151,6 +230,16 @@ class SubCategoryViewController: UICollectionViewController,UICollectionViewDele
     }
     @objc func backToCategories()
     {
-        navigationController?.popViewController(animated: true)
+        if subCategoriesMode
+        {
+            SVProgressHUD.dismiss()
+            navigationController?.popViewController(animated: true)
+        }
+        else
+        {
+            subCategoriesMode = true
+            backtitleLabel.text = categoryName
+            self.collectionView?.reloadData()
+        }
     }
 }

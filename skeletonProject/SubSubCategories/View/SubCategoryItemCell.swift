@@ -8,9 +8,36 @@
 
 import UIKit
 class SubCategoryItemCell: UICollectionViewCell {
+    
+    var listItem:ListItem?{
+        didSet
+        {
+            if let title = listItem?.title
+            {
+                titleLabel.text = title
+            }
+            if let subTitle = listItem?.details
+            {
+                subTitleLabel.text = subTitle
+            }
+            if let imageName = listItem?.image
+            {
+                if imageName != ""
+                {
+                    guard let imageURL = URL(string:"https://fitnessksa.com/public/images/posts/" + imageName)
+                        else {
+                            return
+                    }
+                    print(imageURL)
+                    itemImage.downloadImage(from: imageURL)
+                }
+            }
+        }
+    }
     override init(frame: CGRect)
     {
         super.init(frame: frame)
+        backgroundColor = .white
         setupAutoLayout()
     }
     func setupAutoLayout()
@@ -64,8 +91,8 @@ class SubCategoryItemCell: UICollectionViewCell {
         label.textAlignment = .right
         return label
     }()
-    let itemImage : UIImageView = {
-        let image = UIImageView()
+    let itemImage : CustomImageView = {
+        let image = CustomImageView()
         image.contentMode = .scaleToFill
         image.image = UIImage(named: "flag")
         return image

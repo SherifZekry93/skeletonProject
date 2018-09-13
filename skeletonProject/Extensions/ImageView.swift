@@ -6,9 +6,12 @@
 //  Copyright © 2018 Sherif  Wagih. All rights reserved.
 //
 import UIKit
+
 let imageCache = NSCache<AnyObject, AnyObject>()
+
 class CustomImageView: UIImageView
 {
+    
     var imageUrlString:URL?
     func downloadImage(from url: URL)
     {

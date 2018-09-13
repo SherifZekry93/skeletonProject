@@ -39,7 +39,7 @@ class AllCountriesViewController:UIViewController {
         SVProgressHUD.show(withStatus: "تحميل الدول")
         collectionViewCustomize()
         customizeNavBar()
-        Country.fetchCountries { (allCountries,loadedData) in
+        APIService.shared.fetchCountries { (allCountries,loadedData) in
             self.allCountries = allCountries
             self.loadedData = loadedData
             if loadedData

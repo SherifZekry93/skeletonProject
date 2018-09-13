@@ -17,9 +17,12 @@ class CategoryCell: UICollectionViewCell {
             let imageBaseUrl = "https://fitnessksa.com/public/images/categories/"
             if let imageName = category?.image
             {
-                if let url = URL(string: imageBaseUrl+imageName)
+                if imageName != ""
                 {
-                    sectionImage.downloadImage(from: url)
+                    if let url = URL(string: imageBaseUrl+imageName)
+                    {
+                        sectionImage.downloadImage(from: url)
+                    }
                 }
             }
         }
@@ -34,10 +37,10 @@ class CategoryCell: UICollectionViewCell {
         return label
     }()
     let sectionImage:CustomImageView = {
-       let image = CustomImageView()
-       image.contentMode = .scaleAspectFit
+        let image = CustomImageView()
+        image.contentMode = .scaleAspectFit
         
-       return image
+        return image
     }()
     let gradientView:UIView = {
         let uiview = UIView()
@@ -53,7 +56,6 @@ class CategoryCell: UICollectionViewCell {
         sectionImage.anchorToTop(top: topAnchor, left: leftAnchor, bottom: bottomAnchor, right: rightAnchor)
         sectionLabel.anchorToTop(top: gradientView.topAnchor, left: gradientView.leftAnchor, bottom: gradientView.bottomAnchor, right: gradientView.rightAnchor)
     }
-    
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }

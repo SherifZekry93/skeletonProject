@@ -11,7 +11,6 @@ import SVProgressHUD
 class Categories: UIViewController{
     var countryName:String?{
         didSet{
-//            print(countryName)
             if let name = countryName
             {
                 titleLabel.text = name
@@ -24,7 +23,7 @@ class Categories: UIViewController{
         {
             if let id = countryId
             {
-                Category.fetchCategories(countryId: id) { (allCategories, loadedSuccessfully) in
+                APIService.shared.fetchCategories(countryId: id) { (allCategories, loadedSuccessfully) in
                     self.loadedSuccessfully = loadedSuccessfully
                     if loadedSuccessfully
                     {
@@ -45,8 +44,10 @@ class Categories: UIViewController{
         }
     }
     
-    var imageName:String?{
-        didSet{
+    var imageName:String?
+    {
+        didSet
+        {
             let imageBaseUrl = "https://fitnessksa.com/public/images/countries/"
             if let name = imageName
             {
@@ -61,7 +62,6 @@ class Categories: UIViewController{
     var allCategories:[Category]?
     var loadedSuccessfully = false
     @IBOutlet weak var collectionView: UICollectionView!
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         SVProgressHUD.show(withStatus: "تحميل الاقسام")
@@ -130,8 +130,6 @@ class Categories: UIViewController{
             backButton.bottomAnchor.constraint(equalTo: titleView.bottomAnchor),
             backButton.widthAnchor.constraint(equalToConstant: 80/3)
             ])
-        
-        
         favButton.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             favButton.leadingAnchor.constraint(equalTo: backButton.trailingAnchor),
@@ -139,7 +137,6 @@ class Categories: UIViewController{
             favButton.bottomAnchor.constraint(equalTo: titleView.bottomAnchor),
             favButton.widthAnchor.constraint(equalToConstant: 80/3)
             ])
-        
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             titleLabel.leadingAnchor.constraint(equalTo: favButton.trailingAnchor),
@@ -147,7 +144,6 @@ class Categories: UIViewController{
             titleLabel.bottomAnchor.constraint(equalTo: titleView.bottomAnchor),
             titleLabel.widthAnchor.constraint(equalToConstant: size - 160)
             ])
-        
         countryImage.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             countryImage.leadingAnchor.constraint(equalTo: titleLabel.trailingAnchor),
@@ -156,16 +152,19 @@ class Categories: UIViewController{
             countryImage.widthAnchor.constraint(equalToConstant: 40)
             ])
         backToPrevious.translatesAutoresizingMaskIntoConstraints = false
+        
         NSLayoutConstraint.activate([
             backToPrevious.leadingAnchor.constraint(equalTo: countryImage.trailingAnchor),
             backToPrevious.topAnchor.constraint(equalTo: titleView.topAnchor),
             backToPrevious.bottomAnchor.constraint(equalTo: titleView.bottomAnchor),
             backToPrevious.widthAnchor.constraint(equalToConstant: 40)
             ])
+        
         navigationItem.titleView = titleView
     }
     @objc func goToCountries()
     {
+        SVProgressHUD.dismiss()
         navigationController?.popViewController(animated: true)
     }
 }
