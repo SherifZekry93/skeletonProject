@@ -162,24 +162,22 @@ class APIService {
             }//.resume()
         dataTask?.resume()
     }
-    func fetchListItems(subCategory:Int,subSubCategory:Int,completitionHandler:@escaping ([ListItem]) -> ()) {
+    func fetchListItems(subCategory:Int,subSubCategory:Int,completitionHandler:@escaping ([ListItem],Bool) -> ()) {
+        var loadedData = true
         let listItemsUrlString: String = "https://fitnessksa.com/public/api/list-items?subCategory=\(subCategory)&subSubCategory=\(subSubCategory)"
         print(listItemsUrlString)
         guard let listItemsURL = URL(string: listItemsUrlString) else {
-            print("Error: cannot create URL")
+            loadedData = false
             return
         }
         var listItemsUrlRequest = URLRequest(url: listItemsURL)
-        print("here is the url"+listItemsUrlString)
         listItemsUrlRequest.httpMethod = "POST"
-        print(listItemsUrlString)
         dataTask?.cancel()
         dataTask =  URLSession.shared.dataTask(with: listItemsUrlRequest)
         {
             (data, response, error) in
             guard error == nil else {
-                print("error calling POST on /todos/1")
-                print(error!)
+                loadedData = false
                 return
             }
             var allItems:[ListItem]  = [ListItem]()
@@ -201,10 +199,11 @@ class APIService {
             catch let error
             {
                 print("error parsing data by decoder \(error)")
+                loadedData = false
             }
             DispatchQueue.main.async
             {
-                    completitionHandler(allItems)
+                    completitionHandler(allItems,loadedData)
             }
         }//.resume()
         dataTask?.resume()

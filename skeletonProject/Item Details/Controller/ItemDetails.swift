@@ -19,11 +19,8 @@ class ItemDetailsViewController: UICollectionViewController,UICollectionViewDele
             SVProgressHUD.show()
             guard let subSubCatId = subSubCategory?.sub_category_id else {return}
             guard let subCatId = subSubCategory?.id else {return}
-            APIService.shared.fetchListItems(subCategory:subCatId, subSubCategory: subSubCatId) { (listitems) in
-                print(subCatId)
-                self.allListItems = listitems
-                self.collectionView?.reloadData()
-                SVProgressHUD.dismiss()
+            APIService.shared.fetchListItems(subCategory:subCatId, subSubCategory: subSubCatId) { (listitems,loaddata) in
+                
             }
         }
     }
@@ -37,11 +34,21 @@ class ItemDetailsViewController: UICollectionViewController,UICollectionViewDele
             if let subCategoryId = subCategory?.id
             {
                 print(subCategoryId)
-                APIService.shared.fetchListItems(subCategory:subCategoryId, subSubCategory: 0) { (listitems) in
-                    self.allListItems = listitems
-                    self.collectionView?.reloadData()
-                    print("loaded list items")
-                    SVProgressHUD.dismiss()
+                APIService.shared.fetchListItems(subCategory:subCategoryId, subSubCategory: 0) { (listitems,loaddata) in
+                    if loaddata && !listitems.isEmpty{
+                        self.allListItems = listitems
+                        self.collectionView?.reloadData()
+                        SVProgressHUD.dismiss()
+                    }
+                    else if loaddata && listitems.isEmpty
+                    {
+                        UIAlertController.showAlert(message: "No Data")
+                    }
+                    else
+                    {
+                        UIAlertController.showAlert(message: "Error Loading Data! Make sure you are connected to the internet!")
+                    }
+                    
                 }
             }
         }

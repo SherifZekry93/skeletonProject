@@ -29,7 +29,7 @@ class SingleItemCollectionViewController: UICollectionViewController,UICollectio
         guard let details = listItem?.details else { return CGSize(width: view.frame.width, height: view.frame.height)}
         let size = CGSize(width: view.frame.width - 55, height: 10000)
         let options = NSStringDrawingOptions.usesFontLeading.union(.usesLineFragmentOrigin)
-        let estimatedRect = NSString(string: details ).boundingRect(with: size, options: options, attributes: [NSAttributedStringKey.font:UIFont.systemFont(ofSize: 19)], context: nil)
+        let estimatedRect = NSString(string: details ).boundingRect(with: size, options: options, attributes: [NSAttributedStringKey.font:UIFont.systemFont(ofSize: 16)], context: nil)
         print(estimatedRect.size.height)
         if Int(estimatedRect.size.height) > 100
         {

@@ -33,10 +33,10 @@ class SingleItemCollectionViewCell: UICollectionViewCell {
                 titleLabel.textAlignment = .right
                 let size = CGSize(width: frame.width - 55, height: 10000)
                 let options = NSStringDrawingOptions.usesFontLeading.union(.usesLineFragmentOrigin)
-                let estimatedRect = NSString(string: titleLabel.text ?? "").boundingRect(with: size, options: options, attributes: [NSAttributedStringKey.font:UIFont.systemFont(ofSize: 17)], context: nil)
+                let estimatedRect = NSString(string: titleLabel.text ?? "").boundingRect(with: size, options: options, attributes: [NSAttributedStringKey.font:UIFont.systemFont(ofSize: 15)], context: nil)
                 if Int(estimatedRect.size.height) > 100
                 {
-                    height = estimatedRect.size.height
+                    height = estimatedRect.size.height + 50 //+ 35
                 }
                 else
                 {
@@ -112,9 +112,7 @@ class SingleItemCollectionViewCell: UICollectionViewCell {
         NSLayoutConstraint.activate([
             starButton.leftAnchor.constraint(equalTo: leftAnchor),
             starButton.heightAnchor.constraint(equalToConstant: 50),
-            starButton.centerYAnchor.constraint(equalTo: centerYAnchor),
-           /* starButton.topAnchor.constraint(equalTo: containerView.topAnchor),
-            starButton.bottomAnchor.constraint(equalTo: containerView.bottomAnchor),*/
+            starButton.topAnchor.constraint(equalTo: titleLabel.topAnchor,constant: 15),
             starButton.widthAnchor.constraint(equalToConstant: 50)
             ])
         addSubview(socialContainer)
