@@ -35,18 +35,17 @@ class ItemDetailsViewController: UICollectionViewController,UICollectionViewDele
             {
                 print(subCategoryId)
                 APIService.shared.fetchListItems(subCategory:subCategoryId, subSubCategory: 0) { (listitems,loaddata) in
-                    if loaddata && !listitems.isEmpty{
+                    print(loaddata)
+                    if loaddata
+                    {
                         self.allListItems = listitems
                         self.collectionView?.reloadData()
                         SVProgressHUD.dismiss()
                     }
-                    else if loaddata && listitems.isEmpty
+                    else if loaddata == false
                     {
-                        UIAlertController.showAlert(message: "No Data")
-                    }
-                    else
-                    {
-                        UIAlertController.showAlert(message: "Error Loading Data! Make sure you are connected to the internet!")
+                      self.present(UIAlertController.showAlert(message: "Error loading data. Please make sure you are connected to the internet"), animated: true, completion: nil)
+                        SVProgressHUD.dismiss()
                     }
                     
                 }

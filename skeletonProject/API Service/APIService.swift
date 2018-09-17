@@ -7,207 +7,155 @@
 //
 
 import Foundation
+import Alamofire
 var dataTask:URLSessionDataTask?
 class APIService {
-     static let shared = APIService()
-     func fetchCategories(countryId:Int,completionHandler:@escaping ([Category],Bool) -> () ) {
+    static let shared = APIService()
+    func fetchCategories(countryId:Int,completionHandler:@escaping ([Category],Bool) -> () ) {
         guard let url = URL(string:"https://fitnessksa.com/public/api/category/\(countryId)") else {return}
-        dataTask?.cancel()
-        dataTask = URLSession.shared.dataTask(with: url) { (data, response, error) in
+        Alamofire.request(url, method: .get, parameters: nil).responseJSON{
+            response in
             var categories = [Category]()
             var loadedData:Bool = true
-            if error != nil
+            if response.result.isSuccess
             {
-                loadedData = false
-                print("error\(error)" )
+                guard let data = response.data else {loadedData = false; return}
+                do
+                {
+                    let allCategories = try JSONDecoder().decode([Category].self,from: data)
+                    categories = allCategories
+                }
+                catch
+                {
+                    loadedData = false
+                }
             }
             else
             {
-                if (response as? HTTPURLResponse)?.statusCode == 200 {
-                    do
-                    {
-                        if let responseData = data
-                        {
-                            let allCategories = try JSONDecoder().decode([Category].self,from: responseData)
-                            categories = allCategories
-
-                        }
-                    }
-                    catch let error
-                    {
-                        print("here is the reason why it's not loading egypt")
-                        print(error.localizedDescription)
-                        print(error)
-                        loadedData = false
-                    }
-                }
-                else
+                loadedData = false
+            }
+            DispatchQueue.main.async
                 {
-                    loadedData = false
-                    print((response as! HTTPURLResponse).statusCode)
-                }
+                    completionHandler(categories,loadedData)
             }
-            DispatchQueue.main.async {
-                
-                completionHandler(categories,loadedData)
-            }
-            }//.resume()
-        dataTask?.resume()
+        }
     }
     func fetchCountries(completionHandler:@escaping ([Country],Bool) -> () ) {
         guard let url = URL(string:"https://fitnessksa.com/public/api/country") else {return}
-        dataTask?.cancel()
-        dataTask =  URLSession.shared.dataTask(with: url) { (data, response, error) in
+        Alamofire.request(url, method : .get, parameters: nil).responseJSON{
+            response in
             var countries = [Country]()
             var loadedData:Bool = true
-            if error != nil
+            if response.result.isSuccess
             {
-                loadedData = false
-            }
-            else
-            {
-                if (response as? HTTPURLResponse)?.statusCode == 200 {
-                    do
-                    {
-                        let allCountries = try JSONDecoder().decode([Country].self,from: data!)
-                        countries = allCountries
-                    }
-                    catch
-                    {
-                        loadedData = false
-                    }
+                do
+                {
+                    guard let data = response.data else{loadedData = false; return}
+                    let allCountries = try JSONDecoder().decode([Country].self,from: data)
+                    countries = allCountries
                 }
-                else
+                catch
                 {
                     loadedData = false
                 }
+            }
+            else
+            {
+                loadedData = false
             }
             DispatchQueue.main.async {
                 completionHandler(countries,loadedData)
             }
-            
-            }//.resume()
-        dataTask?.resume()
+        }
     }
     func fetchSubCategories(categoryId:Int,completionHandler:@escaping ([SubCategory],Bool) -> () ) {
         guard let url = URL(string:"https://fitnessksa.com/public/api/sub-categories/\(categoryId)") else {return}
-        dataTask?.cancel()
-       dataTask =  URLSession.shared.dataTask(with: url) { (data, response, error) in
+        Alamofire.request(url, method: .get, parameters: nil).responseJSON{
+            response in
             
             var subCategories = [SubCategory]()
             var loadedData:Bool = true
-            if error != nil
+            if response.result.isSuccess
             {
-                loadedData = false
-            }
-            else
-            {
-                if (response as? HTTPURLResponse)?.statusCode == 200 {
-                    do
-                    {
-                        let allSubCategories = try JSONDecoder().decode([SubCategory].self,from: data!)
-                        subCategories = allSubCategories
-                    }
-                    catch let error
-                    {
-                        loadedData = false
-                    }
+                do
+                {
+                    guard let data = response.data else {loadedData = false; return}
+                    let allSubCategories = try JSONDecoder().decode([SubCategory].self,from: data)
+                    subCategories = allSubCategories
                 }
-                else
+                catch
                 {
                     loadedData = false
                 }
+            }
+            else
+            {
+                loadedData = false
             }
             DispatchQueue.main.async {
                 completionHandler(subCategories,loadedData)
             }
-            }//.resume()
-        dataTask?.resume()
+        }
     }
     func fetchSubSubCategories(subcategoryId:Int,completionHandler:@escaping ([ItemDetails],Bool) -> () ) {
-        let url = URL(string:"https://fitnessksa.com/public/api/sub-sub-category/\(subcategoryId)")
-        dataTask?.cancel()
-        dataTask =  URLSession.shared.dataTask(with: url!) { (data, response, error) in
+        guard let url = URL(string:"https://fitnessksa.com/public/api/sub-sub-category/\(subcategoryId)") else {return}
+        Alamofire.request(url, method: .get, parameters: nil).responseJSON{
+            response in
             var subSubCategories = [ItemDetails]()
             var loadedData:Bool = true
-            if error != nil
+            var allItems:[ListItem]  = [ListItem]()
+
+            if response.result.isSuccess
             {
-                loadedData = false
-                print("here is an error")
+                   guard let data = response.data else {loadedData = false; return}
+                do
+                {
+                    let allSubCategories = try JSONDecoder().decode([ItemDetails].self,from: data)
+                    subSubCategories = allSubCategories
+                }
+                catch
+                {
+                    loadedData = false
+                }
             }
             else
             {
-                if (response as? HTTPURLResponse)?.statusCode == 200 {
-                    do
-                    {
-                        let allSubCategories = try JSONDecoder().decode([ItemDetails].self,from: data!)
-                        subSubCategories = allSubCategories
-                        print(subSubCategories)
-                    }
-                    catch
-                    {
-                        loadedData = false
-                    }
-                }
-                else
-                {
-                    loadedData = false
-                    
-                }
-            }
-            DispatchQueue.main.async {
-                
-                completionHandler(subSubCategories,loadedData)
-            }
-            }//.resume()
-        dataTask?.resume()
-    }
-    func fetchListItems(subCategory:Int,subSubCategory:Int,completitionHandler:@escaping ([ListItem],Bool) -> ()) {
-        var loadedData = true
-        let listItemsUrlString: String = "https://fitnessksa.com/public/api/list-items?subCategory=\(subCategory)&subSubCategory=\(subSubCategory)"
-        print(listItemsUrlString)
-        guard let listItemsURL = URL(string: listItemsUrlString) else {
-            loadedData = false
-            return
-        }
-        var listItemsUrlRequest = URLRequest(url: listItemsURL)
-        listItemsUrlRequest.httpMethod = "POST"
-        dataTask?.cancel()
-        dataTask =  URLSession.shared.dataTask(with: listItemsUrlRequest)
-        {
-            (data, response, error) in
-            guard error == nil else {
-                loadedData = false
-                return
-            }
-            var allItems:[ListItem]  = [ListItem]()
-           
-            do
-            {
-                if  data != nil
-                {
-                    allItems = try JSONDecoder().decode([ListItem].self, from: data!)
-                    print("here is all items")
-                    print(allItems)
-                }
-                else
-                {
-                    print("parsed with no data")
-                }
-               
-            }
-            catch let error
-            {
-                print("error parsing data by decoder \(error)")
                 loadedData = false
             }
             DispatchQueue.main.async
             {
-                    completitionHandler(allItems,loadedData)
+                completionHandler(subSubCategories,loadedData)
             }
-        }//.resume()
-        dataTask?.resume()
-       // task.resume()
+        }
     }
-    
+    func fetchListItems(subCategory:Int,subSubCategory:Int,completitionHandler:@escaping ([ListItem],Bool) -> ()) {
+        let params: [String : Int] = ["subCategory":subCategory, "subSubCategory":subSubCategory];
+        var loadedData = true
+        guard let url: String = "https://fitnessksa.com/public/api/list-items" else {loadedData = false;return}
+        var allItems:[ListItem]  = [ListItem]()
+        
+        Alamofire.request(url, method : .post, parameters: params).responseJSON{
+            response in
+            if response.result.isSuccess
+            {
+                guard let data = response.data else {loadedData = false;return}
+                do
+                {
+                        allItems = try JSONDecoder().decode([ListItem].self, from: data)
+                }
+                catch
+                {
+                    loadedData = false
+                }
+            }
+            else
+            {
+                loadedData = false
+            }
+            DispatchQueue.main.async
+            {
+                completitionHandler(allItems,loadedData)
+            }
+        }
+    }
 }
