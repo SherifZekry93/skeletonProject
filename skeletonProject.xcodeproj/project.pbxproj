@@ -12,6 +12,7 @@
 		7E41328921481F8300D2549F /* Post Details.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E41328821481F8300D2549F /* Post Details.swift */; };
 		7EAD168D214AD4B500FF25F1 /* SingleItemCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EAD168C214AD4B500FF25F1 /* SingleItemCollectionViewController.swift */; };
 		7EAD168F214AD4D500FF25F1 /* SingleItemCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EAD168E214AD4D500FF25F1 /* SingleItemCollectionViewCell.swift */; };
+		7EAF046B21504803003089DE /* ListItem.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 7EAF046921504803003089DE /* ListItem.xcdatamodeld */; };
 		7EB6ED1621402BC50030167A /* Category.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EB6ED1521402BC50030167A /* Category.swift */; };
 		7EB6ED1A214036510030167A /* CVExtension+CollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EB6ED19214036510030167A /* CVExtension+CollectionView.swift */; };
 		7EB6ED2021403B320030167A /* ImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EB6ED1F21403B320030167A /* ImageView.swift */; };
@@ -45,6 +46,7 @@
 		7E41328821481F8300D2549F /* Post Details.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Post Details.swift"; sourceTree = "<group>"; };
 		7EAD168C214AD4B500FF25F1 /* SingleItemCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingleItemCollectionViewController.swift; sourceTree = "<group>"; };
 		7EAD168E214AD4D500FF25F1 /* SingleItemCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingleItemCollectionViewCell.swift; sourceTree = "<group>"; };
+		7EAF046A21504803003089DE /* ListItem.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = ListItem.xcdatamodel; sourceTree = "<group>"; };
 		7EB6ED1521402BC50030167A /* Category.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Category.swift; sourceTree = "<group>"; };
 		7EB6ED19214036510030167A /* CVExtension+CollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CVExtension+CollectionView.swift"; sourceTree = "<group>"; };
 		7EB6ED1F21403B320030167A /* ImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageView.swift; sourceTree = "<group>"; };
@@ -350,6 +352,7 @@
 				7EC11197213BC0BA00CFF334 /* LaunchScreen.storyboard */,
 				7EC1119A213BC0BA00CFF334 /* Info.plist */,
 				7E41328821481F8300D2549F /* Post Details.swift */,
+				7EAF046921504803003089DE /* ListItem.xcdatamodeld */,
 			);
 			path = skeletonProject;
 			sourceTree = "<group>";
@@ -483,6 +486,7 @@
 				7EB6ED27214046390030167A /* AlertExtension.swift in Sources */,
 				7EC111A3213BC25F00CFF334 /* Country.swift in Sources */,
 				7EC111AF213C502A00CFF334 /* SubCategoriesViewController.swift in Sources */,
+				7EAF046B21504803003089DE /* ListItem.xcdatamodeld in Sources */,
 				7EB6ED1A214036510030167A /* CVExtension+CollectionView.swift in Sources */,
 				7E4132872146D69B00D2549F /* ListItem.swift in Sources */,
 				7EAD168F214AD4D500FF25F1 /* SingleItemCollectionViewCell.swift in Sources */,
@@ -691,6 +695,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		7EAF046921504803003089DE /* ListItem.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				7EAF046A21504803003089DE /* ListItem.xcdatamodel */,
+			);
+			currentVersion = 7EAF046A21504803003089DE /* ListItem.xcdatamodel */;
+			path = ListItem.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = 7EC11183213BC0B900CFF334 /* Project object */;
 }

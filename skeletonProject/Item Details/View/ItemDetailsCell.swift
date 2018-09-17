@@ -90,7 +90,6 @@ class ItemDetailsCell: UICollectionViewCell {
         label.font = UIFont.boldSystemFont(ofSize: 17)
         label.numberOfLines = 0
         label.textAlignment = .right
-        //label.backgroundColor = .red
         return label
     }()
     let itemImage : CustomImageView = {

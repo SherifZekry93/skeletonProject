@@ -103,8 +103,6 @@ class APIService {
             response in
             var subSubCategories = [ItemDetails]()
             var loadedData:Bool = true
-            var allItems:[ListItem]  = [ListItem]()
-
             if response.result.isSuccess
             {
                    guard let data = response.data else {loadedData = false; return}
@@ -131,7 +129,7 @@ class APIService {
     func fetchListItems(subCategory:Int,subSubCategory:Int,completitionHandler:@escaping ([ListItem],Bool) -> ()) {
         let params: [String : Int] = ["subCategory":subCategory, "subSubCategory":subSubCategory];
         var loadedData = true
-        guard let url: String = "https://fitnessksa.com/public/api/list-items" else {loadedData = false;return}
+        let url = "https://fitnessksa.com/public/api/list-items"
         var allItems:[ListItem]  = [ListItem]()
         
         Alamofire.request(url, method : .post, parameters: params).responseJSON{

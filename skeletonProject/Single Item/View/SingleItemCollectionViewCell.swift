@@ -15,6 +15,7 @@ class SingleItemCollectionViewCell: UICollectionViewCell {
             setupLayout()
         }
     }
+    let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
     var listItem:ListItem?{
         didSet{
             
@@ -75,7 +76,6 @@ class SingleItemCollectionViewCell: UICollectionViewCell {
     let containerView:UIView = {
         let container = UIView()
         container.translatesAutoresizingMaskIntoConstraints = false
-       // container.backgroundColor = .red
         return container
     }()
     let socialContainer:UIView = {
@@ -83,7 +83,10 @@ class SingleItemCollectionViewCell: UICollectionViewCell {
         container.translatesAutoresizingMaskIntoConstraints = false
         return container
     }()
-    
+    @objc func addToFavourite()
+    {
+        
+    }
     func setupLayout()
     {
         let actualHeight = (frame.height - height!) / 2
@@ -116,13 +119,14 @@ class SingleItemCollectionViewCell: UICollectionViewCell {
             starButton.widthAnchor.constraint(equalToConstant: 50)
             ])
         addSubview(socialContainer)
-        socialContainer.backgroundColor = .red
         NSLayoutConstraint.activate([
             socialContainer.topAnchor.constraint(equalTo: containerView.bottomAnchor),
             socialContainer.leftAnchor.constraint(equalTo: leftAnchor),
             socialContainer.rightAnchor.constraint(equalTo: rightAnchor),
             socialContainer.heightAnchor.constraint(equalToConstant: actualHeight)
             ])
+        
+        starButton.addTarget(self, action: #selector(addToFavourite), for: .touchUpInside)
     }
     
     override init(frame: CGRect) {
