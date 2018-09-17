@@ -6,12 +6,11 @@
 //  Copyright © 2018 Sherif  Wagih. All rights reserved.
 //
 import UIKit
-
+import Alamofire
 let imageCache = NSCache<AnyObject, AnyObject>()
 
 class CustomImageView: UIImageView
 {
-    
     var imageUrlString:URL?
     func downloadImage(from url: URL)
     {
@@ -19,28 +18,25 @@ class CustomImageView: UIImageView
         image = nil
         if let imageFromCache = imageCache.object(forKey: url as AnyObject) as? UIImage
         {
-            print("loading cached image")
             image = imageFromCache
             return
         }
-        URLSession.shared.dataTask(with: url) { (data, response, error) in
-            if error != nil
+        Alamofire.request(url).response{
+            response in
+            if response.error != nil
             {
                 return
             }
-            print("loading from server")
+            guard let data = response.data else {return}
             DispatchQueue.main.async {
-                if let imageData = data
+                let imageToCache = UIImage(data: data)
+                if self.imageUrlString == url
                 {
-                    let imageToCache = UIImage(data: imageData)
-                    if self.imageUrlString == url
-                    {
-                        imageCache.setObject(imageToCache!, forKey: url as AnyObject)
-                    }
-                    self.image = imageToCache
+                    imageCache.setObject(imageToCache!, forKey: url as AnyObject)
                 }
+                self.image = imageToCache
+                
             }
-            
-            }.resume()
+        }
     }
 }
