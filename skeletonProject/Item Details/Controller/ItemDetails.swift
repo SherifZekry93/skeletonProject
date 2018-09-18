@@ -20,7 +20,6 @@ class ItemDetailsViewController: UICollectionViewController,UICollectionViewDele
             guard let subSubCatId = subSubCategory?.sub_category_id else {return}
             guard let subCatId = subSubCategory?.id else {return}
             APIService.shared.fetchListItems(subCategory:subCatId, subSubCategory: subSubCatId) { (listitems,loaddata) in
-                
             }
         }
     }
@@ -39,7 +38,7 @@ class ItemDetailsViewController: UICollectionViewController,UICollectionViewDele
                     if loaddata
                     {
                         self.allListItems = listitems
-                        self.collectionView?.reloadData()
+                        //self.collectionView?.reloadData()
                         SVProgressHUD.dismiss()
                     }
                     else if loaddata == false
@@ -52,7 +51,17 @@ class ItemDetailsViewController: UICollectionViewController,UICollectionViewDele
             }
         }
     }
-    var allListItems:[ListItem]?
+    
+    var allListItems:[ListItem]?{
+        didSet{
+            self.collectionView?.reloadData()
+        }
+    }
+    var dataListItem:[DataListItem]?{
+        didSet{
+            self.collectionView?.reloadData()
+        }
+    }
     override func viewDidLoad()
     {
         super.viewDidLoad()

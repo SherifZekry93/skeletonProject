@@ -23,7 +23,6 @@ class SingleItemCollectionViewController: UICollectionViewController,UICollectio
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return 1
     }
-    
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         var height:CGFloat = 100
         guard let details = listItem?.details else { return CGSize(width: view.frame.width, height: view.frame.height)}
@@ -45,7 +44,8 @@ class SingleItemCollectionViewController: UICollectionViewController,UICollectio
         }
         return CGSize(width: view.frame.width, height: view.frame.height)
     }
-    override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+    override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell
+    {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: itemDetailsCellId, for: indexPath) as! SingleItemCollectionViewCell
         if let cellListItem = listItem
         {

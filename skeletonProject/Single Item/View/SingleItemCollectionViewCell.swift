@@ -7,15 +7,40 @@
 //
 
 import UIKit
-
+import CoreData
 class SingleItemCollectionViewCell: UICollectionViewCell {
+    
+    let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
+    
+    func loadData(id:Int,delete:Bool) -> Bool
+    {
+        let request:NSFetchRequest<DataListItem> = DataListItem.fetchRequest()
+        request.predicate = NSPredicate(format: "id = %@",NSNumber(value : id))
+        let fetchedMessage = try? context.fetch(request)
+        guard let messageId = fetchedMessage?.first?.id else {return false}
+        if id == Int(messageId)
+        {
+            if delete
+            {
+                if let item = fetchedMessage?.first
+                {
+                    context.delete(item)
+                }
+            }
+            return true
+        }
+        else
+        {
+            return false
+        }
+    }
     
     var height:CGFloat?{
         didSet{
             setupLayout()
         }
     }
-    let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
+  
     var listItem:ListItem?{
         didSet{
             
@@ -44,6 +69,13 @@ class SingleItemCollectionViewCell: UICollectionViewCell {
                     height = 100
                 }
             }
+            if let id = listItem?.id
+            {
+                if loadData(id: id, delete: false)
+                {
+                    starButton.tintColor = .orange
+                }
+            }
         }
     }
     let titleLabel : UILabel = {
@@ -59,7 +91,7 @@ class SingleItemCollectionViewCell: UICollectionViewCell {
         let startButton = UIButton(type: .system)
         startButton.frame = CGRect(x: 0, y: 0, width: 60, height: 60)
         startButton.setImage(UIImage(named: "ic_white_empty_star"), for: .normal)
-        startButton.tintColor = UIColor.darkGray
+        startButton.tintColor = UIColor.gray
         startButton.contentMode = .scaleAspectFit
         startButton.translatesAutoresizingMaskIntoConstraints = false
         return startButton
@@ -85,7 +117,61 @@ class SingleItemCollectionViewCell: UICollectionViewCell {
     }()
     @objc func addToFavourite()
     {
-        
+        guard let id = listItem?.id else {return}
+        if loadData(id: id, delete: true)
+        {
+            starButton.tintColor = .gray
+        }
+        else
+        {
+            let modelListItem = DataListItem(context: context)
+            if let id = listItem?.id
+            {
+                modelListItem.id = Int64(id)
+            }
+            if let appstoreLink = listItem?.app_store_link
+            {
+                modelListItem.app_store_link = appstoreLink
+            }
+            if let instagramLink = listItem?.instagram_link
+            {
+                modelListItem.instagram_link = instagramLink
+            }
+            if let details = listItem?.details
+            {
+                modelListItem.details = details
+            }
+            if let image = listItem?.image
+            {
+                modelListItem.image = image
+            }
+            if let twitter = listItem?.twitter_link
+            {
+                modelListItem.twitter_link = twitter
+            }
+            if let websiteLink = listItem?.website_link
+            {
+                modelListItem.website_link = websiteLink
+            }
+            if let title = listItem?.title
+            {
+                modelListItem.title = title
+            }
+            if let facebook = listItem?.facebook_link
+            {
+                modelListItem.facebook_link = facebook
+            }
+            starButton.tintColor = .orange
+        }
+        do
+        {
+            try context.save()
+        }
+        catch
+        {
+            print("error saving data")
+         //   UIAlertController.showAlert(message: "Make sure you have enough space!")
+        }
     }
     func setupLayout()
     {
@@ -137,5 +223,4 @@ class SingleItemCollectionViewCell: UICollectionViewCell {
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
 }

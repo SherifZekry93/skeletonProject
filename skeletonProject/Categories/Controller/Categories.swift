@@ -28,7 +28,7 @@ class Categories: UIViewController{
                     if loadedSuccessfully
                     {
                         self.allCategories = allCategories
-                        self.collectionView.reloadData()
+                        self.collectionView?.reloadData()
                     }
                     else
                     {

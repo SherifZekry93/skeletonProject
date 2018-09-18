@@ -41,6 +41,7 @@ class AllCountriesViewController:UIViewController {
         customizeNavBar()
         APIService.shared.fetchCountries { (allCountries,loadedData) in
             self.allCountries = allCountries
+            self.allCountries?.swapAt(0, 1)
             self.loadedData = loadedData
             if loadedData
             {

@@ -9,11 +9,16 @@
 import UIKit
 extension ItemDetailsViewController
 {
-    override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-       if let count = allListItems?.count
-       {
-        return count
-       }
+    override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int
+    {
+        if let count = allListItems?.count
+        {
+            return count
+        }
+        else if let count = dataListItem?.count
+        {
+            return count
+        }
         return 0
     }
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath)
