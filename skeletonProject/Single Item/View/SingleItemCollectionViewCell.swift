@@ -78,6 +78,42 @@ class SingleItemCollectionViewCell: UICollectionViewCell {
             }
         }
     }
+    var dataListItem:DataListItem?{
+        didSet{
+            if let title = dataListItem?.title
+            {
+                let attributedText = NSMutableAttributedString(string: title, attributes: [NSAttributedStringKey.font : UIFont.boldSystemFont(ofSize: 18)])
+                guard let subTitle = dataListItem?.details else {return }
+                if subTitle != ""
+                {
+                    attributedText.append(NSAttributedString(string: "\n\(subTitle)", attributes: [NSAttributedStringKey.font : UIFont.systemFont(ofSize: 13),NSAttributedStringKey.foregroundColor:UIColor.darkGray]))
+                }
+                let paragraphStyle = NSMutableParagraphStyle()
+                paragraphStyle.lineSpacing = 4
+                attributedText.addAttribute(.paragraphStyle, value: paragraphStyle, range: NSMakeRange(0, attributedText.length))
+                titleLabel.attributedText = attributedText
+                titleLabel.textAlignment = .right
+                let size = CGSize(width: frame.width - 55, height: 10000)
+                let options = NSStringDrawingOptions.usesFontLeading.union(.usesLineFragmentOrigin)
+                let estimatedRect = NSString(string: titleLabel.text ?? "").boundingRect(with: size, options: options, attributes: [NSAttributedStringKey.font:UIFont.systemFont(ofSize: 15)], context: nil)
+                if Int(estimatedRect.size.height) > 100
+                {
+                    height = estimatedRect.size.height + 50 //+ 35
+                }
+                else
+                {
+                    height = 100
+                }
+            }
+            if let id = dataListItem?.id
+            {
+                if loadData(id: Int(id), delete: false)
+                {
+                    starButton.tintColor = .orange
+                }
+            }
+        }
+    }
     let titleLabel : UILabel = {
         let label = UILabel();
         label.font = UIFont.boldSystemFont(ofSize: 17)
@@ -117,8 +153,18 @@ class SingleItemCollectionViewCell: UICollectionViewCell {
     }()
     @objc func addToFavourite()
     {
-        guard let id = listItem?.id else {return}
-        if loadData(id: id, delete: true)
+        var id:Int?
+        
+        if let itemId = listItem?.id
+        {
+            id = itemId
+        }
+        if let dataItemId = dataListItem?.id
+        {
+            id = Int(dataItemId)
+        }
+        guard let itemId = id else {return}
+        if loadData(id: itemId, delete: true)
         {
             starButton.tintColor = .gray
         }
@@ -170,7 +216,6 @@ class SingleItemCollectionViewCell: UICollectionViewCell {
         catch
         {
             print("error saving data")
-         //   UIAlertController.showAlert(message: "Make sure you have enough space!")
         }
     }
     func setupLayout()

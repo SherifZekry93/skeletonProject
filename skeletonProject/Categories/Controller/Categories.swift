@@ -8,6 +8,7 @@
 
 import UIKit
 import SVProgressHUD
+import CoreData
 class Categories: UIViewController{
     var countryName:String?{
         didSet{
@@ -137,6 +138,7 @@ class Categories: UIViewController{
             favButton.bottomAnchor.constraint(equalTo: titleView.bottomAnchor),
             favButton.widthAnchor.constraint(equalToConstant: 80/3)
             ])
+        favButton.addTarget(self, action: #selector(favouritePage), for: .touchUpInside)
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             titleLabel.leadingAnchor.constraint(equalTo: favButton.trailingAnchor),
@@ -166,6 +168,28 @@ class Categories: UIViewController{
     {
         SVProgressHUD.dismiss()
         navigationController?.popViewController(animated: true)
+    }
+    @objc func favouritePage()
+    {
+        let layout = UICollectionViewFlowLayout()
+        let controller = ItemDetailsViewController(collectionViewLayout: layout)
+        controller.dataListItem = loadData()
+        navigationController?.pushViewController(controller, animated: true)
+    }
+    func loadData() -> [DataListItem]
+    {
+        let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
+        let fetchRequest:NSFetchRequest<DataListItem> = DataListItem.fetchRequest()
+        var allDataListItems = [DataListItem]()//try context.fetch(fetchRequest)
+        do
+        {
+            allDataListItems = try context.fetch(fetchRequest)
+        }
+        catch
+        {
+            
+        }
+        return allDataListItems
     }
 }
 

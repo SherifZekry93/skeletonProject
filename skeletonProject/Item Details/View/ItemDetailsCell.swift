@@ -7,8 +7,71 @@
 //
 
 import UIKit
+import CoreData
 class ItemDetailsCell: UICollectionViewCell {
-    
+    let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
+    func loadData(id:Int,delete:Bool) -> Bool
+    {
+        let request:NSFetchRequest<DataListItem> = DataListItem.fetchRequest()
+        request.predicate = NSPredicate(format: "id = %@",NSNumber(value : id))
+        let fetchedMessage = try? context.fetch(request)
+        guard let messageId = fetchedMessage?.first?.id else {return false}
+        if id == Int(messageId)
+        {
+            if delete
+            {
+                if let item = fetchedMessage?.first
+                {
+                    context.delete(item)
+                }
+            }
+            return true
+        }
+        else
+        {
+            return false
+        }
+    }
+    var dataItem:DataListItem?{
+        didSet{
+            if let title = dataItem?.title
+            {
+                let attributedText = NSMutableAttributedString(string: title, attributes: [NSAttributedStringKey.font : UIFont.systemFont(ofSize: 16)])
+                
+                guard let subTitle = dataItem?.details else {return }
+                if subTitle != ""
+                {
+                    attributedText.append(NSAttributedString(string: "\n\(subTitle)", attributes: [NSAttributedStringKey.font : UIFont.systemFont(ofSize: 13),NSAttributedStringKey.foregroundColor:UIColor.lightGray]))
+                }
+                let paragraphStyle = NSMutableParagraphStyle()
+                paragraphStyle.lineSpacing = 4
+                attributedText.addAttribute(.paragraphStyle, value: paragraphStyle, range: NSMakeRange(0, attributedText.length))
+                titleLabel.attributedText = attributedText
+                
+                titleLabel.textAlignment = .right
+            }
+            if let imageName = dataItem?.image
+            {
+                if imageName != ""
+                {
+                    print(imageName)
+                    guard let imageURL = URL(string:"https://fitnessksa.com/public/images/posts/" + imageName)
+                        else {
+                            return
+                    }
+                    print(imageURL)
+                    itemImage.downloadImage(from: imageURL)
+                }
+            }
+            if let id = dataItem?.id
+            {
+                if loadData(id: Int(id), delete: false)
+                {
+                    starButton.tintColor = .orange
+                }
+            }
+        }
+    }
     var listItem:ListItem?{
         didSet
         {
@@ -39,6 +102,13 @@ class ItemDetailsCell: UICollectionViewCell {
                     }
                     print(imageURL)
                     itemImage.downloadImage(from: imageURL)
+                }
+            }
+            if let id = listItem?.id
+            {
+                if loadData(id: id, delete: false)
+                {
+                    starButton.tintColor = .orange
                 }
             }
         }
@@ -76,6 +146,7 @@ class ItemDetailsCell: UICollectionViewCell {
             starButton.leftAnchor.constraint(equalTo: leftAnchor, constant: 15),
             starButton.widthAnchor.constraint(equalToConstant: 40)
             ])
+        starButton.addTarget(self, action: #selector(addToFavourite), for: .touchUpInside)
     }
     let starButton : UIButton = {
         let startButton = UIButton(type: .system)
@@ -100,5 +171,72 @@ class ItemDetailsCell: UICollectionViewCell {
     }()
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    @objc func addToFavourite()
+    {
+        var id:Int?
+        
+        if let itemId = listItem?.id
+        {
+            id = itemId
+        }
+        if let dataItemId = dataItem?.id
+        {
+            id = Int(dataItemId)
+        }
+        guard let itemId = id else {return}
+        if loadData(id: itemId, delete: true)
+        {
+            starButton.tintColor = .gray
+        }
+        else
+        {
+            let modelListItem = DataListItem(context: context)
+            if let id = listItem?.id
+            {
+                modelListItem.id = Int64(id)
+            }
+            if let appstoreLink = listItem?.app_store_link
+            {
+                modelListItem.app_store_link = appstoreLink
+            }
+            if let instagramLink = listItem?.instagram_link
+            {
+                modelListItem.instagram_link = instagramLink
+            }
+            if let details = listItem?.details
+            {
+                modelListItem.details = details
+            }
+            if let image = listItem?.image
+            {
+                modelListItem.image = image
+            }
+            if let twitter = listItem?.twitter_link
+            {
+                modelListItem.twitter_link = twitter
+            }
+            if let websiteLink = listItem?.website_link
+            {
+                modelListItem.website_link = websiteLink
+            }
+            if let title = listItem?.title
+            {
+                modelListItem.title = title
+            }
+            if let facebook = listItem?.facebook_link
+            {
+                modelListItem.facebook_link = facebook
+            }
+            starButton.tintColor = .orange
+        }
+        do
+        {
+            try context.save()
+        }
+        catch
+        {
+            print("error saving data")
+        }
     }
 }

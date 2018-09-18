@@ -29,17 +29,24 @@ extension ItemDetailsViewController
         {
             controller.listItem = listItem
         }
+        if let dataListItem = dataListItem?[indexPath.item]
+        {
+            controller.dataListItem = dataListItem
+        }
         navigationController?.pushViewController(controller, animated: true)
     }
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize(width: view.frame.size.width, height: view.frame.size.height / 6)
     }
-    
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! ItemDetailsCell
         if let item = allListItems?[indexPath.item]
         {
             cell.listItem = item
+        }
+        if let dataItem = dataListItem?[indexPath.item]
+        {
+            cell.dataItem = dataItem
         }
         return cell
     }

@@ -58,7 +58,8 @@ class ItemDetailsViewController: UICollectionViewController,UICollectionViewDele
         }
     }
     var dataListItem:[DataListItem]?{
-        didSet{
+        didSet
+        {
             self.collectionView?.reloadData()
         }
     }

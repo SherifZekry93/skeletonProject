@@ -127,7 +127,7 @@ class SubCategoryViewController: UICollectionViewController,UICollectionViewDele
         
         if segue.identifier == "SectionItemsSegue"
         {
-            print(segue.destination)
+//            print(segue.destination)
             if let dest = segue.destination as? ItemDetailsViewController
             {
                 if let index = (collectionView?.indexPathsForSelectedItems?.first?.item)

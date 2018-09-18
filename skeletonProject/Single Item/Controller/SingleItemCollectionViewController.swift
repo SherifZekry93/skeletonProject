@@ -14,6 +14,7 @@ class SingleItemCollectionViewController: UICollectionViewController,UICollectio
 
     let itemDetailsCellId = "itemDetailsId"
     var listItem:ListItem?
+    var dataListItem:DataListItem?
     override func viewDidLoad() {
         super.viewDidLoad()
         collectionView?.register(SingleItemCollectionViewCell.self, forCellWithReuseIdentifier: itemDetailsCellId)
@@ -25,10 +26,18 @@ class SingleItemCollectionViewController: UICollectionViewController,UICollectio
     }
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         var height:CGFloat = 100
-        guard let details = listItem?.details else { return CGSize(width: view.frame.width, height: view.frame.height)}
+        var details:String?
+        if let itemDetails = dataListItem?.details
+        {
+            details = itemDetails
+        }
+        else if let itemDetails = listItem?.details
+        {
+            details = itemDetails
+        }
         let size = CGSize(width: view.frame.width - 55, height: 10000)
         let options = NSStringDrawingOptions.usesFontLeading.union(.usesLineFragmentOrigin)
-        let estimatedRect = NSString(string: details ).boundingRect(with: size, options: options, attributes: [NSAttributedStringKey.font:UIFont.systemFont(ofSize: 16)], context: nil)
+        let estimatedRect = NSString(string: details! ).boundingRect(with: size, options: options, attributes: [NSAttributedStringKey.font:UIFont.systemFont(ofSize: 16)], context: nil)
         print(estimatedRect.size.height)
         if Int(estimatedRect.size.height) > 100
         {
@@ -50,6 +59,10 @@ class SingleItemCollectionViewController: UICollectionViewController,UICollectio
         if let cellListItem = listItem
         {
             cell.listItem = cellListItem
+        }
+        else if let dataListItem = dataListItem
+        {
+            cell.dataListItem = dataListItem
         }
         return cell
     }
