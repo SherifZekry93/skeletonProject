@@ -11,7 +11,7 @@ import CoreData
 class SingleItemCollectionViewCell: UICollectionViewCell {
     
     let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
-    
+    var itemsDelegate:ItemDetailsViewController?
     func loadData(id:Int,delete:Bool) -> Bool
     {
         let request:NSFetchRequest<DataListItem> = DataListItem.fetchRequest()
@@ -34,13 +34,12 @@ class SingleItemCollectionViewCell: UICollectionViewCell {
             return false
         }
     }
-    
     var height:CGFloat?{
         didSet{
             setupLayout()
         }
     }
-  
+    var homeController:SingleItemCollectionViewController?
     var listItem:ListItem?{
         didSet{
             
@@ -75,6 +74,30 @@ class SingleItemCollectionViewCell: UICollectionViewCell {
                 {
                     starButton.tintColor = .orange
                 }
+            }
+            if listItem?.instagram_link == "" || listItem?.instagram_link == nil
+            {
+                instagramButton.setImage(UIImage(named: ""), for: .normal)
+            }
+            if listItem?.youtube_link == "" || listItem?.youtube_link == nil
+            {
+                youtubeButton.setImage(UIImage(named: ""), for: .normal)
+            }
+            if listItem?.facebook_link == "" || listItem?.facebook_link == nil
+            {
+                facebookButton.setImage(UIImage(named: ""), for: .normal)
+            }
+            if listItem?.app_store_link == "" || listItem?.app_store_link == nil
+            {
+                appStoreButton.setImage(UIImage(named: ""), for: .normal)
+            }
+            if listItem?.website_link == "" || listItem?.website_link == nil
+            {
+                websiteeButton.setImage(UIImage(named: ""), for: .normal)
+            }
+            if listItem?.twitter_link == "" || listItem?.twitter_link == nil
+            {
+                twitterButton.setImage(UIImage(named: ""), for: .normal)
             }
         }
     }
@@ -111,6 +134,30 @@ class SingleItemCollectionViewCell: UICollectionViewCell {
                 {
                     starButton.tintColor = .orange
                 }
+            }
+            if dataListItem?.instagram_link == "" || dataListItem?.instagram_link == nil
+            {
+                instagramButton.setImage(UIImage(named: ""), for: .normal)
+            }
+            if dataListItem?.youtube_link == "" || dataListItem?.youtube_link == nil
+            {
+                youtubeButton.setImage(UIImage(named: ""), for: .normal)
+            }
+            if dataListItem?.facebook_link == "" || dataListItem?.facebook_link == nil
+            {
+                facebookButton.setImage(UIImage(named: ""), for: .normal)
+            }
+            if dataListItem?.app_store_link == "" || dataListItem?.app_store_link == nil
+            {
+                appStoreButton.setImage(UIImage(named: ""), for: .normal)
+            }
+            if dataListItem?.website_link == "" || dataListItem?.website_link == nil
+            {
+                websiteeButton.setImage(UIImage(named: ""), for: .normal)
+            }
+            if dataListItem?.twitter_link == "" || dataListItem?.twitter_link == nil
+            {
+                twitterButton.setImage(UIImage(named: ""), for: .normal)
             }
         }
     }
@@ -151,22 +198,88 @@ class SingleItemCollectionViewCell: UICollectionViewCell {
         container.translatesAutoresizingMaskIntoConstraints = false
         return container
     }()
+    let facebookButton:UIButton = {
+        let button = UIButton()
+        button.setImage(UIImage(named:"facebook"), for: .normal)
+        button.tag = 0
+        return button
+    }()
+    let instagramButton:UIButton = {
+        let button = UIButton()
+        button.setImage(UIImage(named:"instagram"), for: .normal)
+        button.tag = 1
+        return button
+    }()
+    let appStoreButton:UIButton = {
+        let button = UIButton()
+        button.setImage(UIImage(named:"appstore"), for: .normal)
+        button.tag = 2
+        return button
+    }()
+    let websiteeButton:UIButton = {
+        let button = UIButton()
+        button.setImage(UIImage(named:"website"), for: .normal)
+        button.tag = 3
+        return button
+    }()
+    let youtubeButton:UIButton = {
+        let button = UIButton()
+        button.setImage(UIImage(named:"youtube"), for: .normal)
+        button.tag = 4
+        return button
+    }()
+    let twitterButton:UIButton = {
+        let button = UIButton()
+        button.setImage(UIImage(named:"twitter"), for: .normal)
+        button.tag = 5
+        return button
+    }()
+    lazy var firstRowStackView:UIStackView = {
+        let stackV = UIStackView(arrangedSubviews: [facebookButton,instagramButton,appStoreButton])
+        stackV.translatesAutoresizingMaskIntoConstraints = false
+        stackV.distribution = .fillEqually
+        stackV.spacing = 4
+        return stackV
+    }()
+    lazy var secondRowStackView:UIStackView = {
+        let stackV = UIStackView(arrangedSubviews: [websiteeButton,twitterButton,youtubeButton])
+        stackV.translatesAutoresizingMaskIntoConstraints = false
+        stackV.distribution = .fillEqually
+        stackV.spacing = 4
+        return stackV
+    }()
+    
+    lazy var stackView:UIStackView = {
+        let stackV = UIStackView(arrangedSubviews: [firstRowStackView,secondRowStackView])
+        stackV.translatesAutoresizingMaskIntoConstraints = false
+        stackV.axis = .vertical
+        stackV.distribution = .fillEqually
+        stackV.spacing = 4
+        return stackV
+    }()
+  
+
     @objc func addToFavourite()
     {
         var id:Int?
         
         if let itemId = listItem?.id
         {
-            id = itemId
+           id = itemId
         }
         if let dataItemId = dataListItem?.id
         {
             id = Int(dataItemId)
-        }
+         }
         guard let itemId = id else {return}
         if loadData(id: itemId, delete: true)
         {
             starButton.tintColor = .gray
+            if let item = dataListItem
+            {
+                itemsDelegate?.deleteItem(dataItem: item)
+                homeController?.navigationController?.popViewController(animated: true)
+            }
         }
         else
         {
@@ -256,9 +369,83 @@ class SingleItemCollectionViewCell: UICollectionViewCell {
             socialContainer.rightAnchor.constraint(equalTo: rightAnchor),
             socialContainer.heightAnchor.constraint(equalToConstant: actualHeight)
             ])
-        
+        socialContainer.addSubview(stackView)
+        stackView.anchorWithConstantsToTop(top: socialContainer.topAnchor, left: socialContainer.leftAnchor, bottom: socialContainer.bottomAnchor, right: socialContainer.rightAnchor, topConstant: 5, leftConstant: 5, bottomConstant: 5, rightConstant: 5)
+        stackView.backgroundColor = .green
         starButton.addTarget(self, action: #selector(addToFavourite), for: .touchUpInside)
+        facebookButton.addTarget(self, action: #selector(visitWebsite(sender:)), for: .touchUpInside)
     }
+    
+    @objc func visitWebsite(sender: UIButton)
+    {
+        var urlList:[String] = [String]()
+        if let item = listItem
+        {
+            if let facebookLink = item.facebook_link
+            {
+                urlList = [facebookLink]
+            }
+            if let instagramLink = item.instagram_link
+            {
+                urlList.append(instagramLink)
+            }
+            if let appstoreLink = item.app_store_link
+            {
+                urlList.append(appstoreLink)
+            }
+            if let websiteLink = item.website_link
+            {
+                urlList.append(websiteLink)
+            }
+            if let youtubeLink = item.youtube_link
+            {
+                urlList.append(youtubeLink)
+            }
+            if let twitterLink = item.twitter_link
+            {
+                urlList.append(twitterLink)
+            }
+            
+        }
+        else if let item = dataListItem
+        {
+            if let facebookLink = item.facebook_link
+            {
+                urlList = [facebookLink]
+            }
+            if let instagramLink = item.instagram_link
+            {
+                urlList.append(instagramLink)
+            }
+            if let appstoreLink = item.app_store_link
+            {
+                urlList.append(appstoreLink)
+            }
+            if let websiteLink = item.website_link
+            {
+                urlList.append(websiteLink)
+            }
+            if let youtubeLink = item.youtube_link
+            {
+                urlList.append(youtubeLink)
+            }
+            if let twitterLink = item.twitter_link
+            {
+                urlList.append(twitterLink)
+            }
+        }
+
+        if let url = URL(string: urlList[sender.tag])
+        {
+            UIApplication.shared.open(url, options: [:])
+        }
+        
+        else
+        {
+            print("not a url")
+        }
+    }
+    
     
     override init(frame: CGRect) {
         super.init(frame: frame)

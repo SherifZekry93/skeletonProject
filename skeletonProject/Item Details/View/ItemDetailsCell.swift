@@ -9,6 +9,8 @@
 import UIKit
 import CoreData
 class ItemDetailsCell: UICollectionViewCell {
+    var homeController:ItemDetailsViewController?
+
     let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
     func loadData(id:Int,delete:Bool) -> Bool
     {
@@ -54,7 +56,7 @@ class ItemDetailsCell: UICollectionViewCell {
             {
                 if imageName != ""
                 {
-                    print(imageName)
+                    //print(imageName)
                     guard let imageURL = URL(string:"https://fitnessksa.com/public/images/posts/" + imageName)
                         else {
                             return
@@ -183,6 +185,9 @@ class ItemDetailsCell: UICollectionViewCell {
         if let dataItemId = dataItem?.id
         {
             id = Int(dataItemId)
+            guard let dataItemToRemove = dataItem else {return}
+            guard let indexToRemove = homeController?.dataListItem?.index(of: dataItemToRemove) else {return}
+            homeController?.dataListItem?.remove(at: indexToRemove)
         }
         guard let itemId = id else {return}
         if loadData(id: itemId, delete: true)

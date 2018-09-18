@@ -8,10 +8,20 @@
 
 import UIKit
 import SVProgressHUD
-class ItemDetailsViewController: UICollectionViewController,UICollectionViewDelegateFlowLayout {
-
+import CoreData
+protocol controlDataDeletion {
+    func deleteItem(dataItem:DataListItem)
+}
+class ItemDetailsViewController: UICollectionViewController,UICollectionViewDelegateFlowLayout,controlDataDeletion {
+    func deleteItem(dataItem: DataListItem)
+    {
+        if let index = dataListItem?.index(of: dataItem)
+        {
+            dataListItem?.remove(at: index)
+            self.collectionView?.reloadData()
+        }
+    }
     let cellId = "cellId"
-    
     var subSubCategory:ItemDetails?
     {
         didSet{
@@ -51,7 +61,6 @@ class ItemDetailsViewController: UICollectionViewController,UICollectionViewDele
             }
         }
     }
-    
     var allListItems:[ListItem]?{
         didSet{
             self.collectionView?.reloadData()
@@ -61,6 +70,7 @@ class ItemDetailsViewController: UICollectionViewController,UICollectionViewDele
         didSet
         {
             self.collectionView?.reloadData()
+            title = "المفضلة"
         }
     }
     override func viewDidLoad()
@@ -68,13 +78,31 @@ class ItemDetailsViewController: UICollectionViewController,UICollectionViewDele
         super.viewDidLoad()
         collectionView?.register(ItemDetailsCell.self, forCellWithReuseIdentifier: cellId)
         collectionView?.backgroundColor = .lightGray
+        navigationItem.hidesBackButton = true
+        navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "icon-right")?.withRenderingMode(.alwaysTemplate), style: .plain, target: self, action: #selector(goBack))
+        navigationItem.rightBarButtonItem?.tintColor = .white
     }
     override func viewWillDisappear(_ animated: Bool) {
         SVProgressHUD.dismiss()
     }
-    @IBAction func goBackToSections(_ sender: Any) {
+    @objc func goBack() {
         SVProgressHUD.dismiss()
         navigationController?.popViewController(animated: true)
+    }
+    func loadData() -> [DataListItem]
+    {
+        let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
+        let fetchRequest:NSFetchRequest<DataListItem> = DataListItem.fetchRequest()
+        var allDataListItems = [DataListItem]()//try context.fetch(fetchRequest)
+        do
+        {
+            allDataListItems = try context.fetch(fetchRequest)
+        }
+        catch
+        {
+            
+        }
+        return allDataListItems
     }
     
 }

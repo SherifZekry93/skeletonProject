@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import CoreData
 import SVProgressHUD
 class SubCategoryViewController: UICollectionViewController,UICollectionViewDelegateFlowLayout {
     var allSubCategories:[SubCategory]?
@@ -161,6 +162,7 @@ class SubCategoryViewController: UICollectionViewController,UICollectionViewDele
         backButton.setImage(UIImage(named: "ic_white_reply"), for: .normal)
         let favButton = UIButton()
         favButton.setImage(UIImage(named: "ic_white_empty_star"), for: .normal)
+        favButton.addTarget(self, action: #selector(favouritePage), for: .touchUpInside)
         let titleLabel = UIImageView()
         titleLabel.image = UIImage(named: "open_web")
         backtitleLabel.numberOfLines = 2
@@ -195,8 +197,6 @@ class SubCategoryViewController: UICollectionViewController,UICollectionViewDele
             backButton.bottomAnchor.constraint(equalTo: titleView.bottomAnchor),
             backButton.widthAnchor.constraint(equalToConstant: 80/3)
             ])
-        
-        
         favButton.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             favButton.leadingAnchor.constraint(equalTo: backButton.trailingAnchor),
@@ -242,4 +242,27 @@ class SubCategoryViewController: UICollectionViewController,UICollectionViewDele
             self.collectionView?.reloadData()
         }
     }
+    @objc func favouritePage()
+    {
+        let layout = UICollectionViewFlowLayout()
+        let controller = ItemDetailsViewController(collectionViewLayout: layout)
+        controller.dataListItem = loadData()
+        navigationController?.pushViewController(controller, animated: true)
+    }
+    func loadData() -> [DataListItem]
+    {
+        let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
+        let fetchRequest:NSFetchRequest<DataListItem> = DataListItem.fetchRequest()
+        var allDataListItems = [DataListItem]()//try context.fetch(fetchRequest)
+        do
+        {
+            allDataListItems = try context.fetch(fetchRequest)
+        }
+        catch
+        {
+            
+        }
+        return allDataListItems
+    }
+
 }

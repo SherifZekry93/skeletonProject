@@ -15,12 +15,27 @@ class SingleItemCollectionViewController: UICollectionViewController,UICollectio
     let itemDetailsCellId = "itemDetailsId"
     var listItem:ListItem?
     var dataListItem:DataListItem?
+    var delegate:ItemDetailsViewController?
     override func viewDidLoad() {
         super.viewDidLoad()
+        collectionView?.backgroundColor = .white
         collectionView?.register(SingleItemCollectionViewCell.self, forCellWithReuseIdentifier: itemDetailsCellId)
-        view.backgroundColor = .white
+        navigationItem.hidesBackButton = true
+        navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "icon-right")?.withRenderingMode(.alwaysTemplate), style: .plain, target: self, action: #selector(goBack))
+        navigationItem.rightBarButtonItem?.tintColor = .white
+        if let item = listItem
+        {
+            title = item.title
+        }
+        else if let item = dataListItem
+        {
+            title = item.title
+        }
     }
-    
+    @objc func goBack()
+    {
+        navigationController?.popViewController(animated: true)
+    }
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return 1
     }
@@ -37,7 +52,8 @@ class SingleItemCollectionViewController: UICollectionViewController,UICollectio
         }
         let size = CGSize(width: view.frame.width - 55, height: 10000)
         let options = NSStringDrawingOptions.usesFontLeading.union(.usesLineFragmentOrigin)
-        let estimatedRect = NSString(string: details! ).boundingRect(with: size, options: options, attributes: [NSAttributedStringKey.font:UIFont.systemFont(ofSize: 16)], context: nil)
+        guard let itemDetails = details else {return CGSize(width: view.frame.width, height: view.frame.height)}
+        let estimatedRect = NSString(string: itemDetails).boundingRect(with: size, options: options, attributes: [NSAttributedStringKey.font:UIFont.systemFont(ofSize: 16)], context: nil)
         print(estimatedRect.size.height)
         if Int(estimatedRect.size.height) > 100
         {
@@ -63,6 +79,8 @@ class SingleItemCollectionViewController: UICollectionViewController,UICollectio
         else if let dataListItem = dataListItem
         {
             cell.dataListItem = dataListItem
+            cell.itemsDelegate = delegate
+            cell.homeController = self
         }
         return cell
     }

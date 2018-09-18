@@ -21,6 +21,7 @@ struct ListItem:Codable
     var website_link:String?
     var android_store_link:String?
     var app_store_link:String?
+    var youtube_link:String?
     var created_at:String?
     var updated_at:String?
 }

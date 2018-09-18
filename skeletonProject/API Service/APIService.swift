@@ -6,6 +6,9 @@
 //  Copyright © 2018 Sherif  Wagih. All rights reserved.
 //
 
+
+
+
 import Foundation
 import Alamofire
 var dataTask:URLSessionDataTask?
@@ -127,7 +130,7 @@ class APIService {
         }
     }
     func fetchListItems(subCategory:Int,subSubCategory:Int,completitionHandler:@escaping ([ListItem],Bool) -> ()) {
-        let params: [String : Int] = ["subCategory":subCategory, "subSubCategory":subSubCategory];
+        let params: [String : Any] = ["subCategory":subCategory, "subSubCategory":subSubCategory];
         var loadedData = true
         let url = "https://fitnessksa.com/public/api/list-items"
         var allItems:[ListItem]  = [ListItem]()

@@ -10,8 +10,9 @@
         <attribute name="title" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="twitter_link" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="website_link" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="youtube_link" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
     <elements>
-        <element name="DataListItem" positionX="-63" positionY="-18" width="128" height="180"/>
+        <element name="DataListItem" positionX="-63" positionY="-18" width="128" height="195"/>
     </elements>
 </model>

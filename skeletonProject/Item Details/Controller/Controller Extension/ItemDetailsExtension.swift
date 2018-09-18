@@ -32,6 +32,7 @@ extension ItemDetailsViewController
         if let dataListItem = dataListItem?[indexPath.item]
         {
             controller.dataListItem = dataListItem
+            controller.delegate = self
         }
         navigationController?.pushViewController(controller, animated: true)
     }
@@ -48,6 +49,7 @@ extension ItemDetailsViewController
         {
             cell.dataItem = dataItem
         }
+        cell.homeController = self
         return cell
     }
 }

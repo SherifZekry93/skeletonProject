@@ -22,7 +22,6 @@ class CountryCell:UICollectionViewCell
                 imageurl = imageBaseUrl+imageName
             }
             if let url = URL(string: imageurl) {
-                print(url)
                 countryImage.downloadImage(from: url)
             }
         }
