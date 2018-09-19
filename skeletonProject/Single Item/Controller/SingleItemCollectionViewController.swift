@@ -75,12 +75,13 @@ class SingleItemCollectionViewController: UICollectionViewController,UICollectio
         if let cellListItem = listItem
         {
             cell.listItem = cellListItem
+            cell.itemsDelegate = delegate
         }
         else if let dataListItem = dataListItem
         {
             cell.dataListItem = dataListItem
-            cell.itemsDelegate = delegate
             cell.homeController = self
+            cell.itemsDelegate = delegate
         }
         return cell
     }

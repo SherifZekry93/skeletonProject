@@ -11,8 +11,17 @@ import SVProgressHUD
 import CoreData
 protocol controlDataDeletion {
     func deleteItem(dataItem:DataListItem)
+    func markAsNotFavourite(listItem:ListItem, isfavourited:Bool)
 }
 class ItemDetailsViewController: UICollectionViewController,UICollectionViewDelegateFlowLayout,controlDataDeletion {
+    
+    func markAsNotFavourite(listItem: ListItem,isfavourited:Bool)
+    {
+        let index = allListItems?.index(of: listItem)
+        let indexPath = IndexPath(item: index!, section: 0)
+        let cell =  collectionView?.cellForItem(at: indexPath) as! ItemDetailsCell
+        cell.starButton.tintColor = isfavourited ? .orange : .gray
+    }
     func deleteItem(dataItem: DataListItem)
     {
         if let index = dataListItem?.index(of: dataItem)
@@ -91,18 +100,7 @@ class ItemDetailsViewController: UICollectionViewController,UICollectionViewDele
     }
     func loadData() -> [DataListItem]
     {
-        let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
-        let fetchRequest:NSFetchRequest<DataListItem> = DataListItem.fetchRequest()
-        var allDataListItems = [DataListItem]()//try context.fetch(fetchRequest)
-        do
-        {
-            allDataListItems = try context.fetch(fetchRequest)
-        }
-        catch
-        {
-            
-        }
-        return allDataListItems
+        return CoreDataManager.shared.loadData()
     }
     
 }

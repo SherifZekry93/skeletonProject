@@ -20,7 +20,7 @@ class AllCountriesViewController:UIViewController {
         textView.backgroundColor = UIColor.clear
         textView.textAlignment = .center
         let attributedString = NSMutableAttributedString(string: "البوابة الشاملة\n", attributes: [
-            NSAttributedStringKey.font:UIFont.boldSystemFont(ofSize: 16),
+            NSAttributedStringKey.font:UIFont.boldSystemFont(ofSize: 17),
             NSAttributedStringKey.foregroundColor:UIColor.white
             ])
         attributedString.append(NSAttributedString(string: "للمواقع و تطبيقات الهواتف\n", attributes: [
@@ -53,6 +53,7 @@ class AllCountriesViewController:UIViewController {
             }
             SVProgressHUD.dismiss()
         }
+        navigationItem.titleView = titleText
     }
     //MARK:- Customize Navigation Bar
     func customizeNavBar()
@@ -63,14 +64,8 @@ class AllCountriesViewController:UIViewController {
         self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: UIBarMetrics.default)
         self.navigationController?.navigationBar.shadowImage = UIImage()
     }
-
-    //MARK:- Load All Countries
     
-    
-    override func viewWillAppear(_ animated: Bool) {
-        navigationItem.titleView = titleText
-    }
-    
+  
     //MARK:- Prepare for new segues
     override func prepare(for segue: UIStoryboardSegue, sender: Any?)
     {
@@ -84,6 +79,15 @@ class AllCountriesViewController:UIViewController {
             dest.countryId = id
             dest.countryName = countryName
             dest.imageName = imageName
+        }
+    }
+    //MARK:- adding new website
+    
+    @IBAction func visitAddingWebsiteUrl(_ sender: Any)
+    {
+        if let url = URL(string: "http://fitnessksa.com/public/web-form/create")
+        {
+            UIApplication.shared.open(url, options: [:])
         }
     }
 }

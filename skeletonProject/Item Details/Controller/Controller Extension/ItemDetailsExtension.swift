@@ -34,6 +34,8 @@ extension ItemDetailsViewController
             controller.dataListItem = dataListItem
             controller.delegate = self
         }
+        controller.delegate = self
+
         navigationController?.pushViewController(controller, animated: true)
     }
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {

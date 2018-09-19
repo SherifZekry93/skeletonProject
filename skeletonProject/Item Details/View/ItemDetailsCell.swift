@@ -14,25 +14,7 @@ class ItemDetailsCell: UICollectionViewCell {
     let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
     func loadData(id:Int,delete:Bool) -> Bool
     {
-        let request:NSFetchRequest<DataListItem> = DataListItem.fetchRequest()
-        request.predicate = NSPredicate(format: "id = %@",NSNumber(value : id))
-        let fetchedMessage = try? context.fetch(request)
-        guard let messageId = fetchedMessage?.first?.id else {return false}
-        if id == Int(messageId)
-        {
-            if delete
-            {
-                if let item = fetchedMessage?.first
-                {
-                    context.delete(item)
-                }
-            }
-            return true
-        }
-        else
-        {
-            return false
-        }
+        return CoreDataManager.shared.exisistingItem(id:id,delete:delete)
     }
     var dataItem:DataListItem?{
         didSet{
@@ -177,7 +159,6 @@ class ItemDetailsCell: UICollectionViewCell {
     @objc func addToFavourite()
     {
         var id:Int?
-        
         if let itemId = listItem?.id
         {
             id = itemId

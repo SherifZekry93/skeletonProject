@@ -128,7 +128,6 @@ class SubCategoryViewController: UICollectionViewController,UICollectionViewDele
         
         if segue.identifier == "SectionItemsSegue"
         {
-//            print(segue.destination)
             if let dest = segue.destination as? ItemDetailsViewController
             {
                 if let index = (collectionView?.indexPathsForSelectedItems?.first?.item)
@@ -165,6 +164,8 @@ class SubCategoryViewController: UICollectionViewController,UICollectionViewDele
         favButton.addTarget(self, action: #selector(favouritePage), for: .touchUpInside)
         let titleLabel = UIImageView()
         titleLabel.image = UIImage(named: "open_web")
+        titleLabel.isUserInteractionEnabled = true
+        titleLabel.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(visitWebsite)))
         backtitleLabel.numberOfLines = 2
         backtitleLabel.font = UIFont.boldSystemFont(ofSize: 13)
         backtitleLabel.textAlignment = .center
@@ -264,5 +265,12 @@ class SubCategoryViewController: UICollectionViewController,UICollectionViewDele
         }
         return allDataListItems
     }
-
+    @objc func visitWebsite()
+    {
+        print("here")
+        if let url = URL(string: "http://fitnessksa.com/public/web-form/create")
+        {
+            UIApplication.shared.open(url, options: [:])
+        }
+    }
 }

@@ -14,25 +14,7 @@ class SingleItemCollectionViewCell: UICollectionViewCell {
     var itemsDelegate:ItemDetailsViewController?
     func loadData(id:Int,delete:Bool) -> Bool
     {
-        let request:NSFetchRequest<DataListItem> = DataListItem.fetchRequest()
-        request.predicate = NSPredicate(format: "id = %@",NSNumber(value : id))
-        let fetchedMessage = try? context.fetch(request)
-        guard let messageId = fetchedMessage?.first?.id else {return false}
-        if id == Int(messageId)
-        {
-            if delete
-            {
-                if let item = fetchedMessage?.first
-                {
-                    context.delete(item)
-                }
-            }
-            return true
-        }
-        else
-        {
-            return false
-        }
+        return CoreDataManager.shared.exisistingItem(id:id,delete:delete)
     }
     var height:CGFloat?{
         didSet{
@@ -42,7 +24,6 @@ class SingleItemCollectionViewCell: UICollectionViewCell {
     var homeController:SingleItemCollectionViewController?
     var listItem:ListItem?{
         didSet{
-            
             if let title = listItem?.title
             {
                 let attributedText = NSMutableAttributedString(string: title, attributes: [NSAttributedStringKey.font : UIFont.boldSystemFont(ofSize: 18)])
@@ -270,7 +251,7 @@ class SingleItemCollectionViewCell: UICollectionViewCell {
         if let dataItemId = dataListItem?.id
         {
             id = Int(dataItemId)
-         }
+        }
         guard let itemId = id else {return}
         if loadData(id: itemId, delete: true)
         {
@@ -280,9 +261,17 @@ class SingleItemCollectionViewCell: UICollectionViewCell {
                 itemsDelegate?.deleteItem(dataItem: item)
                 homeController?.navigationController?.popViewController(animated: true)
             }
+            if let item = listItem
+            {
+                itemsDelegate?.markAsNotFavourite(listItem: item,isfavourited: false)
+            }
         }
         else
         {
+            if let item = listItem
+            {
+                itemsDelegate?.markAsNotFavourite(listItem: item,isfavourited: true)
+            }
             let modelListItem = DataListItem(context: context)
             if let id = listItem?.id
             {

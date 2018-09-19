@@ -7,7 +7,7 @@
 //
 
 import Foundation
-struct ListItem:Codable
+class ListItem:NSObject, Codable
 {
     var id:Int?
     var sub_category_id: Int?
