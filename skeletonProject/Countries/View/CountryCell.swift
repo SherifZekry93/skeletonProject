@@ -50,7 +50,7 @@ class CountryCell:UICollectionViewCell
         addSubview(countryName)
         addSubview(countryImage)
         countryName.anchorWithConstantsToTop(top: topAnchor, left: leftAnchor, bottom: bottomAnchor, right: rightAnchor, topConstant: 5, leftConstant: 50, bottomConstant: 5, rightConstant: 5)
-    countryImage.translatesAutoresizingMaskIntoConstraints = false
+        countryImage.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate(
             [
                 countryImage.widthAnchor.constraint(equalToConstant: 30),
@@ -66,6 +66,6 @@ class CountryCell:UICollectionViewCell
     }
   
     override func prepareForReuse() {
-        //countryImage.image = nil
+        countryImage.image = nil
     }
 }

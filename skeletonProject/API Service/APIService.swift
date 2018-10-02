@@ -11,7 +11,6 @@
 
 import Foundation
 import Alamofire
-var dataTask:URLSessionDataTask?
 class APIService {
     static let shared = APIService()
     func fetchCategories(countryId:Int,completionHandler:@escaping ([Category],Bool) -> () ) {
@@ -75,7 +74,6 @@ class APIService {
         guard let url = URL(string:"https://fitnessksa.com/public/api/sub-categories/\(categoryId)") else {return}
         Alamofire.request(url, method: .get, parameters: nil).responseJSON{
             response in
-            
             var subCategories = [SubCategory]()
             var loadedData:Bool = true
             if response.result.isSuccess

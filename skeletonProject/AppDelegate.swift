@@ -14,13 +14,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
        UICollectionView.appearance().semanticContentAttribute = .forceRightToLeft
-       /* window = UIWindow(frame: UIScreen.main.bounds)
-        //window?.backgroundColor = .yellow
-        window?.makeKeyAndVisible()
-        let layout = UICollectionViewFlowLayout()
-        let collectionVC = UICollectionViewController(collectionViewLayout: layout)
-        window?.rootViewController = collectionVC
-        */
         return true
     }
    

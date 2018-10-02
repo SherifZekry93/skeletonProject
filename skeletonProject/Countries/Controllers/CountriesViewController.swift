@@ -40,11 +40,12 @@ class AllCountriesViewController:UIViewController {
         collectionViewCustomize()
         customizeNavBar()
         APIService.shared.fetchCountries { (allCountries,loadedData) in
-            self.allCountries = allCountries
-            self.allCountries?.swapAt(0, 1)
+          
             self.loadedData = loadedData
             if loadedData
             {
+                self.allCountries = allCountries
+                self.allCountries?.swapAt(0, 1)
                 self.collectionView.reloadData()
             }
             else
@@ -65,7 +66,6 @@ class AllCountriesViewController:UIViewController {
         self.navigationController?.navigationBar.shadowImage = UIImage()
     }
     
-  
     //MARK:- Prepare for new segues
     override func prepare(for segue: UIStoryboardSegue, sender: Any?)
     {

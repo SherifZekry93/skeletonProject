@@ -154,7 +154,6 @@ class Categories: UIViewController{
             countryImage.widthAnchor.constraint(equalToConstant: 40)
             ])
         backToPrevious.translatesAutoresizingMaskIntoConstraints = false
-        
         NSLayoutConstraint.activate([
             backToPrevious.leadingAnchor.constraint(equalTo: countryImage.trailingAnchor),
             backToPrevious.topAnchor.constraint(equalTo: titleView.topAnchor),

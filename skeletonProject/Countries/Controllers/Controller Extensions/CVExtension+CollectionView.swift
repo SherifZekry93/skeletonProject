@@ -38,6 +38,6 @@ extension AllCountriesViewController:UICollectionViewDelegate,UICollectionViewDa
         collectionView.delegate = self
         collectionView.dataSource = self
         collectionView.register(CountryCell.self, forCellWithReuseIdentifier: cellId)
-        collectionView.backgroundColor = UIColor.lightGray
+        collectionView.backgroundColor = UIColor(white: 0.85, alpha: 1)
     }
 }
