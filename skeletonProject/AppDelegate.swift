@@ -8,12 +8,16 @@
 
 import UIKit
 import CoreData
+import Firebase
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
        UICollectionView.appearance().semanticContentAttribute = .forceRightToLeft
+//        FirebaseApp.configure()
+        // Initialize the Google Mobile Ads SDK.
+        GADMobileAds.configure(withApplicationID: "ca-app-pub-4568744832829146~8173170850")
         return true
     }
    

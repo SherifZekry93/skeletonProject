@@ -198,42 +198,30 @@
                                     <outlet property="delegate" destination="B6W-SA-Nbn" id="n2r-KE-K8B"/>
                                 </connections>
                             </collectionView>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="KOK-my-Sk4" userLabel="googleAds">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="KOK-my-Sk4" userLabel="googleAds" customClass="GADBannerView">
                                 <rect key="frame" x="0.0" y="553" width="375" height="50"/>
-                                <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tYF-b5-eKB">
-                                        <rect key="frame" x="0.0" y="0.0" width="375" height="34"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="34" id="kAq-r0-Sjo"/>
-                                        </constraints>
-                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="18"/>
-                                        <state key="normal" title="آعلانات جوجل">
-                                            <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                        </state>
-                                    </button>
-                                </subviews>
                                 <color key="backgroundColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
-                                    <constraint firstAttribute="trailing" secondItem="tYF-b5-eKB" secondAttribute="trailing" id="6Dz-sU-2XI"/>
                                     <constraint firstAttribute="height" constant="50" id="V69-mh-Ub1"/>
-                                    <constraint firstItem="tYF-b5-eKB" firstAttribute="top" secondItem="KOK-my-Sk4" secondAttribute="top" id="akM-LJ-mpe"/>
-                                    <constraint firstItem="tYF-b5-eKB" firstAttribute="leading" secondItem="KOK-my-Sk4" secondAttribute="leading" id="kei-if-Iy7"/>
+                                    <constraint firstAttribute="width" constant="375" id="VHE-wr-8Fh"/>
                                 </constraints>
                             </view>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <color key="backgroundColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstItem="KOK-my-Sk4" firstAttribute="leading" secondItem="6ZW-oe-EwB" secondAttribute="leading" id="47q-1D-5Wz"/>
-                            <constraint firstItem="KOK-my-Sk4" firstAttribute="trailing" secondItem="6ZW-oe-EwB" secondAttribute="trailing" id="7L1-Oi-xdE"/>
-                            <constraint firstItem="KOK-my-Sk4" firstAttribute="bottom" secondItem="mv3-Bb-WjN" secondAttribute="bottom" id="BoT-RC-4fi"/>
+                            <constraint firstItem="KOK-my-Sk4" firstAttribute="bottom" secondItem="6ZW-oe-EwB" secondAttribute="bottom" id="BoT-RC-4fi"/>
+                            <constraint firstAttribute="trailing" secondItem="KOK-my-Sk4" secondAttribute="trailing" id="CSZ-7d-Uer"/>
+                            <constraint firstItem="KOK-my-Sk4" firstAttribute="leading" secondItem="mv3-Bb-WjN" secondAttribute="leading" id="XGk-yT-dHj"/>
                             <constraint firstItem="TGI-8b-1oZ" firstAttribute="leading" secondItem="6ZW-oe-EwB" secondAttribute="leading" id="diC-cp-S5t"/>
                             <constraint firstItem="KOK-my-Sk4" firstAttribute="top" secondItem="TGI-8b-1oZ" secondAttribute="bottom" id="dxy-xf-HJL"/>
                             <constraint firstItem="TGI-8b-1oZ" firstAttribute="top" secondItem="6ZW-oe-EwB" secondAttribute="top" id="iVi-k5-BpY"/>
+                            <constraint firstItem="KOK-my-Sk4" firstAttribute="centerX" secondItem="mv3-Bb-WjN" secondAttribute="centerX" id="mO8-Ha-Ell"/>
                             <constraint firstItem="TGI-8b-1oZ" firstAttribute="trailing" secondItem="6ZW-oe-EwB" secondAttribute="trailing" id="x8t-zX-REK"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6ZW-oe-EwB"/>
                     </view>
                     <connections>
+                        <outlet property="bannerView" destination="KOK-my-Sk4" id="u86-H1-67s"/>
                         <outlet property="collectionView" destination="TGI-8b-1oZ" id="Swf-SR-NDK"/>
                         <segue destination="geG-ls-ehl" kind="show" identifier="SubCategoriesSegue" id="8uo-ZC-yzz"/>
                     </connections>

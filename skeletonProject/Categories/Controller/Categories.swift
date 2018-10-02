@@ -9,7 +9,10 @@
 import UIKit
 import SVProgressHUD
 import CoreData
+import Firebase
 class Categories: UIViewController{
+    
+    @IBOutlet weak var bannerView: GADBannerView!
     var countryName:String?{
         didSet{
             if let name = countryName
@@ -68,6 +71,9 @@ class Categories: UIViewController{
         SVProgressHUD.show(withStatus: "تحميل الاقسام")
         collectionView.register(CategoryCell.self, forCellWithReuseIdentifier: "id")
         setupTitleStack()
+        bannerView.adUnitID = "ca-app-pub-3940256099942544/2934735716"
+        bannerView.rootViewController = self
+        bannerView.load(GADRequest())
     }
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "SubCategoriesSegue"
