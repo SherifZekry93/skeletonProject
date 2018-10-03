@@ -105,7 +105,6 @@ class SubCategoryViewController: UICollectionViewController,UICollectionViewDele
         {
             SVProgressHUD.dismiss()
             performSegue(withIdentifier: "SectionItemsSegue", sender: self)
-            
         }
     }
     func loadSubSubCategories(subcategoryId:Int)
@@ -157,8 +156,6 @@ class SubCategoryViewController: UICollectionViewController,UICollectionViewDele
         navigationItem.hidesBackButton = true
         let menuButton = UIButton()
         menuButton.setImage(UIImage(named: "ic_white_more"), for: .normal)
-        let backButton = UIButton()
-        backButton.setImage(UIImage(named: "ic_white_reply"), for: .normal)
         let favButton = UIButton()
         favButton.setImage(UIImage(named: "ic_white_empty_star"), for: .normal)
         favButton.addTarget(self, action: #selector(favouritePage), for: .touchUpInside)
@@ -178,7 +175,6 @@ class SubCategoryViewController: UICollectionViewController,UICollectionViewDele
         titleView.heightAnchor.constraint(equalToConstant: 40).isActive = true
         titleView.widthAnchor.constraint(equalToConstant: view.frame.size.width)
         titleView.addSubview(menuButton)
-        titleView.addSubview(backButton)
         titleView.addSubview(favButton)
         titleView.addSubview(titleLabel)
         titleView.addSubview(backToPrevious)
@@ -189,21 +185,15 @@ class SubCategoryViewController: UICollectionViewController,UICollectionViewDele
             menuButton.leadingAnchor.constraint(equalTo: titleView.leadingAnchor),
             menuButton.topAnchor.constraint(equalTo: titleView.topAnchor),
             menuButton.bottomAnchor.constraint(equalTo: titleView.bottomAnchor),
-            menuButton.widthAnchor.constraint(equalToConstant: 80/3)
+            menuButton.widthAnchor.constraint(equalToConstant: 60/2)
             ])
-        backButton.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
-            backButton.leadingAnchor.constraint(equalTo: menuButton.trailingAnchor),
-            backButton.topAnchor.constraint(equalTo: titleView.topAnchor),
-            backButton.bottomAnchor.constraint(equalTo: titleView.bottomAnchor),
-            backButton.widthAnchor.constraint(equalToConstant: 80/3)
-            ])
+        
         favButton.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            favButton.leadingAnchor.constraint(equalTo: backButton.trailingAnchor),
+            favButton.leadingAnchor.constraint(equalTo: menuButton.trailingAnchor),
             favButton.topAnchor.constraint(equalTo: titleView.topAnchor),
             favButton.bottomAnchor.constraint(equalTo: titleView.bottomAnchor),
-            favButton.widthAnchor.constraint(equalToConstant: 80/3)
+            favButton.widthAnchor.constraint(equalToConstant: 60/2)
             ])
         
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
@@ -211,14 +201,14 @@ class SubCategoryViewController: UICollectionViewController,UICollectionViewDele
             titleLabel.leadingAnchor.constraint(equalTo: favButton.trailingAnchor),
             titleLabel.topAnchor.constraint(equalTo: titleView.topAnchor),
             titleLabel.bottomAnchor.constraint(equalTo: titleView.bottomAnchor),
-            titleLabel.widthAnchor.constraint(equalToConstant: (size - 130)/2)
+            titleLabel.widthAnchor.constraint(equalToConstant: (size - 100)/2)
             ])
         backtitleLabel.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             backtitleLabel.leadingAnchor.constraint(equalTo: titleLabel.trailingAnchor),
             backtitleLabel.topAnchor.constraint(equalTo: titleView.topAnchor),
             backtitleLabel.bottomAnchor.constraint(equalTo: titleView.bottomAnchor),
-            backtitleLabel.widthAnchor.constraint(equalToConstant: (size - 130)/2)
+            backtitleLabel.widthAnchor.constraint(equalToConstant: (size - 100)/2)
             ])
         backToPrevious.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
@@ -247,23 +237,9 @@ class SubCategoryViewController: UICollectionViewController,UICollectionViewDele
     {
         let layout = UICollectionViewFlowLayout()
         let controller = ItemDetailsViewController(collectionViewLayout: layout)
-        controller.dataListItem = loadData()
+        controller.favoriteMode = true
+        controller.allListItems = UserDefaults.standard.getFavoritedItems()
         navigationController?.pushViewController(controller, animated: true)
-    }
-    func loadData() -> [DataListItem]
-    {
-        let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
-        let fetchRequest:NSFetchRequest<DataListItem> = DataListItem.fetchRequest()
-        var allDataListItems = [DataListItem]()//try context.fetch(fetchRequest)
-        do
-        {
-            allDataListItems = try context.fetch(fetchRequest)
-        }
-        catch
-        {
-            
-        }
-        return allDataListItems
     }
     @objc func visitWebsite()
     {

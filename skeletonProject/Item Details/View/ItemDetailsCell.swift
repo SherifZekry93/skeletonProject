@@ -12,58 +12,59 @@ class ItemDetailsCell: UICollectionViewCell {
     var homeController:ItemDetailsViewController?
 
     let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
-    func loadData(id:Int,delete:Bool) -> Bool
-    {
-        return CoreDataManager.shared.exisistingItem(id:id,delete:delete)
-    }
-    var dataItem:DataListItem?{
-        didSet{
-            if let title = dataItem?.title
-            {
-                let attributedText = NSMutableAttributedString(string: title, attributes: [NSAttributedStringKey.font : UIFont.systemFont(ofSize: 16)])
-                
-                guard let subTitle = dataItem?.details else {return }
-                if subTitle != ""
-                {
-                    attributedText.append(NSAttributedString(string: "\n\(subTitle)", attributes: [NSAttributedStringKey.font : UIFont.systemFont(ofSize: 13),NSAttributedStringKey.foregroundColor:UIColor.lightGray]))
-                }
-                let paragraphStyle = NSMutableParagraphStyle()
-                paragraphStyle.lineSpacing = 4
-                attributedText.addAttribute(.paragraphStyle, value: paragraphStyle, range: NSMakeRange(0, attributedText.length))
-                titleLabel.attributedText = attributedText
-                
-                titleLabel.textAlignment = .right
-            }
-            if let imageName = dataItem?.image
-            {
-                if imageName != ""
-                {
-                    //print(imageName)
-                    guard let imageURL = URL(string:"https://fitnessksa.com/public/images/posts/" + imageName)
-                        else {
-                            return
-                    }
-                    print(imageURL)
-                    itemImage.downloadImage(from: imageURL)
-                }
-            }
-            if let id = dataItem?.id
-            {
-                if loadData(id: Int(id), delete: false)
-                {
-                    starButton.tintColor = .orange
-                }
-            }
-        }
-    }
+//    func loadData(id:Int,delete:Bool) -> Bool
+//    {
+//        return CoreDataManager.shared.exisistingItem(id:id,delete:delete)
+//    }
+//    var dataItem:DataListItem?{
+//        didSet{
+//            if let title = dataItem?.title
+//            {
+//                let attributedText = NSMutableAttributedString(string: title, attributes: [NSAttributedStringKey.font : UIFont.systemFont(ofSize: 16)])
+//
+//                guard let subTitle = dataItem?.details else {return }
+//                if subTitle != ""
+//                {
+//                    attributedText.append(NSAttributedString(string: "\n\(subTitle)", attributes: [NSAttributedStringKey.font : UIFont.systemFont(ofSize: 13),NSAttributedStringKey.foregroundColor:UIColor.lightGray]))
+//                }
+//                let paragraphStyle = NSMutableParagraphStyle()
+//                paragraphStyle.lineSpacing = 4
+//                attributedText.addAttribute(.paragraphStyle, value: paragraphStyle, range: NSMakeRange(0, attributedText.length))
+//                titleLabel.attributedText = attributedText
+//
+//                titleLabel.textAlignment = .right
+//            }
+//            if let imageName = dataItem?.image
+//            {
+//                if imageName != ""
+//                {
+//                    //print(imageName)
+//                    guard let imageURL = URL(string:"https://fitnessksa.com/public/images/posts/" + imageName)
+//                        else {
+//                            return
+//                    }
+//                    print(imageURL)
+//                    itemImage.downloadImage(from: imageURL)
+//                }
+//            }
+//            if let id = dataItem?.id
+//            {
+//                if loadData(id: Int(id), delete: false)
+//                {
+//                    starButton.tintColor = .orange
+//                }
+//            }
+//        }
+//    }
     var listItem:ListItem?{
         didSet
         {
-            if let title = listItem?.title
+            guard let listItem = listItem else {return}
+            if let title = listItem.title
             {
                 let attributedText = NSMutableAttributedString(string: title, attributes: [NSAttributedStringKey.font : UIFont.systemFont(ofSize: 16)])
                 
-                guard let subTitle = listItem?.details else {return }
+                guard let subTitle = listItem.details else {return }
                 if subTitle != ""
                 {
                 attributedText.append(NSAttributedString(string: "\n\(subTitle)", attributes: [NSAttributedStringKey.font : UIFont.systemFont(ofSize: 13),NSAttributedStringKey.foregroundColor:UIColor.lightGray]))
@@ -75,26 +76,25 @@ class ItemDetailsCell: UICollectionViewCell {
                 
                 titleLabel.textAlignment = .right
             }
-            if let imageName = listItem?.image
+            if let imageName = listItem.image
             {
                 if imageName != ""
                 {
-                    print(imageName)
+                    //print(imageName)
                     guard let imageURL = URL(string:"https://fitnessksa.com/public/images/posts/" + imageName)
                         else {
                             return
                     }
-                    print(imageURL)
+                    //print(imageURL)
                     itemImage.downloadImage(from: imageURL)
                 }
             }
-            if let id = listItem?.id
-            {
-                if loadData(id: id, delete: false)
+         
+                if UserDefaults.standard.exisitingItem(checkedListItem: listItem)
                 {
                     starButton.tintColor = .orange
                 }
-            }
+            
         }
     }
     override init(frame: CGRect)
@@ -158,71 +158,24 @@ class ItemDetailsCell: UICollectionViewCell {
     }
     @objc func addToFavourite()
     {
-        var id:Int?
-        if let itemId = listItem?.id
+        guard let currentListItem = listItem else {return}
+
+        if !UserDefaults.standard.exisitingItem(checkedListItem: currentListItem)
         {
-            id = itemId
-        }
-        if let dataItemId = dataItem?.id
-        {
-            id = Int(dataItemId)
-            guard let dataItemToRemove = dataItem else {return}
-            guard let indexToRemove = homeController?.dataListItem?.index(of: dataItemToRemove) else {return}
-            homeController?.dataListItem?.remove(at: indexToRemove)
-        }
-        guard let itemId = id else {return}
-        if loadData(id: itemId, delete: true)
-        {
-            starButton.tintColor = .gray
+            UserDefaults.standard.favoriteItem(checkedListItem: currentListItem)
+            starButton.tintColor = .orange
         }
         else
         {
-            let modelListItem = DataListItem(context: context)
-            if let id = listItem?.id
+            if UserDefaults.standard.exisitingItem(checkedListItem: currentListItem, delete: true)
             {
-                modelListItem.id = Int64(id)
+                starButton.tintColor = .darkGray
+                guard let favoriteMode = homeController?.favoriteMode else {return}
+                if favoriteMode
+                {
+                    homeController?.deleteItem(dataItem: currentListItem)
+                }
             }
-            if let appstoreLink = listItem?.app_store_link
-            {
-                modelListItem.app_store_link = appstoreLink
-            }
-            if let instagramLink = listItem?.instagram_link
-            {
-                modelListItem.instagram_link = instagramLink
-            }
-            if let details = listItem?.details
-            {
-                modelListItem.details = details
-            }
-            if let image = listItem?.image
-            {
-                modelListItem.image = image
-            }
-            if let twitter = listItem?.twitter_link
-            {
-                modelListItem.twitter_link = twitter
-            }
-            if let websiteLink = listItem?.website_link
-            {
-                modelListItem.website_link = websiteLink
-            }
-            if let title = listItem?.title
-            {
-                modelListItem.title = title
-            }
-            if let facebook = listItem?.facebook_link
-            {
-                modelListItem.facebook_link = facebook
-            }
-            starButton.tintColor = .orange
-        }
-        do
-        {
-            try context.save()
-        }
-        catch
-        {
-            print("error saving data")
         }
     }
 }

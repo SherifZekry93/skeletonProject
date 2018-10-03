@@ -12,10 +12,10 @@ class SingleItemCollectionViewCell: UICollectionViewCell {
     
     let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
     var itemsDelegate:ItemDetailsViewController?
-    func loadData(id:Int,delete:Bool) -> Bool
-    {
-        return CoreDataManager.shared.exisistingItem(id:id,delete:delete)
-    }
+//    func loadData(id:Int,delete:Bool) -> Bool
+//    {
+//        return CoreDataManager.shared.exisistingItem(id:id,delete:delete)
+//    }
     var height:CGFloat?{
         didSet{
             setupLayout()
@@ -24,10 +24,11 @@ class SingleItemCollectionViewCell: UICollectionViewCell {
     var homeController:SingleItemCollectionViewController?
     var listItem:ListItem?{
         didSet{
-            if let title = listItem?.title
+            guard let listItem = listItem else {return}
+            if let title = listItem.title
             {
                 let attributedText = NSMutableAttributedString(string: title, attributes: [NSAttributedStringKey.font : UIFont.boldSystemFont(ofSize: 18)])
-                guard let subTitle = listItem?.details else {return }
+                guard let subTitle = listItem.details else {return }
                 if subTitle != ""
                 {
                     attributedText.append(NSAttributedString(string: "\n\(subTitle)", attributes: [NSAttributedStringKey.font : UIFont.systemFont(ofSize: 13),NSAttributedStringKey.foregroundColor:UIColor.darkGray]))
@@ -49,94 +50,34 @@ class SingleItemCollectionViewCell: UICollectionViewCell {
                     height = 100
                 }
             }
-            if let id = listItem?.id
+            if listItem.id != nil
             {
-                if loadData(id: id, delete: false)
+                if UserDefaults.standard.exisitingItem(checkedListItem: listItem)
                 {
                     starButton.tintColor = .orange
                 }
             }
-            if listItem?.instagram_link == "" || listItem?.instagram_link == nil
+            if listItem.instagram_link == "" || listItem.instagram_link == nil
             {
                 instagramButton.setImage(UIImage(named: ""), for: .normal)
             }
-            if listItem?.youtube_link == "" || listItem?.youtube_link == nil
+            if listItem.youtube_link == "" || listItem.youtube_link == nil
             {
                 youtubeButton.setImage(UIImage(named: ""), for: .normal)
             }
-            if listItem?.facebook_link == "" || listItem?.facebook_link == nil
+            if listItem.facebook_link == "" || listItem.facebook_link == nil
             {
                 facebookButton.setImage(UIImage(named: ""), for: .normal)
             }
-            if listItem?.app_store_link == "" || listItem?.app_store_link == nil
+            if listItem.app_store_link == "" || listItem.app_store_link == nil
             {
                 appStoreButton.setImage(UIImage(named: ""), for: .normal)
             }
-            if listItem?.website_link == "" || listItem?.website_link == nil
+            if listItem.website_link == "" || listItem.website_link == nil
             {
                 websiteeButton.setImage(UIImage(named: ""), for: .normal)
             }
-            if listItem?.twitter_link == "" || listItem?.twitter_link == nil
-            {
-                twitterButton.setImage(UIImage(named: ""), for: .normal)
-            }
-        }
-    }
-    var dataListItem:DataListItem?{
-        didSet{
-            if let title = dataListItem?.title
-            {
-                let attributedText = NSMutableAttributedString(string: title, attributes: [NSAttributedStringKey.font : UIFont.boldSystemFont(ofSize: 18)])
-                guard let subTitle = dataListItem?.details else {return }
-                if subTitle != ""
-                {
-                    attributedText.append(NSAttributedString(string: "\n\(subTitle)", attributes: [NSAttributedStringKey.font : UIFont.systemFont(ofSize: 13),NSAttributedStringKey.foregroundColor:UIColor.darkGray]))
-                }
-                let paragraphStyle = NSMutableParagraphStyle()
-                paragraphStyle.lineSpacing = 4
-                attributedText.addAttribute(.paragraphStyle, value: paragraphStyle, range: NSMakeRange(0, attributedText.length))
-                titleLabel.attributedText = attributedText
-                titleLabel.textAlignment = .right
-                let size = CGSize(width: frame.width - 55, height: 10000)
-                let options = NSStringDrawingOptions.usesFontLeading.union(.usesLineFragmentOrigin)
-                let estimatedRect = NSString(string: titleLabel.text ?? "").boundingRect(with: size, options: options, attributes: [NSAttributedStringKey.font:UIFont.systemFont(ofSize: 15)], context: nil)
-                if Int(estimatedRect.size.height) > 100
-                {
-                    height = estimatedRect.size.height + 50 //+ 35
-                }
-                else
-                {
-                    height = 100
-                }
-            }
-            if let id = dataListItem?.id
-            {
-                if loadData(id: Int(id), delete: false)
-                {
-                    starButton.tintColor = .orange
-                }
-            }
-            if dataListItem?.instagram_link == "" || dataListItem?.instagram_link == nil
-            {
-                instagramButton.setImage(UIImage(named: ""), for: .normal)
-            }
-            if dataListItem?.youtube_link == "" || dataListItem?.youtube_link == nil
-            {
-                youtubeButton.setImage(UIImage(named: ""), for: .normal)
-            }
-            if dataListItem?.facebook_link == "" || dataListItem?.facebook_link == nil
-            {
-                facebookButton.setImage(UIImage(named: ""), for: .normal)
-            }
-            if dataListItem?.app_store_link == "" || dataListItem?.app_store_link == nil
-            {
-                appStoreButton.setImage(UIImage(named: ""), for: .normal)
-            }
-            if dataListItem?.website_link == "" || dataListItem?.website_link == nil
-            {
-                websiteeButton.setImage(UIImage(named: ""), for: .normal)
-            }
-            if dataListItem?.twitter_link == "" || dataListItem?.twitter_link == nil
+            if listItem.twitter_link == "" || listItem.twitter_link == nil
             {
                 twitterButton.setImage(UIImage(named: ""), for: .normal)
             }
@@ -242,82 +183,34 @@ class SingleItemCollectionViewCell: UICollectionViewCell {
 
     @objc func addToFavourite()
     {
-        var id:Int?
-        
-        if let itemId = listItem?.id
+//        var id:Int?
+//
+//        if let itemId = listItem?.id
+//        {
+//           id = itemId
+//        }
+        if let item = listItem
         {
-           id = itemId
-        }
-        if let dataItemId = dataListItem?.id
-        {
-            id = Int(dataItemId)
-        }
-        guard let itemId = id else {return}
-        if loadData(id: itemId, delete: true)
+        if UserDefaults.standard.exisitingItem(checkedListItem: item,delete: true)//(id: itemId, delete: true)
         {
             starButton.tintColor = .gray
-            if let item = dataListItem
-            {
-                itemsDelegate?.deleteItem(dataItem: item)
-                homeController?.navigationController?.popViewController(animated: true)
-            }
             if let item = listItem
             {
                 itemsDelegate?.markAsNotFavourite(listItem: item,isfavourited: false)
+                guard let homeController = homeController else {return}
+                if homeController.favoriteMode
+                {
+                itemsDelegate?.deleteItem(dataItem: item)
+                homeController.navigationController?.popViewController(animated: true)
+                }
             }
         }
         else
         {
-            if let item = listItem
-            {
-                itemsDelegate?.markAsNotFavourite(listItem: item,isfavourited: true)
-            }
-            let modelListItem = DataListItem(context: context)
-            if let id = listItem?.id
-            {
-                modelListItem.id = Int64(id)
-            }
-            if let appstoreLink = listItem?.app_store_link
-            {
-                modelListItem.app_store_link = appstoreLink
-            }
-            if let instagramLink = listItem?.instagram_link
-            {
-                modelListItem.instagram_link = instagramLink
-            }
-            if let details = listItem?.details
-            {
-                modelListItem.details = details
-            }
-            if let image = listItem?.image
-            {
-                modelListItem.image = image
-            }
-            if let twitter = listItem?.twitter_link
-            {
-                modelListItem.twitter_link = twitter
-            }
-            if let websiteLink = listItem?.website_link
-            {
-                modelListItem.website_link = websiteLink
-            }
-            if let title = listItem?.title
-            {
-                modelListItem.title = title
-            }
-            if let facebook = listItem?.facebook_link
-            {
-                modelListItem.facebook_link = facebook
-            }
+            UserDefaults.standard.favoriteItem(checkedListItem: item)
+            itemsDelegate?.markAsNotFavourite(listItem: item, isfavourited: true)
             starButton.tintColor = .orange
         }
-        do
-        {
-            try context.save()
-        }
-        catch
-        {
-            print("error saving data")
         }
     }
     func setupLayout()
@@ -396,39 +289,10 @@ class SingleItemCollectionViewCell: UICollectionViewCell {
             }
             
         }
-        else if let item = dataListItem
-        {
-            if let facebookLink = item.facebook_link
-            {
-                urlList = [facebookLink]
-            }
-            if let instagramLink = item.instagram_link
-            {
-                urlList.append(instagramLink)
-            }
-            if let appstoreLink = item.app_store_link
-            {
-                urlList.append(appstoreLink)
-            }
-            if let websiteLink = item.website_link
-            {
-                urlList.append(websiteLink)
-            }
-            if let youtubeLink = item.youtube_link
-            {
-                urlList.append(youtubeLink)
-            }
-            if let twitterLink = item.twitter_link
-            {
-                urlList.append(twitterLink)
-            }
-        }
-
         if let url = URL(string: urlList[sender.tag])
         {
             UIApplication.shared.open(url, options: [:])
         }
-        
         else
         {
             print("not a url")

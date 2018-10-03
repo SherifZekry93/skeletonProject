@@ -10,11 +10,11 @@ import UIKit
 import SVProgressHUD
 import CoreData
 protocol controlDataDeletion {
-    func deleteItem(dataItem:DataListItem)
+    func deleteItem(dataItem:ListItem)
     func markAsNotFavourite(listItem:ListItem, isfavourited:Bool)
 }
 class ItemDetailsViewController: UICollectionViewController,UICollectionViewDelegateFlowLayout,controlDataDeletion {
-    
+    var favoriteMode = false
     func markAsNotFavourite(listItem: ListItem,isfavourited:Bool)
     {
         let index = allListItems?.index(of: listItem)
@@ -22,11 +22,11 @@ class ItemDetailsViewController: UICollectionViewController,UICollectionViewDele
         let cell =  collectionView?.cellForItem(at: indexPath) as! ItemDetailsCell
         cell.starButton.tintColor = isfavourited ? .orange : .gray
     }
-    func deleteItem(dataItem: DataListItem)
+    func deleteItem(dataItem: ListItem)
     {
-        if let index = dataListItem?.index(of: dataItem)
+        if let index = allListItems?.index(of: dataItem)
         {
-            dataListItem?.remove(at: index)
+            allListItems?.remove(at: index)
             self.collectionView?.reloadData()
         }
     }
@@ -47,7 +47,6 @@ class ItemDetailsViewController: UICollectionViewController,UICollectionViewDele
         didSet
         {
             title = subCategory?.name
-
             SVProgressHUD.show()
             if let subCategoryId = subCategory?.id
             {
@@ -57,12 +56,11 @@ class ItemDetailsViewController: UICollectionViewController,UICollectionViewDele
                     if loaddata
                     {
                         self.allListItems = listitems
-                        //self.collectionView?.reloadData()
                         SVProgressHUD.dismiss()
                     }
                     else if loaddata == false
                     {
-                      self.present(UIAlertController.showAlert(message: "Error loading data. Please make sure you are connected to the internet"), animated: true, completion: nil)
+                        self.present(UIAlertController.showAlert(message: "Error loading data. Please make sure you are connected to the internet"), animated: true, completion: nil)
                         SVProgressHUD.dismiss()
                     }
                     
@@ -73,13 +71,10 @@ class ItemDetailsViewController: UICollectionViewController,UICollectionViewDele
     var allListItems:[ListItem]?{
         didSet{
             self.collectionView?.reloadData()
-        }
-    }
-    var dataListItem:[DataListItem]?{
-        didSet
-        {
-            self.collectionView?.reloadData()
-            title = "المفضلة"
+            if favoriteMode
+            {
+                title = "المفضلة"
+            }
         }
     }
     override func viewDidLoad()
@@ -98,9 +93,9 @@ class ItemDetailsViewController: UICollectionViewController,UICollectionViewDele
         SVProgressHUD.dismiss()
         navigationController?.popViewController(animated: true)
     }
-    func loadData() -> [DataListItem]
-    {
-        return CoreDataManager.shared.loadData()
-    }
+//    func loadData() -> [DataListItem]
+//    {
+//        return CoreDataManager.shared.loadData()
+//    }
     
 }

@@ -12,7 +12,6 @@
 		7E41328921481F8300D2549F /* Post Details.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E41328821481F8300D2549F /* Post Details.swift */; };
 		7EAD168D214AD4B500FF25F1 /* SingleItemCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EAD168C214AD4B500FF25F1 /* SingleItemCollectionViewController.swift */; };
 		7EAD168F214AD4D500FF25F1 /* SingleItemCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EAD168E214AD4D500FF25F1 /* SingleItemCollectionViewCell.swift */; };
-		7EAF046B21504803003089DE /* ListItem.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 7EAF046921504803003089DE /* ListItem.xcdatamodeld */; };
 		7EB6ED1621402BC50030167A /* Category.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EB6ED1521402BC50030167A /* Category.swift */; };
 		7EB6ED1A214036510030167A /* CVExtension+CollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EB6ED19214036510030167A /* CVExtension+CollectionView.swift */; };
 		7EB6ED2021403B320030167A /* ImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EB6ED1F21403B320030167A /* ImageView.swift */; };
@@ -35,7 +34,7 @@
 		7EC111B1213C51AA00CFF334 /* SubCategoryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EC111B0213C51AA00CFF334 /* SubCategoryCell.swift */; };
 		7EC111B3213C74E100CFF334 /* ItemDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EC111B2213C74E100CFF334 /* ItemDetails.swift */; };
 		7EC111B5213C75F100CFF334 /* ItemDetailsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EC111B4213C75F100CFF334 /* ItemDetailsCell.swift */; };
-		7EEEA4F921529A2400F7E47E /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EEEA4F821529A2400F7E47E /* CoreDataManager.swift */; };
+		7ED762ED21649D61009EAD5B /* UserDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7ED762EC21649D61009EAD5B /* UserDefaults.swift */; };
 		A8389EB4D738A8C55E258074 /* Pods_skeletonProject.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CF10E20F0AE003E57D28EC4C /* Pods_skeletonProject.framework */; };
 /* End PBXBuildFile section */
 
@@ -47,7 +46,6 @@
 		7E41328821481F8300D2549F /* Post Details.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Post Details.swift"; sourceTree = "<group>"; };
 		7EAD168C214AD4B500FF25F1 /* SingleItemCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingleItemCollectionViewController.swift; sourceTree = "<group>"; };
 		7EAD168E214AD4D500FF25F1 /* SingleItemCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingleItemCollectionViewCell.swift; sourceTree = "<group>"; };
-		7EAF046A21504803003089DE /* ListItem.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = ListItem.xcdatamodel; sourceTree = "<group>"; };
 		7EB6ED1521402BC50030167A /* Category.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Category.swift; sourceTree = "<group>"; };
 		7EB6ED19214036510030167A /* CVExtension+CollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CVExtension+CollectionView.swift"; sourceTree = "<group>"; };
 		7EB6ED1F21403B320030167A /* ImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageView.swift; sourceTree = "<group>"; };
@@ -72,7 +70,7 @@
 		7EC111B0213C51AA00CFF334 /* SubCategoryCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubCategoryCell.swift; sourceTree = "<group>"; };
 		7EC111B2213C74E100CFF334 /* ItemDetails.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemDetails.swift; sourceTree = "<group>"; };
 		7EC111B4213C75F100CFF334 /* ItemDetailsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemDetailsCell.swift; sourceTree = "<group>"; };
-		7EEEA4F821529A2400F7E47E /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
+		7ED762EC21649D61009EAD5B /* UserDefaults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaults.swift; sourceTree = "<group>"; };
 		CF10E20F0AE003E57D28EC4C /* Pods_skeletonProject.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_skeletonProject.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -179,6 +177,7 @@
 				7EC111A0213BC16900CFF334 /* ConstraintExtension.swift */,
 				7EB6ED1F21403B320030167A /* ImageView.swift */,
 				7EB6ED26214046390030167A /* AlertExtension.swift */,
+				7ED762EC21649D61009EAD5B /* UserDefaults.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -256,17 +255,9 @@
 		7EB6ED2D2140583F0030167A /* Controller */ = {
 			isa = PBXGroup;
 			children = (
-				7EB6ED2E214058BA0030167A /* Controller Extension */,
 				7EC111AE213C502A00CFF334 /* SubCategoriesViewController.swift */,
 			);
 			path = Controller;
-			sourceTree = "<group>";
-		};
-		7EB6ED2E214058BA0030167A /* Controller Extension */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = "Controller Extension";
 			sourceTree = "<group>";
 		};
 		7EBBF6942144FA8A00A2117C /* Item Details */ = {
@@ -341,7 +332,6 @@
 		7EC1118D213BC0B900CFF334 /* skeletonProject */ = {
 			isa = PBXGroup;
 			children = (
-				7EEEA4F721529A1100F7E47E /* CoreData Manager */,
 				7EBBF69B2144FB6300A2117C /* API Service */,
 				7EB6ED17214035B70030167A /* Countries */,
 				7EB6ED2121403B8A0030167A /* Categories */,
@@ -355,17 +345,8 @@
 				7EC11197213BC0BA00CFF334 /* LaunchScreen.storyboard */,
 				7EC1119A213BC0BA00CFF334 /* Info.plist */,
 				7E41328821481F8300D2549F /* Post Details.swift */,
-				7EAF046921504803003089DE /* ListItem.xcdatamodeld */,
 			);
 			path = skeletonProject;
-			sourceTree = "<group>";
-		};
-		7EEEA4F721529A1100F7E47E /* CoreData Manager */ = {
-			isa = PBXGroup;
-			children = (
-				7EEEA4F821529A2400F7E47E /* CoreDataManager.swift */,
-			);
-			path = "CoreData Manager";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -502,13 +483,12 @@
 				7EB6ED1621402BC50030167A /* Category.swift in Sources */,
 				7EB6ED27214046390030167A /* AlertExtension.swift in Sources */,
 				7EC111A3213BC25F00CFF334 /* Country.swift in Sources */,
+				7ED762ED21649D61009EAD5B /* UserDefaults.swift in Sources */,
 				7EC111AF213C502A00CFF334 /* SubCategoriesViewController.swift in Sources */,
-				7EAF046B21504803003089DE /* ListItem.xcdatamodeld in Sources */,
 				7EB6ED1A214036510030167A /* CVExtension+CollectionView.swift in Sources */,
 				7E4132872146D69B00D2549F /* ListItem.swift in Sources */,
 				7EAD168F214AD4D500FF25F1 /* SingleItemCollectionViewCell.swift in Sources */,
 				7EC111A7213BDC2500CFF334 /* Categories.swift in Sources */,
-				7EEEA4F921529A2400F7E47E /* CoreDataManager.swift in Sources */,
 				7EC111A1213BC16900CFF334 /* ConstraintExtension.swift in Sources */,
 				7EBBF69A2144FB0E00A2117C /* ItemDetailsExtension.swift in Sources */,
 				7EC111B3213C74E100CFF334 /* ItemDetails.swift in Sources */,
@@ -713,19 +693,6 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
-
-/* Begin XCVersionGroup section */
-		7EAF046921504803003089DE /* ListItem.xcdatamodeld */ = {
-			isa = XCVersionGroup;
-			children = (
-				7EAF046A21504803003089DE /* ListItem.xcdatamodel */,
-			);
-			currentVersion = 7EAF046A21504803003089DE /* ListItem.xcdatamodel */;
-			path = ListItem.xcdatamodeld;
-			sourceTree = "<group>";
-			versionGroupType = wrapper.xcdatamodel;
-		};
-/* End XCVersionGroup section */
 	};
 	rootObject = 7EC11183213BC0B900CFF334 /* Project object */;
 }

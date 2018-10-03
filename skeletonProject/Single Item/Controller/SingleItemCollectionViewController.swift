@@ -11,10 +11,10 @@ import UIKit
 private let reuseIdentifier = "Cell"
 
 class SingleItemCollectionViewController: UICollectionViewController,UICollectionViewDelegateFlowLayout {
-
+    var favoriteMode = false
     let itemDetailsCellId = "itemDetailsId"
     var listItem:ListItem?
-    var dataListItem:DataListItem?
+    //var dataListItem:DataListItem?
     var delegate:ItemDetailsViewController?
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -27,10 +27,10 @@ class SingleItemCollectionViewController: UICollectionViewController,UICollectio
         {
             title = item.title
         }
-        else if let item = dataListItem
-        {
-            title = item.title
-        }
+//        else if let item = dataListItem
+//        {
+//            title = item.title
+//        }
     }
     @objc func goBack()
     {
@@ -42,11 +42,11 @@ class SingleItemCollectionViewController: UICollectionViewController,UICollectio
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         var height:CGFloat = 100
         var details:String?
-        if let itemDetails = dataListItem?.details
-        {
-            details = itemDetails
-        }
-        else if let itemDetails = listItem?.details
+//        if let itemDetails = dataListItem?.details
+//        {
+//            details = itemDetails
+//        }
+        if let itemDetails = listItem?.details
         {
             details = itemDetails
         }
@@ -76,12 +76,7 @@ class SingleItemCollectionViewController: UICollectionViewController,UICollectio
         {
             cell.listItem = cellListItem
             cell.itemsDelegate = delegate
-        }
-        else if let dataListItem = dataListItem
-        {
-            cell.dataListItem = dataListItem
             cell.homeController = self
-            cell.itemsDelegate = delegate
         }
         return cell
     }

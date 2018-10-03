@@ -200,7 +200,6 @@
                             </collectionView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="KOK-my-Sk4" userLabel="googleAds" customClass="GADBannerView">
                                 <rect key="frame" x="0.0" y="553" width="375" height="50"/>
-                                <color key="backgroundColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="50" id="V69-mh-Ub1"/>
                                     <constraint firstAttribute="width" constant="375" id="VHE-wr-8Fh"/>

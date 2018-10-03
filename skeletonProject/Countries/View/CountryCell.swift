@@ -30,6 +30,7 @@ class CountryCell:UICollectionViewCell
         let label = UILabel()
         label.textAlignment = .center
         label.textColor = .blue
+        label.font = UIFont.systemFont(ofSize: 24)
         return label
     }()
     let countryImage:CustomImageView = {

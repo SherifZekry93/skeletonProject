@@ -101,8 +101,6 @@ class Categories: UIViewController{
         navigationItem.hidesBackButton = true
         let menuButton = UIButton()
         menuButton.setImage(UIImage(named: "ic_white_more"), for: .normal)
-        let backButton = UIButton()
-        backButton.setImage(UIImage(named: "ic_white_reply"), for: .normal)
         let favButton = UIButton()
         favButton.setImage(UIImage(named: "ic_white_empty_star"), for: .normal)
         titleLabel.textAlignment = .center
@@ -118,7 +116,7 @@ class Categories: UIViewController{
         titleView.heightAnchor.constraint(equalToConstant: 40).isActive = true
         titleView.widthAnchor.constraint(equalToConstant: view.frame.size.width)
         titleView.addSubview(menuButton)
-        titleView.addSubview(backButton)
+        
         titleView.addSubview(favButton)
         titleView.addSubview(titleLabel)
         titleView.addSubview(countryImage)
@@ -128,21 +126,14 @@ class Categories: UIViewController{
             menuButton.leadingAnchor.constraint(equalTo: titleView.leadingAnchor),
             menuButton.topAnchor.constraint(equalTo: titleView.topAnchor),
             menuButton.bottomAnchor.constraint(equalTo: titleView.bottomAnchor),
-            menuButton.widthAnchor.constraint(equalToConstant: 80/3)
-            ])
-        backButton.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
-            backButton.leadingAnchor.constraint(equalTo: menuButton.trailingAnchor),
-            backButton.topAnchor.constraint(equalTo: titleView.topAnchor),
-            backButton.bottomAnchor.constraint(equalTo: titleView.bottomAnchor),
-            backButton.widthAnchor.constraint(equalToConstant: 80/3)
+            menuButton.widthAnchor.constraint(equalToConstant: 60/2)
             ])
         favButton.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            favButton.leadingAnchor.constraint(equalTo: backButton.trailingAnchor),
+            favButton.leadingAnchor.constraint(equalTo: menuButton.trailingAnchor),
             favButton.topAnchor.constraint(equalTo: titleView.topAnchor),
             favButton.bottomAnchor.constraint(equalTo: titleView.bottomAnchor),
-            favButton.widthAnchor.constraint(equalToConstant: 80/3)
+            favButton.widthAnchor.constraint(equalToConstant: 60/2)
             ])
         favButton.addTarget(self, action: #selector(favouritePage), for: .touchUpInside)
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
@@ -150,7 +141,7 @@ class Categories: UIViewController{
             titleLabel.leadingAnchor.constraint(equalTo: favButton.trailingAnchor),
             titleLabel.topAnchor.constraint(equalTo: titleView.topAnchor),
             titleLabel.bottomAnchor.constraint(equalTo: titleView.bottomAnchor),
-            titleLabel.widthAnchor.constraint(equalToConstant: size - 160)
+            titleLabel.widthAnchor.constraint(equalToConstant: size - 130)
             ])
         countryImage.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
@@ -178,23 +169,9 @@ class Categories: UIViewController{
     {
         let layout = UICollectionViewFlowLayout()
         let controller = ItemDetailsViewController(collectionViewLayout: layout)
-        controller.dataListItem = loadData()
+        controller.favoriteMode = true
+        controller.allListItems = UserDefaults.standard.getFavoritedItems()
         navigationController?.pushViewController(controller, animated: true)
-    }
-    func loadData() -> [DataListItem]
-    {
-        let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
-        let fetchRequest:NSFetchRequest<DataListItem> = DataListItem.fetchRequest()
-        var allDataListItems = [DataListItem]()//try context.fetch(fetchRequest)
-        do
-        {
-            allDataListItems = try context.fetch(fetchRequest)
-        }
-        catch
-        {
-            
-        }
-        return allDataListItems
     }
 }
 

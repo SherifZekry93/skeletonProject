@@ -15,10 +15,6 @@ extension ItemDetailsViewController
         {
             return count
         }
-        else if let count = dataListItem?.count
-        {
-            return count
-        }
         return 0
     }
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath)
@@ -28,14 +24,9 @@ extension ItemDetailsViewController
         if let listItem = allListItems?[indexPath.item]
         {
             controller.listItem = listItem
-        }
-        if let dataListItem = dataListItem?[indexPath.item]
-        {
-            controller.dataListItem = dataListItem
-            controller.delegate = self
+            controller.favoriteMode = favoriteMode
         }
         controller.delegate = self
-
         navigationController?.pushViewController(controller, animated: true)
     }
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
@@ -47,12 +38,11 @@ extension ItemDetailsViewController
         {
             cell.listItem = item
         }
-        if let dataItem = dataListItem?[indexPath.item]
-        {
-            cell.dataItem = dataItem
-        }
         cell.homeController = self
         return cell
+    }
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+        return 0.5
     }
 }
 
