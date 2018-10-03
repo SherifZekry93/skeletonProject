@@ -84,7 +84,8 @@ class ItemDetailsCell: UICollectionViewCell {
         NSLayoutConstraint.activate([
             starButton.centerYAnchor.constraint(equalTo: centerYAnchor),
             starButton.leftAnchor.constraint(equalTo: leftAnchor, constant: 15),
-            starButton.widthAnchor.constraint(equalToConstant: 40)
+            starButton.widthAnchor.constraint(equalToConstant: 40),
+            starButton.heightAnchor.constraint(equalToConstant: 40)
             ])
         starButton.addTarget(self, action: #selector(addToFavourite), for: .touchUpInside)
     }
@@ -127,6 +128,7 @@ class ItemDetailsCell: UICollectionViewCell {
         {
             if UserDefaults.standard.exisitingItem(checkedListItem: currentListItem, delete: true)
             {
+                starButton.setImage(UIImage(named: "ic_white_empty_star"), for: .normal)
                 starButton.tintColor = .darkGray
                 guard let favoriteMode = homeController?.favoriteMode else {return}
                 if favoriteMode

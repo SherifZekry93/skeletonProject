@@ -87,7 +87,7 @@ class SingleItemCollectionViewCell: UICollectionViewCell {
         let startButton = UIButton(type: .system)
         startButton.frame = CGRect(x: 0, y: 0, width: 60, height: 60)
         startButton.setImage(UIImage(named: "ic_white_empty_star"), for: .normal)
-        startButton.tintColor = .gray
+        startButton.tintColor = .darkGray
         startButton.contentMode = .scaleAspectFit
         startButton.translatesAutoresizingMaskIntoConstraints = false
         return startButton
@@ -176,6 +176,7 @@ class SingleItemCollectionViewCell: UICollectionViewCell {
         {
         if UserDefaults.standard.exisitingItem(checkedListItem: item,delete: true)
         {
+            starButton.setImage(UIImage(named: "ic_white_empty_star"), for: .normal)
             starButton.tintColor = .gray
             if let item = listItem
             {
