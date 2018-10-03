@@ -21,7 +21,7 @@ class SingleItemCollectionViewCell: UICollectionViewCell {
         didSet{
             guard let listItem = listItem else {return}
             if UserDefaults.standard.exisitingItem(checkedListItem: listItem)            {
-                starButton.tintColor = .orange
+                starButton.setImage(#imageLiteral(resourceName: "filledstar").withRenderingMode(.alwaysOriginal), for: .normal)
             }
             if let title = listItem.title
             {
@@ -48,37 +48,30 @@ class SingleItemCollectionViewCell: UICollectionViewCell {
                     height = 100
                 }
             }
-//            if listItem.id != nil
-//            {
-//                if UserDefaults.standard.exisitingItem(checkedListItem: listItem)
-//                {
-//                    starButton.tintColor = .orange
-//                }
-//            }
-//            if listItem.instagram_link == "" || listItem.instagram_link == nil
-//            {
-//                instagramButton.setImage(UIImage(named: ""), for: .normal)
-//            }
-//            if listItem.youtube_link == "" || listItem.youtube_link == nil
-//            {
-//                youtubeButton.setImage(UIImage(named: ""), for: .normal)
-//            }
-//            if listItem.facebook_link == "" || listItem.facebook_link == nil
-//            {
-//                facebookButton.setImage(UIImage(named: ""), for: .normal)
-//            }
-//            if listItem.app_store_link == "" || listItem.app_store_link == nil
-//            {
-//                appStoreButton.setImage(UIImage(named: ""), for: .normal)
-//            }
-//            if listItem.website_link == "" || listItem.website_link == nil
-//            {
-//                websiteeButton.setImage(UIImage(named: ""), for: .normal)
-//            }
-//            if listItem.twitter_link == "" || listItem.twitter_link == nil
-//            {
-//                twitterButton.setImage(UIImage(named: ""), for: .normal)
-//            }
+            if listItem.instagram_link == "" || listItem.instagram_link == nil
+            {
+                instagramButton.setImage(UIImage(named: ""), for: .normal)
+            }
+            if listItem.youtube_link == "" || listItem.youtube_link == nil
+            {
+                youtubeButton.setImage(UIImage(named: ""), for: .normal)
+            }
+            if listItem.facebook_link == "" || listItem.facebook_link == nil
+            {
+                facebookButton.setImage(UIImage(named: ""), for: .normal)
+            }
+            if listItem.app_store_link == "" || listItem.app_store_link == nil
+            {
+                appStoreButton.setImage(UIImage(named: ""), for: .normal)
+            }
+            if listItem.website_link == "" || listItem.website_link == nil
+            {
+                websiteeButton.setImage(UIImage(named: ""), for: .normal)
+            }
+            if listItem.twitter_link == "" || listItem.twitter_link == nil
+            {
+                twitterButton.setImage(UIImage(named: ""), for: .normal)
+            }
         }
     }
     let titleLabel : UILabel = {
@@ -199,7 +192,8 @@ class SingleItemCollectionViewCell: UICollectionViewCell {
         {
             UserDefaults.standard.favoriteItem(checkedListItem: item)
             itemsDelegate?.markAsNotFavourite(listItem: item, isfavourited: true)
-            starButton.tintColor = .orange
+            starButton.setImage(#imageLiteral(resourceName: "filledstar").withRenderingMode(.alwaysOriginal), for: .normal)
+            //starButton.tintColor = .orange
         }
         }
     }

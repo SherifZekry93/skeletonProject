@@ -10,52 +10,6 @@ import UIKit
 import CoreData
 class ItemDetailsCell: UICollectionViewCell {
     var homeController:ItemDetailsViewController?
-
-    let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
-//    func loadData(id:Int,delete:Bool) -> Bool
-//    {
-//        return CoreDataManager.shared.exisistingItem(id:id,delete:delete)
-//    }
-//    var dataItem:DataListItem?{
-//        didSet{
-//            if let title = dataItem?.title
-//            {
-//                let attributedText = NSMutableAttributedString(string: title, attributes: [NSAttributedStringKey.font : UIFont.systemFont(ofSize: 16)])
-//
-//                guard let subTitle = dataItem?.details else {return }
-//                if subTitle != ""
-//                {
-//                    attributedText.append(NSAttributedString(string: "\n\(subTitle)", attributes: [NSAttributedStringKey.font : UIFont.systemFont(ofSize: 13),NSAttributedStringKey.foregroundColor:UIColor.lightGray]))
-//                }
-//                let paragraphStyle = NSMutableParagraphStyle()
-//                paragraphStyle.lineSpacing = 4
-//                attributedText.addAttribute(.paragraphStyle, value: paragraphStyle, range: NSMakeRange(0, attributedText.length))
-//                titleLabel.attributedText = attributedText
-//
-//                titleLabel.textAlignment = .right
-//            }
-//            if let imageName = dataItem?.image
-//            {
-//                if imageName != ""
-//                {
-//                    //print(imageName)
-//                    guard let imageURL = URL(string:"https://fitnessksa.com/public/images/posts/" + imageName)
-//                        else {
-//                            return
-//                    }
-//                    print(imageURL)
-//                    itemImage.downloadImage(from: imageURL)
-//                }
-//            }
-//            if let id = dataItem?.id
-//            {
-//                if loadData(id: Int(id), delete: false)
-//                {
-//                    starButton.tintColor = .orange
-//                }
-//            }
-//        }
-//    }
     var listItem:ListItem?{
         didSet
         {
@@ -93,8 +47,9 @@ class ItemDetailsCell: UICollectionViewCell {
          
                 if UserDefaults.standard.exisitingItem(checkedListItem: listItem)
                 {
-                    starButton.tintColor = .orange
-                }
+ starButton.setImage(#imageLiteral(resourceName: "filledstar").withRenderingMode(.alwaysOriginal), for: .normal)
+                    
+            }
             
         }
     }
@@ -166,7 +121,7 @@ class ItemDetailsCell: UICollectionViewCell {
         if !UserDefaults.standard.exisitingItem(checkedListItem: currentListItem)
         {
             UserDefaults.standard.favoriteItem(checkedListItem: currentListItem)
-            starButton.tintColor = .orange
+ starButton.setImage(#imageLiteral(resourceName: "filledstar").withRenderingMode(.alwaysOriginal), for: .normal)
         }
         else
         {
