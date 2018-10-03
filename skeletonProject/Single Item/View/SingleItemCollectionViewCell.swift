@@ -100,8 +100,8 @@ class SingleItemCollectionViewCell: UICollectionViewCell {
         return startButton
     }()
     
-    let itemImage : CustomImageView = {
-        let image = CustomImageView()
+    let itemImage : UIImageView = {
+        let image = UIImageView()
         image.contentMode = .scaleToFill
         image.image = UIImage(named: "img_blank")
         image.translatesAutoresizingMaskIntoConstraints = false
@@ -181,15 +181,9 @@ class SingleItemCollectionViewCell: UICollectionViewCell {
 
     @objc func addToFavourite()
     {
-//        var id:Int?
-//
-//        if let itemId = listItem?.id
-//        {
-//           id = itemId
-//        }
         if let item = listItem
         {
-        if UserDefaults.standard.exisitingItem(checkedListItem: item,delete: true)//(id: itemId, delete: true)
+        if UserDefaults.standard.exisitingItem(checkedListItem: item,delete: true)
         {
             starButton.tintColor = .gray
             if let item = listItem

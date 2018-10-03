@@ -10,6 +10,7 @@ import UIKit
 import SVProgressHUD
 import CoreData
 import Firebase
+import SDWebImage
 class Categories: UIViewController{
     
     @IBOutlet weak var bannerView: GADBannerView!
@@ -58,7 +59,8 @@ class Categories: UIViewController{
                 let imageurl = imageBaseUrl + name
                 if let url = URL(string: imageurl)
                 {
-                    countryImage.downloadImage(from: url)
+                    countryImage.sd_setImage(with: url, completed: nil)
+                    //countryImage.downloadImage(from: url)
                 }
             }
         }
@@ -93,10 +95,12 @@ class Categories: UIViewController{
             }
         }
     }
-    let countryImage = CustomImageView()
+    let countryImage = UIImageView()
     let titleLabel = UILabel()
     func setupTitleStack()
     {
+        countryImage.sd_setIndicatorStyle(.gray)
+        countryImage.sd_showActivityIndicatorView()
         let size = (view.frame.size.width - 20)
         navigationItem.hidesBackButton = true
         let menuButton = UIButton()

@@ -21,7 +21,8 @@ class CategoryCell: UICollectionViewCell {
                 {
                     if let url = URL(string: imageBaseUrl+imageName)
                     {
-                        sectionImage.downloadImage(from: url)
+                        sectionImage.sd_setImage(with: url, completed: nil)
+                        //sectionImage.downloadImage(from: url)
                     }
                 }
             }
@@ -36,8 +37,8 @@ class CategoryCell: UICollectionViewCell {
         label.font = UIFont.boldSystemFont(ofSize: 16)
         return label
     }()
-    let sectionImage:CustomImageView = {
-        let image = CustomImageView()
+    let sectionImage:UIImageView = {
+        let image = UIImageView()
         image.contentMode = .scaleAspectFit
         
         return image

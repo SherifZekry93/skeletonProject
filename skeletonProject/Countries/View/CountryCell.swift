@@ -22,7 +22,8 @@ class CountryCell:UICollectionViewCell
                 imageurl = imageBaseUrl+imageName
             }
             if let url = URL(string: imageurl) {
-                countryImage.downloadImage(from: url)
+                countryImage.sd_setImage(with: url, completed: nil)
+                //countryImage.downloadImage(from: url)
             }
         }
     }
@@ -33,8 +34,10 @@ class CountryCell:UICollectionViewCell
         label.font = UIFont.systemFont(ofSize: 24)
         return label
     }()
-    let countryImage:CustomImageView = {
-        let image = CustomImageView()
+    let countryImage:UIImageView = {
+        let image = UIImageView()
+        image.sd_setIndicatorStyle(.gray)
+        image.sd_showActivityIndicatorView()
         image.contentMode = .scaleAspectFill
         image.clipsToBounds = true
         image.backgroundColor = .gray

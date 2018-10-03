@@ -86,7 +86,8 @@ class ItemDetailsCell: UICollectionViewCell {
                             return
                     }
                     //print(imageURL)
-                    itemImage.downloadImage(from: imageURL)
+                    itemImage.sd_setImage(with:imageURL, completed: nil)
+                   // itemImage.downloadImage(from: imageURL)
                 }
             }
          
@@ -147,8 +148,10 @@ class ItemDetailsCell: UICollectionViewCell {
         label.textAlignment = .right
         return label
     }()
-    let itemImage : CustomImageView = {
-        let image = CustomImageView()
+    let itemImage : UIImageView = {
+        let image = UIImageView()
+        image.sd_setIndicatorStyle(.gray)
+        image.sd_showActivityIndicatorView()
         image.contentMode = .scaleToFill
         image.image = UIImage(named: "img_blank")
         return image
