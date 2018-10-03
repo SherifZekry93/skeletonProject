@@ -10,12 +10,7 @@ import UIKit
 import CoreData
 class SingleItemCollectionViewCell: UICollectionViewCell {
     
-    let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
     var itemsDelegate:ItemDetailsViewController?
-//    func loadData(id:Int,delete:Bool) -> Bool
-//    {
-//        return CoreDataManager.shared.exisistingItem(id:id,delete:delete)
-//    }
     var height:CGFloat?{
         didSet{
             setupLayout()
@@ -25,6 +20,9 @@ class SingleItemCollectionViewCell: UICollectionViewCell {
     var listItem:ListItem?{
         didSet{
             guard let listItem = listItem else {return}
+            if UserDefaults.standard.exisitingItem(checkedListItem: listItem)            {
+                starButton.tintColor = .orange
+            }
             if let title = listItem.title
             {
                 let attributedText = NSMutableAttributedString(string: title, attributes: [NSAttributedStringKey.font : UIFont.boldSystemFont(ofSize: 18)])
@@ -50,37 +48,37 @@ class SingleItemCollectionViewCell: UICollectionViewCell {
                     height = 100
                 }
             }
-            if listItem.id != nil
-            {
-                if UserDefaults.standard.exisitingItem(checkedListItem: listItem)
-                {
-                    starButton.tintColor = .orange
-                }
-            }
-            if listItem.instagram_link == "" || listItem.instagram_link == nil
-            {
-                instagramButton.setImage(UIImage(named: ""), for: .normal)
-            }
-            if listItem.youtube_link == "" || listItem.youtube_link == nil
-            {
-                youtubeButton.setImage(UIImage(named: ""), for: .normal)
-            }
-            if listItem.facebook_link == "" || listItem.facebook_link == nil
-            {
-                facebookButton.setImage(UIImage(named: ""), for: .normal)
-            }
-            if listItem.app_store_link == "" || listItem.app_store_link == nil
-            {
-                appStoreButton.setImage(UIImage(named: ""), for: .normal)
-            }
-            if listItem.website_link == "" || listItem.website_link == nil
-            {
-                websiteeButton.setImage(UIImage(named: ""), for: .normal)
-            }
-            if listItem.twitter_link == "" || listItem.twitter_link == nil
-            {
-                twitterButton.setImage(UIImage(named: ""), for: .normal)
-            }
+//            if listItem.id != nil
+//            {
+//                if UserDefaults.standard.exisitingItem(checkedListItem: listItem)
+//                {
+//                    starButton.tintColor = .orange
+//                }
+//            }
+//            if listItem.instagram_link == "" || listItem.instagram_link == nil
+//            {
+//                instagramButton.setImage(UIImage(named: ""), for: .normal)
+//            }
+//            if listItem.youtube_link == "" || listItem.youtube_link == nil
+//            {
+//                youtubeButton.setImage(UIImage(named: ""), for: .normal)
+//            }
+//            if listItem.facebook_link == "" || listItem.facebook_link == nil
+//            {
+//                facebookButton.setImage(UIImage(named: ""), for: .normal)
+//            }
+//            if listItem.app_store_link == "" || listItem.app_store_link == nil
+//            {
+//                appStoreButton.setImage(UIImage(named: ""), for: .normal)
+//            }
+//            if listItem.website_link == "" || listItem.website_link == nil
+//            {
+//                websiteeButton.setImage(UIImage(named: ""), for: .normal)
+//            }
+//            if listItem.twitter_link == "" || listItem.twitter_link == nil
+//            {
+//                twitterButton.setImage(UIImage(named: ""), for: .normal)
+//            }
         }
     }
     let titleLabel : UILabel = {
