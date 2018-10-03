@@ -20,6 +20,14 @@ class ItemDetailsViewController: UICollectionViewController,UICollectionViewDele
         let index = allListItems?.index(of: listItem)
         let indexPath = IndexPath(item: index!, section: 0)
         let cell =  collectionView?.cellForItem(at: indexPath) as! ItemDetailsCell
+        if isfavourited
+        {
+            cell.starButton.setImage(#imageLiteral(resourceName: "filledstar").withRenderingMode(.alwaysOriginal), for: .normal)
+        }
+        else
+        {
+            cell.starButton.setImage(#imageLiteral(resourceName: "ic_white_empty_star").withRenderingMode(.alwaysTemplate), for: .normal)
+        }
         cell.starButton.tintColor = isfavourited ? .orange : .gray
     }
     func deleteItem(dataItem: ListItem)
