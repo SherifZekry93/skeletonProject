@@ -94,12 +94,11 @@ class SingleItemCollectionViewCell: UICollectionViewCell {
         let startButton = UIButton(type: .system)
         startButton.frame = CGRect(x: 0, y: 0, width: 60, height: 60)
         startButton.setImage(UIImage(named: "ic_white_empty_star"), for: .normal)
-        startButton.tintColor = UIColor.gray
+        startButton.tintColor = .gray
         startButton.contentMode = .scaleAspectFit
         startButton.translatesAutoresizingMaskIntoConstraints = false
         return startButton
     }()
-    
     let itemImage : UIImageView = {
         let image = UIImageView()
         image.contentMode = .scaleToFill
@@ -107,7 +106,6 @@ class SingleItemCollectionViewCell: UICollectionViewCell {
         image.translatesAutoresizingMaskIntoConstraints = false
         return image
     }()
-    
     let containerView:UIView = {
         let container = UIView()
         container.translatesAutoresizingMaskIntoConstraints = false

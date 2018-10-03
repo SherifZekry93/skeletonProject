@@ -14,7 +14,6 @@ class SingleItemCollectionViewController: UICollectionViewController,UICollectio
     var favoriteMode = false
     let itemDetailsCellId = "itemDetailsId"
     var listItem:ListItem?
-    //var dataListItem:DataListItem?
     var delegate:ItemDetailsViewController?
     override func viewDidLoad() {
         super.viewDidLoad()
